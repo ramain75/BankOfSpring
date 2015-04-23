@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 // marks this POJO as a spring component , candidate to be "discovered"
 @Component
-public class HelloAnnotation implements HelloWorld {
+public class HelloWorldAnnotation implements HelloWorld {
 	@Value("Stranger")
 	private String theThing;
 	

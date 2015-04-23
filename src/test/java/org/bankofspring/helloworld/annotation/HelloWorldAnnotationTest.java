@@ -17,14 +17,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:SpringHelloAppAnnotation.xml")
-public class HelloAnnotationTest {
+public class HelloWorldAnnotationTest {
 	@Autowired
 	private HelloWorld helloWorld;
 	
 	@Test
 	public void test() {
 		assertNotNull( "HelloWorld bean was null", helloWorld );
-		assertEquals( "HelloWorld bean had unexpected class", HelloAnnotation.class, helloWorld.getClass() );
+		assertEquals( "HelloWorld bean had unexpected class", HelloWorldAnnotation.class, helloWorld.getClass() );
 		assertEquals( "Unexpected greeting", "Hello Stranger", helloWorld.sayHello() );
 	}
 }
