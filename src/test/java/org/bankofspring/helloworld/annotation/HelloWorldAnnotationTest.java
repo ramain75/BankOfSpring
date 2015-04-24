@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * This test class uses annotation itself to set up the Spring context
  * 
- * @author Thierry Roisin, Sean Clark, Alex Panayotopoulos
+ * @author txr, slc, axp
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:SpringHelloAppAnnotation.xml")

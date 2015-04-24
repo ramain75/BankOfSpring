@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * org.bankofspring.helloworld.HelloWorldProperty with annotation as 
  * a (very) gentle introduction to wiring via annotation
  * 
- * @author Thierry Roisin
+ * @author txr
  */
 // marks this POJO as a spring component , candidate to be "discovered"
 @Component

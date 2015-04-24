@@ -8,6 +8,11 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * Test Pojo, Property and Constructor HelloWorld beans.
+ * 
+ * @author txr, axp
+ */
 public class HelloWorldTest {
 	private static ApplicationContext context;
 	

@@ -3,7 +3,7 @@ package org.bankofspring.helloworld;
 /**
  * A basic Hello World type POJO, we pass what to say via the constructor
  * 
- * @author Thierry Roisin, Alex Panayotopoulos
+ * @author txr, axp
  */
 public class HelloWorldConstructor implements HelloWorld {
 	private String whatToSay;

@@ -3,7 +3,7 @@ package org.bankofspring.helloworld;
 /**
  * A basic Hello World type POJO, we pass what to say via a property setter
  * 
- * @author Thierry Roisin, Alex Panayotopoulos
+ * @author txr, axp
  */
 public class HelloWorldProperty implements HelloWorld {
 	private String prop;

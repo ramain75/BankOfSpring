@@ -3,7 +3,7 @@ package org.bankofspring.helloworld;
 /**
  * An interface for saying hello.
  * 
- * @author Alex Panayotopoulos
+ * @author axp
  */
 public interface HelloWorld {
 	public String sayHello();

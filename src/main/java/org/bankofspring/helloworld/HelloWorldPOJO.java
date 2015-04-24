@@ -3,7 +3,7 @@ package org.bankofspring.helloworld;
 /**
  * Simple HelloWorld Plain Old Java Object that, you have guessed it, says HelloWorld
  * 
- * @author Thierry Roisin, Alex Panayotopoulos
+ * @author txr, axp
  */
 public class HelloWorldPOJO implements HelloWorld {
 	public String sayHello() {
