@@ -4,5 +4,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ...  -->
+	<!-- Current user (hardcoded for now) -->
+	<bean id="currentUser" class="org.bankofspring.entities.User">
+		<property name="username" value="user01"/>
+		<property name="password" value="123pass"/>
+	</bean>
+
+	<!-- Service Layer  -->
+	<bean id="bankService" class="org.bankofspring.service.BankServiceImpl">
+		<property name="currentUser" ref="currentUser"/>
+		<property name="bankDAO" ref="bankDAO"/>
+		<property name="bankValidator">
+			<bean class="org.bankofspring.validator.BankValidator"/>
+		</property>
+	</bean>
 </beans>
