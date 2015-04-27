@@ -2,6 +2,9 @@ package org.bankofspring;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+import java.util.Map;
+
 import org.bankofspring.entity.Account;
 import org.bankofspring.entity.AccountTransaction;
 import org.bankofspring.entity.User;
@@ -15,22 +18,27 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class BankServiceTest {
 	private static ApplicationContext context;
 	private static BankService service;
+	private static Map<String, User> users;
+	private static Map<User, List<Account>> userAccounts;
 	
 	/**
 	 * We reload the application context before each test. ClasspathXmlApplicationContext requires obviously
 	 * the location of the xml to be known on the classpath
 	 */
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setupClass() {
 		context = new ClassPathXmlApplicationContext( "BankOfSpringApp.xml" );
 		service = (BankService) context.getBean( "bankService" );
+		users = (Map<String, User>) context.getBean( "users" );
+		userAccounts = (Map<User, List<Account>>) context.getBean( "accounts" );
 	}
 	
 	@Test
 	public void testValidTransfer() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		AccountTransaction transaction = service.transfer( alice, aliceCurrent, bobCurrent, 2500 );
 		assertEquals( "Unexpected transaction amount", 2500, transaction.getAmount() );
@@ -43,9 +51,9 @@ public class BankServiceTest {
 	
 	@Test
 	public void testTransferAllMoney() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		AccountTransaction transaction = service.transfer( alice, aliceCurrent, bobCurrent, 100000 );
 		assertEquals( "Unexpected transaction amount", 100000, transaction.getAmount() );
@@ -62,9 +70,9 @@ public class BankServiceTest {
 	 */
 	@Test
 	public void testTransferNoMoney() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		AccountTransaction transaction = service.transfer( alice, aliceCurrent, bobCurrent, 0 );
 		assertEquals( "Unexpected transaction amount", 0, transaction.getAmount() );
@@ -81,8 +89,8 @@ public class BankServiceTest {
 	 */
 	@Test
 	public void testTransferToNowhere() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
 		
 		AccountTransaction transaction = service.transfer( alice, aliceCurrent, aliceCurrent, 2500 );
 		assertEquals( "Unexpected transaction amount", 2500, transaction.getAmount() );
@@ -94,60 +102,60 @@ public class BankServiceTest {
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testTransferTooMuchMoney() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		service.transfer( alice, aliceCurrent, bobCurrent, 100001 );
 	}
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testTransferNegativeMoney() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		service.transfer( alice, aliceCurrent, bobCurrent, -1 );
 	}
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testDoesNotOwnAccount() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account daveCurrent = (Account) context.getBean( "dave-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account daveCurrent = userAccounts.get( users.get( "dave" ) ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		service.transfer( alice, daveCurrent, bobCurrent, 1000 );
 	}
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testNotACustomer() throws OperationDisallowedException {
-		User eve = (User) context.getBean( "eve" );
-		Account daveCurrent = (Account) context.getBean( "dave-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User eve = users.get( "eve" );
+		Account daveCurrent = userAccounts.get( users.get( "dave" ) ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		service.transfer( eve, daveCurrent, bobCurrent, 1000 );
 	}
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testNullUser() throws OperationDisallowedException {
-		Account daveCurrent = (Account) context.getBean( "dave-current" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		Account daveCurrent = userAccounts.get( users.get( "dave" ) ).get( 0 );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		service.transfer( null, daveCurrent, bobCurrent, 1000 );
 	}
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testNullFromAccount() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account bobCurrent = (Account) context.getBean( "bob-current" );
+		User alice = users.get( "alice" );
+		Account bobCurrent = userAccounts.get( users.get( "bob" ) ).get( 0 );
 		
 		service.transfer( alice, null, bobCurrent, 1000 );
 	}
 	
 	@Test( expected = OperationDisallowedException.class )
 	public void testNullToAccount() throws OperationDisallowedException {
-		User alice = (User) context.getBean( "alice" );
-		Account aliceCurrent = (Account) context.getBean( "alice-current" );
+		User alice = users.get( "alice" );
+		Account aliceCurrent = userAccounts.get( alice ).get( 0 );
 		
 		service.transfer( alice, aliceCurrent, null, 1000 );
 	}
