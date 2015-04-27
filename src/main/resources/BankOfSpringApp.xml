@@ -4,5 +4,64 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ...  -->
+	<!-- We have a bunch of hard-coded customers -->
+	<bean id="alice" class="org.bankofspring.entity.Customer">
+		<property name="customerId" value="1"></property>
+		<property name="name" value="Alice Aqua"></property>
+		<property name="username" value="alice"></property>
+		<property name="password" value="auqu"></property>
+	</bean>
+	<bean id="bob" class="org.bankofspring.entity.Customer">
+		<property name="customerId" value="2"></property>
+		<property name="name" value="Bob Brown"></property>
+		<property name="username" value="bob"></property>
+		<property name="password" value="nworb"></property>
+	</bean>
+	<bean id="carol" class="org.bankofspring.entity.Customer">
+		<property name="customerId" value="3"></property>
+		<property name="name" value="Carol Chartreuse"></property>
+		<property name="username" value="carol"></property>
+		<property name="password" value="esuertrahc"></property>
+	</bean>
+	<bean id="dave" class="org.bankofspring.entity.Customer">
+		<property name="customerId" value="4"></property>
+		<property name="name" value="Dave Damson"></property>
+		<property name="username" value="dave"></property>
+		<property name="password" value="nosmad"></property>
+	</bean>
+	
+	<!-- Eve isn't a customer, but she is a user -->
+	<bean id="eve" class="org.bankofspring.entity.User">
+		<property name="username" value="eve"></property>
+		<property name="password" value="dlareme"></property>
+	</bean>
+	
+	<!-- Each customer has an account -->
+	<bean id="alice-current" class="org.bankofspring.entity.Account">
+		<property name="accountNumber" value="000001"></property>
+		<property name="description" value="Alice Aqua Current Account"></property>
+		<property name="balance" value="100000"></property>
+		<property name="customer" ref="alice"></property>
+	</bean>
+	<bean id="bob-current" class="org.bankofspring.entity.Account">
+		<property name="accountNumber" value="000002"></property>
+		<property name="description" value="Bob Brown Current Account"></property>
+		<property name="balance" value="80000"></property>
+		<property name="customer" ref="bob"></property>
+	</bean>
+	<bean id="carol-current" class="org.bankofspring.entity.Account">
+		<property name="accountNumber" value="000003"></property>
+		<property name="description" value="Carol Chartreuse Current Account"></property>
+		<property name="balance" value="60000"></property>
+		<property name="customer" ref="carol"></property>
+	</bean>
+	<bean id="dave-current" class="org.bankofspring.entity.Account">
+		<property name="accountNumber" value="000004"></property>
+		<property name="description" value="Dave Damson Current Account"></property>
+		<property name="balance" value="40000"></property>
+		<property name="customer" ref="dave"></property>
+	</bean>
+	
+	<!-- The BankService is also a bean -->
+	<bean id="bankService" class="org.bankofspring.service.BankService"></bean>
 </beans>
