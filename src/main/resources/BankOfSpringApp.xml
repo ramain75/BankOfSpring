@@ -4,5 +4,29 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ...  -->
+	<bean id="janice" class="org.bankofspring.model.User">
+		<constructor-arg name="username" value="janice" />
+		<constructor-arg name="password" value="B@nkT3ll3r" />
+	</bean>
+
+	<bean id="tonyThompson" class="org.bankofspring.model.Customer">
+		<constructor-arg name="username" value="tonyThompson" />
+		<constructor-arg name="password" value="password123" />
+		<constructor-arg name="customerId" value="5810938810" />
+		<constructor-arg name="name" value="Tony Thompson" />
+	</bean>
+
+	<bean id="account10000001" class="org.bankofspring.model.Account">
+		<constructor-arg name="accountNumber" value="10000001" />
+		<constructor-arg name="accountType" value="CURRENT" />
+		<constructor-arg name="customer" ref="tonyThompson" />
+	</bean>
+	
+	<bean id="account12345678" class="org.bankofspring.model.Account">
+		<constructor-arg name="accountNumber" value="12345678" />
+		<constructor-arg name="accountType" value="SAVINGS" />
+		<constructor-arg name="customer" ref="tonyThompson" />
+	</bean>
+	
+	<bean id="bankService" class="org.bankofspring.service.BankServiceImpl" />
 </beans>
