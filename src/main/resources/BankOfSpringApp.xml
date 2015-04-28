@@ -4,5 +4,53 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ...  -->
+
+<!--  first customer and his/her accounts --> 
+	<bean id="customer1" class="org.bankofspring.model.Customer">
+		<property name="userName" value="User1"/>
+		<property name="password" value="test"/>
+		<property name="customerID" value="CUSTOMER-1" />
+		<property name="customerName" value="TestCustomer1" />
+		<property name="accounts" >
+			<list>
+			<ref bean="account1" />
+			<ref bean="account2" />
+			</list>
+    	</property>
+	</bean>
+	
+	<bean id="account1" class="org.bankofspring.model.Account">
+	<property name="accountNumber" value="account1cust1"/>
+	<property name="accountDescription" value="account 1 for customer 1"/>
+	<property name="customer" ref="customer1"/>
+	<property name="accountAmount" value="100"/>
+	</bean>
+	
+	<bean id="account2" class="org.bankofspring.model.Account">
+	<property name="accountNumber" value="account2cust1"/>
+	<property name="accountDescription" value="account 2 for customer 1"/>
+	<property name="customer" ref="customer1"/>
+	<property name="accountAmount" value="50"/>
+	</bean>
+
+<!--  second customer and his/her account -->	
+	<bean id="customer2" class="org.bankofspring.model.Customer">
+		<property name="userName" value="User2"/>
+		<property name="password" value="test"/>
+		<property name="customerID" value="CUSTOMER-2" />
+		<property name="customerName" value="TestCustomer2" />
+		<property name="accounts" >
+			<list>
+			<ref bean="account3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="account3" class="org.bankofspring.model.Account">
+	<property name="accountNumber" value="account1cust2"/>
+	<property name="accountDescription" value="account 1 for customer 2"/>
+	<property name="customer" ref="customer2"/>
+	<property name="accountAmount" value="125"/>
+	</bean>
+	
 </beans>
