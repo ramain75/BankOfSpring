@@ -6,12 +6,12 @@ import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 
 public class BankServiceImpl implements BankService {
-	protected BankTransactionValidator validator;
-	public BankTransactionValidator getValidator() {
+	protected BankOperationValidator validator;
+	public BankOperationValidator getValidator() {
 		return validator;
 	}
 
-	public void setValidator(BankTransactionValidator validator) {
+	public void setValidator(BankOperationValidator validator) {
 		this.validator = validator;
 	}
 
@@ -19,7 +19,7 @@ public class BankServiceImpl implements BankService {
 	public boolean debit(User loggedInUser, Account fromAccount,
 			Account toAccount, long amount) {
 		
-		if (validator.validateTransaction(loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT)) {
+		if (validator.validateOperation(loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT)) {
 			AccountTransaction accountTxn = new AccountTransaction(fromAccount,toAccount,amount);
 			return fromAccount.addAccountTransaction(accountTxn,BankOperationType.DEBIT);
 		}
@@ -37,9 +37,9 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public boolean credit(User loggedInUser, Account fromAccount,
 			Account toAccount, long amount) {
-		if (validator.validateTransaction(loggedInUser, fromAccount, toAccount, amount, BankOperationType.CREDIT)) {
+		if (validator.validateOperation(loggedInUser, fromAccount, toAccount, amount, BankOperationType.CREDIT)) {
 			AccountTransaction accountTxn = new AccountTransaction(fromAccount,toAccount,amount);
-			return fromAccount.addAccountTransaction(accountTxn,BankOperationType.CREDIT);
+			return toAccount.addAccountTransaction(accountTxn,BankOperationType.CREDIT);
 		}
 		return false;
 	}
@@ -47,7 +47,7 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public boolean credit(User loggedInUser, Account toAccount,
 			long amount) {
-		return credit(loggedInUser, toAccount, null, amount);
+		return credit(loggedInUser, null,toAccount, amount);
 	}
 	
 	

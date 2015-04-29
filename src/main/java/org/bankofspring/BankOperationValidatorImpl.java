@@ -4,8 +4,8 @@ import org.bankofspring.model.Account;
 import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 
-public class BankTransactionValidatorImpl implements BankTransactionValidator {
-	public boolean validateTransaction(User user, Account fromAccount, Account toAccount, long amount, BankOperationType type) {
+public class BankOperationValidatorImpl implements BankOperationValidator {
+	public boolean validateOperation(User user, Account fromAccount, Account toAccount, long amount, BankOperationType type) {
 		 validateUser(user);
 		 validateAmount(amount);
 		 if (type == BankOperationType.DEBIT) {

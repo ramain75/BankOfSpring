@@ -53,4 +53,10 @@
 	<property name="accountAmount" value="125"/>
 	</bean>
 	
+	<bean id="bankservice" class="org.bankofspring.BankServiceImpl">
+		<property name="validator" ref="validator" />
+	</bean>
+	<bean id="validator" class="org.bankofspring.BankOperationValidatorImpl">
+		
+	</bean>
 </beans>
