@@ -28,7 +28,7 @@
     <bean id="account1" class="com.bankofspring.model.Account">
 		<constructor-arg value="123456789" />
 		<constructor-arg value="Standard Joint Current Account" />
-		<constructor-arg />
+		<constructor-arg>
 			<list>
 				<ref bean="customerBean1" />
 				<ref bean="customerBean2" />
@@ -39,11 +39,18 @@
  	<bean id="account2" class="com.bankofspring.model.Account">
 		<constructor-arg value="12345999" />
 		<constructor-arg value="Standard Current Account" />
-		<constructor-arg />
+		<constructor-arg>
 			<list>
 				<ref bean="customerBean3" />
 			</list>
 		</constructor-arg>
+	</bean>
+	
+	<bean id="transactionlog" class="com.bankofspring.model.AccountTransactions"
+		factory-method="getInstance" />
+		
+	<bean id="bankOfSpringService" class="com.bankofspring.service.BankOfSpringServiceImpl">
+		<property name="transactionLog" ref="transactionlog"/>
 	</bean>
 	
 </beans>

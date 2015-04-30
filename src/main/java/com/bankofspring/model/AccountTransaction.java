@@ -1,4 +1,4 @@
-package org.bankofspring.model;
+package com.bankofspring.model;
 
 /**
  * Class to represent an account transaction. To be eventually stored in the DB

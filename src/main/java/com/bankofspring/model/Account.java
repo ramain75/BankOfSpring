@@ -1,4 +1,4 @@
-package org.bankofspring.model;
+package com.bankofspring.model;
 
 import java.util.List;
 
