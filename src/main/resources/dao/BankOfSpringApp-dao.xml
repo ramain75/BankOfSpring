@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- This is the DAO for in memory accounts  -->
-	<bean id="bankDAO" class="org.bankofspring.dao.BankDAOInMemoryImpl">
-		<property name="customers">
+	<bean id="bill" class="org.bankofspring.entities.Customer">
+		<property name="customerId" value="1" />
+		<property name="name" value="Bill" />
+		<property name="accounts">
 			<list>
-				<bean class="org.bankofspring.entities.Customer">
-					<property name="customerId" value="1"/>
-					<property name="name" value="Bill"/>
-					<property name="accounts">
-						<list>
-							<bean class="org.bankofspring.entities.Account">
-								<property name="accountNumber" value="100000"/>
-								<property name="accountDescription" value="SAVINGS"/>
-								<property name="accountAmount" value="1000"/>
-							</bean>
-							<bean class="org.bankofspring.entities.Account">
-								<property name="accountNumber" value="100001"/>
-								<property name="accountDescription" value="CURRENT"/>
-								<property name="accountAmount" value="100000"/>
-							</bean>
-						</list>
-					</property>
+				<bean class="org.bankofspring.entities.Account">
+					<property name="accountNumber" value="100000" />
+					<property name="accountDescription" value="SAVINGS" />
+					<property name="accountAmount" value="1000" />
 				</bean>
-				<bean class="org.bankofspring.entities.Customer">
-					<property name="customerId" value="2"/>
-					<property name="name" value="Jill"/>
-					<property name="accounts">
-						<list>
-							<bean class="org.bankofspring.entities.Account">
-								<property name="accountNumber" value="100002"/>
-								<property name="accountDescription" value="SAVINGS"/>
-								<property name="accountAmount" value="1"/>
-							</bean>
-							<bean class="org.bankofspring.entities.Account">
-								<property name="accountNumber" value="100003"/>
-								<property name="accountDescription" value="CURRENT"/>
-								<property name="accountAmount" value="100"/>
-							</bean>
-						</list>
-					</property>
+				<bean class="org.bankofspring.entities.Account">
+					<property name="accountNumber" value="100001" />
+					<property name="accountDescription" value="CURRENT" />
+					<property name="accountAmount" value="100000" />
 				</bean>
 			</list>
 		</property>
 	</bean>
+	<bean id="jill" class="org.bankofspring.entities.Customer">
+		<property name="customerId" value="2" />
+		<property name="name" value="Jill" />
+		<property name="accounts">
+			<list>
+				<bean class="org.bankofspring.entities.Account">
+					<property name="accountNumber" value="100002" />
+					<property name="accountDescription" value="SAVINGS" />
+					<property name="accountAmount" value="1" />
+				</bean>
+				<bean class="org.bankofspring.entities.Account">
+					<property name="accountNumber" value="100003" />
+					<property name="accountDescription" value="CURRENT" />
+					<property name="accountAmount" value="100" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- This is the DAO for in memory accounts -->
+	<context:component-scan base-package="org.bankofspring.dao.memory"/>
+	
 </beans>

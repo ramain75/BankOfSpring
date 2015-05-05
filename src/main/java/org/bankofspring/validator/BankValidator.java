@@ -1,7 +1,9 @@
 package org.bankofspring.validator;
 
 import org.bankofspring.entities.Account;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BankValidator {
 
 	/**
