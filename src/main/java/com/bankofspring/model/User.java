@@ -2,7 +2,6 @@ package com.bankofspring.model;
 
 /**
  * Class to represent a bank User
- * @author malcolmmurray
  *
  */
 public class User {

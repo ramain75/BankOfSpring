@@ -1,14 +1,17 @@
 package com.bankofspring.model;
 
+import java.util.List;
+
 /**
  * Class to represent a bank customer - extends user
- * @author malcolmmurray
+ * 
  *
  */
 public class Customer extends User {
 	
 	private String customerID;
 	private String name;
+	private List<Account> accounts;
 	
 	public Customer(String username, String password, String name, String customerID){
 		super(username, password);
