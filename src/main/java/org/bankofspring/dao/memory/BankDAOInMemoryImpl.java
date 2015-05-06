@@ -1,14 +1,19 @@
-package org.bankofspring.dao;
+package org.bankofspring.dao.memory;
 
 import java.util.List;
 
+import org.bankofspring.dao.BankDAO;
 import org.bankofspring.entities.Account;
 import org.bankofspring.entities.AccountTransaction;
 import org.bankofspring.entities.Customer;
 import org.bankofspring.exception.AccountNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class BankDAOInMemoryImpl implements BankDAO {
 
+	@Autowired
 	private List<Customer> customers;
 
 	@Override

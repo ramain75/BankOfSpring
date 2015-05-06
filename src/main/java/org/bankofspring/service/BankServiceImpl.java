@@ -7,15 +7,23 @@ import org.bankofspring.dao.BankDAO;
 import org.bankofspring.entities.Account;
 import org.bankofspring.entities.User;
 import org.bankofspring.validator.BankValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author sean
  *
  */
+@Service
 public class BankServiceImpl implements BankService {
 
+	@Autowired
 	private BankDAO bankDAO;
+	
+	@Autowired
 	private BankValidator bankValidator;
+	
+	@Autowired
 	private User currentUser;
 	
 	/**

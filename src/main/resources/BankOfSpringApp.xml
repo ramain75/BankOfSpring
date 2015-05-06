@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- Current user (hardcoded for now) -->
-	<bean id="currentUser" class="org.bankofspring.entities.User">
-		<property name="username" value="user01"/>
-		<property name="password" value="123pass"/>
-	</bean>
+    <!-- Use annotation configuration -->
+    <context:annotation-config />
 
-	<!-- Service Layer  -->
-	<bean id="bankService" class="org.bankofspring.service.BankServiceImpl">
-		<property name="currentUser" ref="currentUser"/>
-		<property name="bankDAO" ref="bankDAO"/>
-		<property name="bankValidator">
-			<bean class="org.bankofspring.validator.BankValidator"/>
-		</property>
-	</bean>
+    <!-- Load security -->
+    <context:component-scan base-package="org.bankofspring.security" />
+    
+    <!-- Service layer -->
+    <context:component-scan base-package="org.bankofspring.service" />
+
+	<!-- Validator  -->
+	<context:component-scan base-package="org.bankofspring.validator" />
+	
 </beans>
