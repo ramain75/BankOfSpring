@@ -1,4 +1,4 @@
-package com.bankofspring.model;
+package org.bankofspring.model;
 
 import java.util.List;
 
@@ -80,6 +80,14 @@ public class Account {
 		accountBalance += transaction.getTransactionAmount();
 		transactions.add(transaction);
 		return true;
+	}
+
+	public List<AccountTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<AccountTransaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	@Override

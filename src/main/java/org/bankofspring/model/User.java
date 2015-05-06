@@ -1,4 +1,4 @@
-package com.bankofspring.model;
+package org.bankofspring.model;
 
 /**
  * Class to represent a bank User

@@ -1,4 +1,4 @@
-package com.bankofspring.model;
+package org.bankofspring.model;
 
 import java.util.Calendar;
 
@@ -19,6 +19,7 @@ public class AccountTransaction {
 		setToAccount(toAccount);
 		setFromAccount(fromAccount);
 		setTransactionAmount(amount);
+		setTransactionDate(Calendar.getInstance());
 	}
 
 	public Account getFromAccount() {
@@ -82,6 +83,14 @@ public class AccountTransaction {
 		} else if (!toAccount.equals(other.toAccount))
 			return false;
 		return true;
+	}
+
+	public Calendar getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Calendar transactionDate) {
+		this.transactionDate = transactionDate;
 	}
 	
 	

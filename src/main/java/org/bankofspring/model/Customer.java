@@ -1,5 +1,6 @@
-package com.bankofspring.model;
+package org.bankofspring.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,5 +35,22 @@ public class Customer extends User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		// just to ensure account and customer are consistent
+		for (Account account: accounts) {
+			List<Customer> customers = account.getOwningCustomers();
+			if (!customers.contains(this)) {
+				ArrayList<Customer> newCustomers = new ArrayList<Customer>(customers);
+				newCustomers.add(this);
+				account.setOwningCustomers(newCustomers);
+			}
+		}
+		this.accounts = accounts;
 	}
 }
