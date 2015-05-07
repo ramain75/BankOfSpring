@@ -20,7 +20,7 @@ public class Customer extends User {
 		setName(name);
 		setCustomerID(customerID);
 	}
-
+	
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -45,7 +45,7 @@ public class Customer extends User {
 		// just to ensure account and customer are consistent
 		for (Account account: accounts) {
 			List<Customer> customers = account.getOwningCustomers();
-			if (!customers.contains(this)) {
+			if (customers == null || !customers.contains(this)) {
 				ArrayList<Customer> newCustomers = new ArrayList<Customer>(customers);
 				newCustomers.add(this);
 				account.setOwningCustomers(newCustomers);
@@ -53,4 +53,44 @@ public class Customer extends User {
 		}
 		this.accounts = accounts;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((accounts == null) ? 0 : accounts.hashCode());
+		result = prime * result
+				+ ((customerID == null) ? 0 : customerID.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		if (accounts == null) {
+			if (other.accounts != null)
+				return false;
+		} else if (!accounts.equals(other.accounts))
+			return false;
+		if (customerID == null) {
+			if (other.customerID != null)
+				return false;
+		} else if (!customerID.equals(other.customerID))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	
 }

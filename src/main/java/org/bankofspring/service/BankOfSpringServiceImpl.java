@@ -37,8 +37,8 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 			Account fromAccount, long amount) {
 		
 		if ( validator.validateOperation(loggedInUser, fromAccount, toAccount, amount, BankOperationType.CREDIT)) {
-			AccountTransaction txn = new AccountTransaction(fromAccount,toAccount,-amount);
-			return fromAccount.applyTransaction(txn);
+			AccountTransaction txn = new AccountTransaction(fromAccount,toAccount,amount);
+			return toAccount.applyTransaction(txn);
 		}
 		return false;
 	}

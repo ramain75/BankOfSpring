@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<!--  build this customer with constructor args and property-->
+  <bean id="customer1" class="org.bankofspring.model.Customer">
+  	<constructor-arg value="user1"/>
+  	<constructor-arg value="test"/>
+  	<constructor-arg value="customerone" />
+  	<constructor-arg value="customer1"/>
+  
+  	<!-- internal bean accounts -->
+  	<property name="accounts">
+  		<list>
+  			<bean id="account1" class="org.bankofspring.model.Account">
+  			<!-- null property not necessary but it can be done -->
+  			<!--  arguments for constructor in different order -->
+  				<constructor-arg name="owningCustomers"><list><ref bean="customer1"/></list> </constructor-arg>
+  				<constructor-arg name="accountNumber" value="account1"/>
+  				<constructor-arg name="accountDescription" value="account1description"/>
+  				<!-- using property -->
+  				<property name="maxBalanceAmount" value="100000000"></property>
+  			</bean>
+  			<bean id="account2" class="org.bankofspring.model.Account">
+  			<constructor-arg name="owningCustomers"><list><ref bean="customer1"/></list> </constructor-arg>
+  				<constructor-arg name="accountNumber" value="account2"/>
+  				<constructor-arg name="accountDescription" value="account2description"/>
+  				<property name="maxBalanceAmount" value="100000000"></property>
+  			</bean>
+  		</list>
+  	</property>
+  </bean>
+  
+  <bean id="customer2" class="org.bankofspring.model.Customer">
+  	<constructor-arg name="username" value="user2"/>
+  	<constructor-arg name="password"  value="test"/>
+  	<constructor-arg name="customerID">
+  		<value>2</value> 
+  	</constructor-arg>
+  	<constructor-arg name="name" value="customer2"/>
+  
+  	<!-- internal bean accounts -->
+  	<property name="accounts">
+  		<list>
+  			<bean id="account3" class="org.bankofspring.model.Account">
+  			<!--  arguments for constructor in different order -->
+  				<constructor-arg name="accountNumber" value="account1"/>
+  				<constructor-arg name="accountDescription" value="account1description"/>
+  				<property name="maxBalanceAmount" value="100000000"></property>
+  				<property name="accountBalance" value="100"></property>
+  				<constructor-arg name="owningCustomers">
+  					<list>
+  					<ref bean="customer2"/>
+  					<ref bean="customer1"/>
+  					</list>
+  				</constructor-arg>
+  			</bean>
+  			<ref bean="account4" />
+  		</list>
+  	</property>
+   </bean> 	
+   
+   
+<bean id="account4" class="org.bankofspring.model.Account">
+  			
+  				<constructor-arg name="accountNumber" value="account4"/>
+  				<constructor-arg name="accountDescription"  value="account4description"/>
+  				<property name="maxBalanceAmount" value="100000000"></property>
+  				<property name="accountBalance" value="100"></property>
+  				<constructor-arg name="owningCustomers">
+  					<list>
+  					<ref bean="customer2"/>
+  					</list>
+  				</constructor-arg>
+  			  	<property name="transactions"><list><ref bean="txn1"></ref></list></property> 
+  				
+ </bean> 
+  	 	
+<!--  A transaction for customer2 account 4 -->
+  	<bean id="txn1" class="org.bankofspring.model.AccountTransaction">
+  		<constructor-arg name="toAccount" ref="account4"/>
+  		<constructor-arg name="fromAccount"><null/></constructor-arg>
+  		<constructor-arg name="transactionAmount" value="100"></constructor-arg>
+  		
+  		<property name="transactionDate" value="#{T(java.util.Calendar).getInstance().set(2015,01,01)}" /> 
+  		
+  	</bean>
+	
+</beans>

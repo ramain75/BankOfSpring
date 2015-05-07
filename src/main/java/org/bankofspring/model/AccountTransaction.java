@@ -7,18 +7,15 @@ import java.util.Calendar;
  *
  */
 public class AccountTransaction {
-	
-	
-
 	private Account fromAccount;
 	private Account toAccount;
-	private Long amount;
+	private long transactionAmount;
 	private Calendar transactionDate;
 	
-	public AccountTransaction(Account toAccount, Account fromAccount, Long amount){
+	public AccountTransaction(Account toAccount, Account fromAccount, long transactionAmount){
 		setToAccount(toAccount);
 		setFromAccount(fromAccount);
-		setTransactionAmount(amount);
+		setTransactionAmount(transactionAmount);
 		setTransactionDate(Calendar.getInstance());
 	}
 
@@ -39,52 +36,14 @@ public class AccountTransaction {
 	}
 
 	public long getTransactionAmount() {
-		return amount;
+		return transactionAmount;
 	}
 
 	public void setTransactionAmount(long amount) {
-		this.amount = amount;
+		this.transactionAmount = amount;
 	}
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result
-				+ ((fromAccount == null) ? 0 : fromAccount.hashCode());
-		result = prime * result
-				+ ((toAccount == null) ? 0 : toAccount.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AccountTransaction other = (AccountTransaction) obj;
-		if (amount == null) {
-			if (other.amount != null)
-				return false;
-		} else if (!amount.equals(other.amount))
-			return false;
-		if (fromAccount == null) {
-			if (other.fromAccount != null)
-				return false;
-		} else if (!fromAccount.equals(other.fromAccount))
-			return false;
-		if (toAccount == null) {
-			if (other.toAccount != null)
-				return false;
-		} else if (!toAccount.equals(other.toAccount))
-			return false;
-		return true;
-	}
-
+	
 	public Calendar getTransactionDate() {
 		return transactionDate;
 	}
@@ -92,8 +51,5 @@ public class AccountTransaction {
 	public void setTransactionDate(Calendar transactionDate) {
 		this.transactionDate = transactionDate;
 	}
-	
-	
-	
 
 }

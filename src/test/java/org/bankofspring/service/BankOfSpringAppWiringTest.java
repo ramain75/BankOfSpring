@@ -1,4 +1,4 @@
-package com.bankofspring.service;
+package org.bankofspring.service;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+/*
+ * test that BankOfSpringApp.xml wires up beans (bankService and validator) as expected
+ */
 public class BankOfSpringAppWiringTest {
 
 	private ApplicationContext context;

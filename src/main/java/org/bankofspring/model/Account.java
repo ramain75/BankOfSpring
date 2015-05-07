@@ -4,7 +4,9 @@ import java.util.List;
 
 /**
  * Class to represent a bank account
- *
+ * we have added a maxBalanceAmount to maintain the maximum allowed for an account
+ * note that an Account has a bidirectional relationship with customer and that
+ * more than one customer can be linked to an account (joined account)
  */
 public class Account {
 	
