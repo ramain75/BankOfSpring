@@ -21,6 +21,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 			Account toAccount, long amount) {
 		if ( validator.validateOperation(loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT)) {
 			AccountTransaction txn = new AccountTransaction(fromAccount,toAccount,-amount);
+			// at a later stage, will ensure we credit the account receiving the money but not at this stage
 			return fromAccount.applyTransaction(txn);
 		}
 		return false;
@@ -38,6 +39,8 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		
 		if ( validator.validateOperation(loggedInUser, fromAccount, toAccount, amount, BankOperationType.CREDIT)) {
 			AccountTransaction txn = new AccountTransaction(fromAccount,toAccount,amount);
+			// at a later stage, will ensure we debit the account releasing the money but not at this stage
+
 			return toAccount.applyTransaction(txn);
 		}
 		return false;
