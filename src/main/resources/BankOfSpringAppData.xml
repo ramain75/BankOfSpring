@@ -6,18 +6,21 @@
 
 	<!-- build this customer with constructor args and property -->
 	<bean id="customer1" class="org.bankofspring.model.Customer">
-		<!--  constructor arg -->
+		<!--  constructor args with just value (follows order of arguments in constructor -->
 		<constructor-arg value="user1" />
 		<constructor-arg value="test" />
 		<constructor-arg value="customerone" />
 		<constructor-arg value="customer1" />
+		
 		<!--  accounts property is a map<String(accountNumber),Account> -->
+		
 		<property name="accounts">
+		<!--  map definition  -->
 			<map  value-type="org.bankofspring.model.Account">
 				<entry key="account1">
 				<!--  internal bean -->
+					
 					<bean id="account1" class="org.bankofspring.model.Account">
-						<!-- null property not necessary but it can be done -->
 						<!-- arguments for constructor in different order -->
 						<constructor-arg name="owningCustomers">
 							<list>
@@ -29,6 +32,7 @@
 						<!-- using property -->
 						<property name="maxBalanceAmount" value="170000000"></property>
 					</bean>
+					
 				</entry>
 				<entry key="account2">
 					<bean id="account2" class="org.bankofspring.model.Account">
@@ -50,18 +54,20 @@
 	<bean id="customer2" class="org.bankofspring.model.Customer">
 		<constructor-arg name="username" value="user2" />
 		<constructor-arg name="password" value="test" />
+		<!--  value as an element on its own -->
 		<constructor-arg name="customerID">
 			<value>customer2</value>
 		</constructor-arg>
 		<constructor-arg name="name" value="customertwo" />
 
-		
 		<property name="accounts">
 			<map value-type="org.bankofspring.model.Account">
+			<!-- note use of SpEL to use accoutn number from account3 and 4 as key for the map -->
 				<entry key="#{account3.accountNumber}" value-ref="account3"></entry>
 				<entry key="#{account4.accountNumber}" value-ref="account4"></entry>
 			</map>
 		</property> 	
+
 	</bean>
 <!--  2 accounts for customer 2-->
    <bean id="account3" class="org.bankofspring.model.Account">
@@ -76,6 +82,7 @@
 			</list>
 		</constructor-arg>
    </bean>
+
 	<bean id="account4" class="org.bankofspring.model.Account">
 
 		<constructor-arg name="accountNumber" value="account4" />
@@ -103,10 +110,12 @@
 			<null />
 		</constructor-arg>
 		<constructor-arg name="transactionAmount" value="100"></constructor-arg>
-
-		<property name="transactionDate"
-			value="#{T(java.util.Calendar).getInstance().set(2015,01,01)}" />
+<!-- another example of SpEl. this time with java.util.Calendar -->
+		<property name="transactionDate"		
+			value="#{new java.util.GregorianCalendar(2015,1,1).getTime()}" />
 
 	</bean>
+	
+	
 
 </beans>

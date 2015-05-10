@@ -1,5 +1,8 @@
 package org.bankofspring.service;
-
+/*
+ * the service interface for the bank, at this stage we support credit and debit
+ * also we have an BankOperationValidator
+ */
 import org.bankofspring.model.Account;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;

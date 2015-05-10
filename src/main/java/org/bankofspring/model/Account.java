@@ -1,5 +1,6 @@
 package org.bankofspring.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,6 +8,8 @@ import java.util.List;
  * we have added a maxBalanceAmount to maintain the maximum allowed for an account
  * note that an Account has a bidirectional relationship with customer and that
  * more than one customer can be linked to an account (joined account)
+ * we have added facilities to add customer against the account but no facilities as yet to 
+ * remove an customer from account
  */
 public class Account {
 	
@@ -16,8 +19,8 @@ public class Account {
 	private long maxBalanceAmount;
 	
 	//List of owning customers, for e.g., joint accounts
-	private List<Customer> owningCustomers;
-	private List<AccountTransaction> transactions;
+	private List<Customer> owningCustomers = new ArrayList<Customer>();
+	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();;
 	
 	public Account(String accountNumber, String accountDescription, List<Customer> owningCustomers){
 		setAccountNumber(accountNumber);
@@ -56,9 +59,19 @@ public class Account {
 	}
 
 	public void setOwningCustomers(List<Customer> owningCustomers) {
-		this.owningCustomers = owningCustomers;
+		if (owningCustomers != null) {
+			this.owningCustomers = owningCustomers;
+		}
 	}
 	
+	public void addCustomer(Customer customer) {
+		if (customer == null) {
+			return;
+		}
+		if ( !owningCustomers.contains(customer)) {
+			owningCustomers.add(customer);
+		}
+	}
 	public long getMaxBalanceAmount() {
 		return maxBalanceAmount;
 	}

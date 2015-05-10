@@ -49,7 +49,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	
 	public boolean credit(User loggedInUser, Account toAccount, long amount) {
 		// TODO Auto-generated method stub
-		return debit(loggedInUser,toAccount,null,amount);
+		return credit(loggedInUser,toAccount,null,amount);
 	}
 
 	

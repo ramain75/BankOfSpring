@@ -1,6 +1,6 @@
 package org.bankofspring.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Class to represent an account transaction. To be eventually stored in the DB
@@ -10,13 +10,14 @@ public class AccountTransaction {
 	private Account fromAccount;
 	private Account toAccount;
 	private long transactionAmount;
-	private Calendar transactionDate;
+	//small addition to specs, just to use spEL but it makes sense to store the date associated with an txn
+	private Date transactionDate;
 	
 	public AccountTransaction(Account toAccount, Account fromAccount, long transactionAmount){
 		setToAccount(toAccount);
 		setFromAccount(fromAccount);
 		setTransactionAmount(transactionAmount);
-		setTransactionDate(Calendar.getInstance());
+		setTransactionDate(new Date());
 	}
 
 	public Account getFromAccount() {
@@ -44,11 +45,11 @@ public class AccountTransaction {
 	}
 	
 	
-	public Calendar getTransactionDate() {
+	public Date getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(Calendar transactionDate) {
+	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 

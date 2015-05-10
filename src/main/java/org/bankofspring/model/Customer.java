@@ -46,7 +46,7 @@ public class Customer extends User {
 		return new ArrayList<Account>(accounts.values());
 	}
 	
-	public Account getCustomerAccount(String accountNumber) {
+	public Account getAccount(String accountNumber) {
 		return accounts.get(accountNumber);
 	}
 	
@@ -55,21 +55,16 @@ public class Customer extends User {
 			accounts.remove(accountNumber);
 		};
 	}
-	public void addeAccount(Account account) {
+	public void addAccount(Account account) {
 		if (!accounts.containsKey(account.getAccountNumber())) {
-			accounts.remove(account);
+			accounts.put(account.getAccountNumber(),account);
 		};
 	}
 
 	public void setAccounts(Map<String,Account> accounts) {
 		// just to ensure account and customer are consistent
 		for (Account account: accounts.values()) {
-			List<Customer> customers = account.getOwningCustomers();
-			if (customers == null || !customers.contains(this)) {
-				ArrayList<Customer> newCustomers = new ArrayList<Customer>(customers);
-				newCustomers.add(this);
-				account.setOwningCustomers(newCustomers);
-			}
+			account.addCustomer(this);
 		}
 		this.accounts = accounts;
 	}

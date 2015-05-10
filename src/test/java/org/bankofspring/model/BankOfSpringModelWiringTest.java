@@ -3,6 +3,9 @@ package org.bankofspring.model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +22,9 @@ public class BankOfSpringModelWiringTest {
 		context = new ClassPathXmlApplicationContext("BankOfSpringAppData.xml");
 		
 	}
+	/**
+	 * check that Customer2 wiring is as expected in terms of customer and accounts
+	 */
 	
 	@Test
 	public void testWiringCustomer1() {
@@ -49,7 +55,9 @@ public class BankOfSpringModelWiringTest {
 		assertEquals(balance,account.getAccountBalance());
 		assertEquals(customers.size(),account.getOwningCustomers().size());
 	}
-	
+	/**
+	 * check that Customer2 wiring is as expected in terms of customer and accounts
+	 */
 	@Test
 	public void testWiringCustomer2() {
 		Customer customer2 = context.getBean("customer2",Customer.class);
@@ -66,13 +74,36 @@ public class BankOfSpringModelWiringTest {
 		Account account3 = accounts.get("account3");
 		List<Customer> expectedCust = new ArrayList<Customer>();
 		expectedCust.add(customer2);
+		
 		checkAccount(account3,"account3","account3description", 150000000L,100L, expectedCust);
 		expectedCust = new ArrayList<Customer>();
 		expectedCust.add(customer2);
 		expectedCust.add(customer1);
+		
 		Account account4 = accounts.get("account4");
 		checkAccount(account4,"account4","account4description", 100000000L,150L, expectedCust);
-		
+	}
+	/*
+	 * test the accounttransaction created
+	 */
+	@Test
+	public void testTransaction() {
+		Customer customer2 = context.getBean("customer2",Customer.class);
+		assertNotNull(customer2);
+		assertNotNull(customer2.getAccounts());
+		Map<String,Account> accounts = customer2.getAccounts();
+		assertEquals(2, accounts.size());
+		Account account4 = accounts.get("account4");
+		assertEquals("invalid size of transactions", 1, account4.getTransactions().size());
+		AccountTransaction txn = account4.getTransactions().get(0);
+		assertNotNull(txn);
+		assertNull(txn.getFromAccount());
+		assertEquals(account4, txn.getToAccount());
+		assertEquals(100L,txn.getTransactionAmount());
+		assertNotNull(txn.getTransactionDate());
+		// test date spEL worked
+		Date expectedDate = new  GregorianCalendar(2015,1,1).getTime();
+		assertEquals(expectedDate, txn.getTransactionDate());
 	}
 
 }
