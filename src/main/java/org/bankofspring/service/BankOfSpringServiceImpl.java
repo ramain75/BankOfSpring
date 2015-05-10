@@ -5,16 +5,16 @@ import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+@Service
 public class BankOfSpringServiceImpl implements BankOfSpringService {
+	@Autowired
 	protected BankOperationValidator validator;
 
 	public BankOperationValidator getValidator() {
 		return validator;
-	}
-
-	public void setValidator(BankOperationValidator validator) {
-		this.validator = validator;
 	}
 
 	public boolean debit(User loggedInUser, Account fromAccount,

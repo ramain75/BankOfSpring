@@ -8,12 +8,16 @@ import org.bankofspring.model.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.mockito.Mockito.*;
+
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 /**
  * 
@@ -22,8 +26,12 @@ import org.mockito.runners.MockitoJUnitRunner;
  * we mock(usimg Mockito) the various dependent objects as we really only want to assert Validator itself
  *
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:BankOfSpringApp.xml")
 public class BankOperationValidatorTest {
+	
+	@Autowired
+	BankOperationValidator validator;
 	
 	@Mock
 	Customer customer;
@@ -31,20 +39,18 @@ public class BankOperationValidatorTest {
 	Account fromAccount;
 	@Mock
 	Account toAccount;
-	
-	private ApplicationContext context;
 	@Before
 	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpringApp.xml");
-		
+		// this allows us to still use mockito annotations despite using springJunit4ClassRunner
+		MockitoAnnotations.initMocks(this);
 	}
+		
 	/*
 	 * if the user is null we expect a runtime exception
 	 */
 	@Test(expected=RuntimeException.class)
 	public void testValidatorNullUser() {
 		long amount = 100L;
-		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(null, fromAccount, toAccount, amount, BankOperationType.CREDIT);
 	}
 	/*
@@ -53,7 +59,6 @@ public class BankOperationValidatorTest {
 	@Test(expected=RuntimeException.class)
 	public void testValidatorNegativeAmount() {
 		long amount = -1;
-		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT);
 	}
 	/*
@@ -62,7 +67,6 @@ public class BankOperationValidatorTest {
 	@Test(expected=RuntimeException.class)
 	public void testValidatorNullBankOperationType() {
 		long amount = 100L;
-		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(customer, fromAccount, toAccount, amount, null);
 	}
 	/*
@@ -72,7 +76,6 @@ public class BankOperationValidatorTest {
 	public void testValidatorDebitHappyPath() {
 		long amount = 100L;
 		when(fromAccount.getAccountBalance()).thenReturn(200L);
-		BankOperationValidator validator = getBankOperationValidator();
 		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
 		verify(fromAccount).getAccountBalance();
 	}
@@ -83,7 +86,6 @@ public class BankOperationValidatorTest {
 	public void testValidatorDebitJustEnough() {
 		long amount = 100L;
 		when(fromAccount.getAccountBalance()).thenReturn(100L);
-		BankOperationValidator validator = getBankOperationValidator();
 		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
 		verify(fromAccount).getAccountBalance();
 	}
@@ -92,7 +94,6 @@ public class BankOperationValidatorTest {
 	public void testValidatorDebitNotEnough() {
 		long amount = 101L;
 		when(fromAccount.getAccountBalance()).thenReturn(100L);
-		BankOperationValidator validator = getBankOperationValidator();
 		assertFalse("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
 		verify(fromAccount).getAccountBalance();
 	}
@@ -100,7 +101,6 @@ public class BankOperationValidatorTest {
 	public void testValidatorCreditHappyPath() {
 		long amount = 100L;
 		when(toAccount.getMaxBalanceAmount()).thenReturn(Long.MAX_VALUE);
-		BankOperationValidator validator = getBankOperationValidator();
 		assertTrue("credit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT));
 		verify(toAccount).getAccountBalance();
 		verify(toAccount).getMaxBalanceAmount();
@@ -109,16 +109,8 @@ public class BankOperationValidatorTest {
 	public void testValidatorCreditOverMaxBalance() {
 		long amount = Long.MAX_VALUE;
 		when(toAccount.getMaxBalanceAmount()).thenReturn(Long.MAX_VALUE);
-		BankOperationValidator validator = getBankOperationValidator();
 		assertTrue("credit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT));
 		verify(toAccount).getAccountBalance();
 		verify(toAccount).getMaxBalanceAmount();
 	}
-	
-	private BankOperationValidator getBankOperationValidator() {
-		BankOperationValidator validator = context.getBean("validator", BankOperationValidatorImpl.class);
-		assertNotNull(validator);
-		return validator;
-	}
-
 }
