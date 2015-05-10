@@ -4,5 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ...  -->
+    <bean id="bankService" class="org.bankofspring.service.BankOfSpringServiceImpl" >
+    <property name="validator" ref="validator"></property>
+    </bean>
+    <bean id="validator" class="org.bankofspring.validator.BankOperationValidatorImpl">
+    </bean>
+	
 </beans>
