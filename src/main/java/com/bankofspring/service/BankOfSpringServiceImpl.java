@@ -1,12 +1,17 @@
 package com.bankofspring.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bankofspring.model.Account;
 import com.bankofspring.model.AccountTransaction;
 import com.bankofspring.model.AccountTransactions;
 import com.bankofspring.model.User;
 
+@Service
 public class BankOfSpringServiceImpl implements BankOfSpringService {
 	
+	@Autowired
 	private AccountTransactions transactionLog;
 	
 	public AccountTransactions getTransactionLog() {

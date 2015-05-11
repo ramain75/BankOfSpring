@@ -2,9 +2,13 @@ package com.bankofspring.service;
 
 import static org.junit.Assert.*;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,11 +23,32 @@ public class BankOfSpringServiceImplTest {
 
 	
 	/**
-	 * Autowiring by necessity to get the application context using the SpringJunit4ClassRunner
-	 * I am purposely avoiding using autowiring this week for other objects as it's covered in the next chapter
+	 * Using JSR 330 for the first bean to see if it works, Spring annotations for the rest
+	 * Note - this is probably a bad idea in general as it's not very consistent, but proves that they work together
 	 */
+	@Inject
+	@Named("customerBean1")
+	Customer customer1;
+	
 	@Autowired
-    private ApplicationContext applicationContext;
+	@Qualifier("customerBean2")
+	Customer customer2;
+	
+	@Autowired
+	@Qualifier("customerBean3")
+	Customer customer3;
+	
+	@Autowired
+	@Qualifier("account1")
+	Account account1;
+	
+	@Autowired
+	@Qualifier("account2")
+	Account account2;
+	
+	@Autowired
+	BankOfSpringService service;
+	
 	
 	@Test
 	public void testCustomer1BeanWiring() {
@@ -31,9 +56,7 @@ public class BankOfSpringServiceImplTest {
 		/**
 		 * Retrieving beans via the application context for now as we haven't covered autowiring
 		 * properly in the book yet.
-		 **/
-		Customer customer1 = (Customer) applicationContext.getBean("customerBean1"); 
-		
+		 **/	
 		assertNotNull("Customer 1 Has been Populated", customer1);
 		assertEquals("Expected Customer Username","TestCustomer1",customer1.getUsername());
 		assertEquals("Expected Customer Password","testpass",customer1.getPassword());
@@ -48,20 +71,15 @@ public class BankOfSpringServiceImplTest {
 		 * Retrieving beans via the application context for now as we haven't covered autowiring
 		 * properly in the book yet.
 		 **/
-		Customer customer1 = (Customer) applicationContext.getBean("customerBean2"); 
-		
-		assertNotNull("Customer 1 Has been Populated", customer1);
-		assertEquals("Expected Customer Username","TestCustomer2",customer1.getUsername());
-		assertEquals("Expected Customer Password","testpass",customer1.getPassword());
-		assertEquals("Expected Customer Name","Test Customer2",customer1.getName());
-		assertEquals("Expected Customer ID","123456799",customer1.getCustomerID() );
+		assertNotNull("Customer 2 Has been Populated", customer2);
+		assertEquals("Expected Customer Username","TestCustomer2",customer2.getUsername());
+		assertEquals("Expected Customer Password","testpass",customer2.getPassword());
+		assertEquals("Expected Customer Name","Test Customer2",customer2.getName());
+		assertEquals("Expected Customer ID","123456799",customer2.getCustomerID() );
 	}
 	
 	@Test
-	public void testAccount1BeanWiring() {
-		
-		Account account1 = (Account) applicationContext.getBean("account1"); 
-		
+	public void testAccount1BeanWiring() {	
 		assertNotNull("Account1 Has been Populated", account1);
 		assertEquals("Expected Customer Username","123456789",account1.getAccountNumber());
 		assertEquals("Account balance should be empty", new Double(0.00), account1.getAccountAmount());
@@ -73,18 +91,7 @@ public class BankOfSpringServiceImplTest {
 	
 	@Test
 	public void testService(){
-		
-		//Get accounts
-		Account account1 = (Account) applicationContext.getBean("account1"); 
-		Account account2 = (Account) applicationContext.getBean("account2"); 
-		
-		//Get User
-		Customer customer1 = (Customer) applicationContext.getBean("customerBean1");
-		Customer customer3 = (Customer) applicationContext.getBean("customerBean3");
-		
-		//Get Service
-		BankOfSpringService service = (BankOfSpringService) applicationContext.getBean("bankOfSpringService");
-		
+				
 		//Credit some money in
 		service.credit(customer1, account1, 10000.00);
 		

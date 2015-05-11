@@ -31,6 +31,24 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.1</version>
+		</dependency>
+		
+		<dependency>
+	      <groupId>javax.inject</groupId>
+	      <artifactId>javax.inject</artifactId>
+	      <version>1</version>
+	    </dependency>
+		
 
 		<!-- Logging with SLF4J -->
 		<dependency>
