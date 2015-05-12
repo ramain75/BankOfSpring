@@ -5,34 +5,32 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.bankofspring.entity.Account;
 import org.bankofspring.entity.AccountTransaction;
 import org.bankofspring.entity.User;
 import org.bankofspring.exception.OperationDisallowedException;
 import org.bankofspring.service.BankService;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( "classpath:BankOfSpringApp.xml" )
+@DirtiesContext( classMode = ClassMode.AFTER_EACH_TEST_METHOD )
 public class BankServiceTest {
-	private static ApplicationContext context;
-	private static BankService service;
-	private static Map<String, User> users;
-	private static Map<User, List<Account>> userAccounts;
+	@Resource( name = "bankService" )
+	private BankService service;
 	
-	/**
-	 * We reload the application context before each test. ClasspathXmlApplicationContext requires obviously
-	 * the location of the xml to be known on the classpath
-	 */
-	@SuppressWarnings("unchecked")
-	@Before
-	public void setupClass() {
-		context = new ClassPathXmlApplicationContext( "BankOfSpringApp.xml" );
-		service = (BankService) context.getBean( "bankService" );
-		users = (Map<String, User>) context.getBean( "users" );
-		userAccounts = (Map<User, List<Account>>) context.getBean( "accounts" );
-	}
+	@Resource( name = "users" )
+	private Map<String, User> users;
+	
+	@Resource( name = "accounts" )
+	private Map<User, List<Account>> userAccounts;
 	
 	@Test
 	public void testValidTransfer() throws OperationDisallowedException {
