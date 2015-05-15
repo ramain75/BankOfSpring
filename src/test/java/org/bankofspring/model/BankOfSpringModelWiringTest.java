@@ -3,32 +3,32 @@ package org.bankofspring.model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:BankOfSpring.xml")
 public class BankOfSpringModelWiringTest {
 
-	private ApplicationContext context;
-	@Before
-	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpringAppData.xml");
-		
-	}
+	@Autowired
+	Customer customer1;
+	
+	@Autowired
+	Customer customer2;
+	
 	/**
 	 * check that Customer2 wiring is as expected in terms of customer and accounts
 	 */
 	
 	@Test
 	public void testWiringCustomer1() {
-		Customer customer1 = context.getBean("customer1",Customer.class);
 		assertNotNull(customer1);
 		assertEquals("user1",customer1.getUsername());
 		assertEquals("test",customer1.getPassword());
@@ -60,8 +60,6 @@ public class BankOfSpringModelWiringTest {
 	 */
 	@Test
 	public void testWiringCustomer2() {
-		Customer customer2 = context.getBean("customer2",Customer.class);
-		Customer customer1 = context.getBean("customer1",Customer.class);
 		assertNotNull(customer2);
 		assertEquals("user2",customer2.getUsername());
 		assertEquals("test",customer2.getPassword());
@@ -88,7 +86,6 @@ public class BankOfSpringModelWiringTest {
 	 */
 	@Test
 	public void testTransaction() {
-		Customer customer2 = context.getBean("customer2",Customer.class);
 		assertNotNull(customer2);
 		assertNotNull(customer2.getAccounts());
 		Map<String,Account> accounts = customer2.getAccounts();

@@ -6,7 +6,9 @@ package org.bankofspring.service;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface BankOfSpringService {
 	
 	public boolean debit(User loggedInUser, Account fromAccount, Account toAccount, long amount);
