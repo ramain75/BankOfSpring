@@ -4,19 +4,30 @@ import static org.junit.Assert.*;
 
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /*
  * This test class tests it all together
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:BankOfSpring.xml")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOfSpringAppTest {
-	private ApplicationContext context;
-	@Before
-	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpringAppData.xml", "BankOfSpringApp.xml");
-	}
+	
+	@Autowired
+	private ApplicationContext appContext;
+	
+	@Autowired
+	@Qualifier("bankService")
+	private BankOfSpringService service;
+	
 	/*
 	 * credit an account with fromAccount unknown: a cash credit
 	 * ensure balance of the toAccount is increased by the credited account
@@ -136,14 +147,15 @@ public class BankOfSpringAppTest {
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
 		
 	}
+	
 	private Customer getCustomer(String beanID) {
-		Customer cust  = context.getBean(beanID,Customer.class);
+		Customer cust  = appContext.getBean(beanID,Customer.class);
 		assertNotNull(cust);
 		return cust;
 	}
 	
 	private BankOfSpringService getService() {
-		BankOfSpringService service = context.getBean("bankService",BankOfSpringService.class);
+		BankOfSpringService service = appContext.getBean("bankService",BankOfSpringService.class);
 		assertNotNull(service);
 		return service;
 	}

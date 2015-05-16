@@ -27,6 +27,8 @@ public class BankOfSpringAppDataConfig {
 		Map<String, Account> accounts = new HashMap<String, Account>();
 		accounts.put("account1", account1());
 		accounts.put("account2", account2());
+		accounts.put("account4", account4());
+			
 		customer1.setAccounts(accounts);
 		
 		return customer1;
@@ -49,7 +51,6 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public Account account1(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
-		owningCustomers.add(customer1());
 		
 		Account account1 = new Account("account1", "account1description", owningCustomers);
 		account1.setMaxBalanceAmount(170000000);
@@ -60,7 +61,6 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public Account account2(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
-		owningCustomers.add(customer1());
 		
 		Account account2 = new Account("account2", "account2description", owningCustomers);
 		account2.setMaxBalanceAmount(100000000);
@@ -71,7 +71,6 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public Account account3(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
-		owningCustomers.add(customer2());
 		
 		Account account3 = new Account("account3", "account3description", owningCustomers);
 		account3.setMaxBalanceAmount(150000000);
@@ -83,8 +82,6 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public Account account4(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
-		owningCustomers.add(customer1());
-		owningCustomers.add(customer2());
 		
 		Account account4 = new Account("account4", "account4description", owningCustomers);
 		account4.setMaxBalanceAmount(100000000);
@@ -102,6 +99,8 @@ public class BankOfSpringAppDataConfig {
 		
 		AccountTransaction txn1 = new AccountTransaction(account4(), null, 100);
 		txn1.setTransactionDate(new GregorianCalendar(2015,1,1).getTime());
+		
+		account4().getTransactions().add(txn1);
 		
 		return txn1;
 		

@@ -36,7 +36,7 @@ public class BankOfSpringModelWiringTest {
 		assertEquals("customer1",customer1.getCustomerID());
 		assertNotNull(customer1.getAccounts());
 		Map<String, Account> accounts = customer1.getAccounts();
-		assertEquals(2, accounts.size());
+		assertEquals(3, accounts.size());
 		
 		Account account1 = accounts.get("account1");
 		List<Customer> expectedCust = new ArrayList<Customer>();
