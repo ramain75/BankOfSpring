@@ -5,7 +5,9 @@ import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BankOfSpringServiceImpl implements BankOfSpringService {
 	protected BankOperationValidator validator;
 
