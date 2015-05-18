@@ -15,6 +15,8 @@ public class Customer extends User {
 	private String name;
 	private Map<String, Account> accounts;
 	
+	public Customer() {}
+	
 	public Customer(String username, String password, String name, String customerID){
 		super(username, password);
 		

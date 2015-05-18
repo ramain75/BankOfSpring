@@ -9,8 +9,6 @@ import java.util.Map;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
-import org.bankofspring.service.BankOfSpringService;
-import org.bankofspring.service.BankOfSpringServiceImpl;
 import org.bankofspring.validator.BankOperationValidator;
 import org.bankofspring.validator.BankOperationValidatorImpl;
 import org.springframework.context.annotation.Bean;
@@ -104,14 +102,6 @@ public class BankOfSpringAppDataConfig {
 		
 		return txn1;
 		
-	}
-	
-	@Bean
-	public BankOfSpringService bankService(){
-		BankOfSpringServiceImpl service = new BankOfSpringServiceImpl();
-		service.setValidator(validator());
-		
-		return service;
 	}
 	
 	@Bean
