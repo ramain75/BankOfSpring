@@ -13,8 +13,6 @@ public class AccountTransaction {
 	//small addition to specs, just to use spEL but it makes sense to store the date associated with an txn
 	private Date transactionDate;
 	
-	public AccountTransaction() {}
-	
 	public AccountTransaction(Account toAccount, Account fromAccount, long transactionAmount){
 		setToAccount(toAccount);
 		setFromAccount(fromAccount);

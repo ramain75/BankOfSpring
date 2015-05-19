@@ -7,11 +7,13 @@ import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("bankService")
 public class BankOfSpringServiceImpl implements BankOfSpringService {
 
+	@Autowired
 	protected BankOperationValidator validator;
 
 	public BankOperationValidator getValidator() {
@@ -22,7 +24,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		this.validator = validator;
 	}
 
-	@Audit
+	@Audit(logParameters=true)
 	public boolean debit( User loggedInUser, Account fromAccount,
 	    Account toAccount, long amount ) {
 		if ( validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT ) ) {
@@ -33,13 +35,13 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		return false;
 	}
 
-	@Audit
+	@Audit(logParameters=true)
 	public boolean debit( User loggedInUser, Account fromAccount, long amount ) {
 		return debit( loggedInUser, fromAccount, null, amount );
 
 	}
 
-	@Audit( logParameters = true )
+	@Audit(logParameters=true)
 	public boolean credit( User loggedInUser, Account toAccount,
 	    Account fromAccount, long amount ) {
 
@@ -52,7 +54,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		return false;
 	}
 
-	@Audit
+	@Audit(logParameters=true)
 	public boolean credit( User loggedInUser, Account toAccount, long amount ) {
 		// TODO Auto-generated method stub
 		return credit( loggedInUser, toAccount, null, amount );

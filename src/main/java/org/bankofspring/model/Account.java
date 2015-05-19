@@ -22,9 +22,6 @@ public class Account {
 	private List<Customer> owningCustomers = new ArrayList<Customer>();
 	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();
 	
-	public Account() {
-	}
-	
 	public Account(String accountNumber, String accountDescription, List<Customer> owningCustomers){
 		setAccountNumber(accountNumber);
 		setAccountDescription(accountDescription);

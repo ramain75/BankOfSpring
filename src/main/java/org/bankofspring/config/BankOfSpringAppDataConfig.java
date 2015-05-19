@@ -9,8 +9,10 @@ import java.util.Map;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
+import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
 import org.bankofspring.validator.BankOperationValidatorImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -107,6 +109,11 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public BankOperationValidator validator(){
 		return new BankOperationValidatorImpl();
+	}
+	
+	@Bean(name = "currentUser")
+	public User currentUser() {
+		return new User("bob", "blah");
 	}
 	
 }
