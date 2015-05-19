@@ -20,7 +20,7 @@ public class Account {
 	
 	//List of owning customers, for e.g., joint accounts
 	private List<Customer> owningCustomers = new ArrayList<Customer>();
-	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();;
+	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();
 	
 	public Account(String accountNumber, String accountDescription, List<Customer> owningCustomers){
 		setAccountNumber(accountNumber);

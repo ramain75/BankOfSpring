@@ -28,7 +28,6 @@ public class BankOfSpringAppWiringTest {
 	@Test
 	public void testBankOfSpringContext() {
 		assertNotNull(service);
-		assertNotNull(service.getValidator());
 	}
 
 }
