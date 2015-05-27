@@ -1,0 +1,133 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  <!-- build this customer with constructor args and property -->
+	<bean id="customer1" class="org.bankofspring.model.Customer">
+		<!--  constructor args with just value (follows order of arguments in constructor -->
+		<constructor-arg value="user1" />
+		<constructor-arg value="test" />
+		<constructor-arg value="customerone" />
+		<constructor-arg value="customer1" />
+		
+		<!--  accounts property is a map<String(accountNumber),Account> -->
+		
+		<property name="accounts">
+		<!--  map definition  -->
+			<map  value-type="org.bankofspring.model.Account">
+				<entry key="account1">
+				<!--  internal bean -->
+					
+					<bean id="account1" class="org.bankofspring.model.Account">
+						<!-- arguments for constructor in different order -->
+						<constructor-arg name="owningCustomers">
+							<list>
+								<ref bean="customer1" />
+							</list>
+						</constructor-arg>
+						<constructor-arg name="accountNumber" value="account1" />
+						<constructor-arg name="accountDescription" value="account1description" />
+						<!-- using property -->
+						<property name="maxBalanceAmount" value="170000000"></property>
+					</bean>
+					
+				</entry>
+				<entry key="account2">
+					<bean id="account2" class="org.bankofspring.model.Account">
+						<constructor-arg name="owningCustomers">
+							<list>
+								<ref bean="customer1" />
+							</list>
+						</constructor-arg>
+						<constructor-arg name="accountNumber" value="account2" />
+						<constructor-arg name="accountDescription" value="account2description" />
+						<property name="maxBalanceAmount" value="100000000"></property>
+					</bean>
+				</entry>
+
+			</map>
+		</property>
+	</bean>
+
+	<bean id="customer2" class="org.bankofspring.model.Customer">
+		<constructor-arg name="username" value="user2" />
+		<constructor-arg name="password" value="test" />
+		<!--  value as an element on its own -->
+		<constructor-arg name="customerID">
+			<value>customer2</value>
+		</constructor-arg>
+		<constructor-arg name="name" value="customertwo" />
+
+		<property name="accounts">
+			<map value-type="org.bankofspring.model.Account">
+			<!-- note use of SpEL to use accoutn number from account3 and 4 as key for the map -->
+				<entry key="#{account3.accountNumber}" value-ref="account3"></entry>
+				<entry key="#{account4.accountNumber}" value-ref="account4"></entry>
+			</map>
+		</property> 	
+
+	</bean>
+<!--  2 accounts for customer 2-->
+   <bean id="account3" class="org.bankofspring.model.Account">
+
+		<constructor-arg name="accountNumber" value="account3" />
+		<constructor-arg name="accountDescription" value="account3description" />
+		<property name="maxBalanceAmount" value="150000000"></property>
+		<property name="accountBalance" value="100"></property>
+		<constructor-arg name="owningCustomers">
+			<list>
+				<ref bean="customer2" />
+			</list>
+		</constructor-arg>
+   </bean>
+
+	<bean id="account4" class="org.bankofspring.model.Account">
+
+		<constructor-arg name="accountNumber" value="account4" />
+		<constructor-arg name="accountDescription" value="account4description" />
+		<property name="maxBalanceAmount" value="100000000"></property>
+		<property name="accountBalance" value="150"></property>
+		<constructor-arg name="owningCustomers">
+			<list>
+				<ref bean="customer2" />
+				<ref bean="customer1" />
+			</list>
+		</constructor-arg>
+		<property name="transactions">
+			<list>
+				<ref bean="txn1"></ref>
+			</list>
+		</property>
+
+	</bean>
+
+	<!-- A transaction for customer2 account 4 -->
+	<bean id="txn1" class="org.bankofspring.model.AccountTransaction">
+		<constructor-arg name="toAccount" ref="account4" />
+		<constructor-arg name="fromAccount">
+			<null />
+		</constructor-arg>
+		<constructor-arg name="transactionAmount" value="100"></constructor-arg>
+<!-- another example of SpEl. this time with java.util.Calendar -->
+		<property name="transactionDate"		
+			value="#{new java.util.GregorianCalendar(2015,1,1).getTime()}" />
+
+	</bean>
+	<bean id="bankService" class="org.bankofspring.service.BankOfSpringServiceImpl" >
+    <property name="validator" ref="validator"></property>
+    </bean>
+    <bean id="validator" class="org.bankofspring.validator.BankOperationValidatorImpl">
+    </bean>
+    
+    	<bean id="auditor" class="org.bankofspring.audit.Auditor">
+    	</bean>
+    <aop:config>
+  	<aop:aspect ref="auditor">
+  		<aop:before pointcut="execution(* org.bankofspring.service.BankOfSpringServiceImpl.debit(..))" method="auditBefore"/>
+  	</aop:aspect>
+  </aop:config>  
+ </beans>

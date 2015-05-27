@@ -68,10 +68,8 @@ public class BankOfSpringAppTest {
 	@Test(expected=RuntimeException.class)
 	public void testCreditInvalidAmountFails() {
 		Customer customer1 = getCustomer("customer1");
-		Customer customer2 = getCustomer("customer2");
 		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
-		Account account3 = customer2.getAccount("account3");
 		assertFalse(service.credit(customer1, account1, -100)); 
 	}
 	
