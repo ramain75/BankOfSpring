@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 
-public class AuditTest {
+public class AuditXMLTest {
 	private ApplicationContext context;
 	@Before
 	public void setup() {

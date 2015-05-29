@@ -125,9 +125,23 @@
     
     	<bean id="auditor" class="org.bankofspring.audit.Auditor">
     	</bean>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    
     <aop:config>
-  	<aop:aspect ref="auditor">
-  		<aop:before pointcut="execution(* org.bankofspring.service.BankOfSpringServiceImpl.debit(..))" method="auditBefore"/>
+  	
+  	<!-- <aop:aspect id="aspect1" ref="auditor">
+  		<aop:pointcut expression="execution(* org.bankofspring.service.BankOfSpringServiceImpl.debit(..))" id="audit"/>
+  		
+  		<aop:before pointcut-ref="audit" method="auditBefore"/>
+  		<aop:after pointcut-ref="audit" method="auditAfter"/>
+  		
+  		<aop:around pointcut-ref="audit" method="auditTime"/>
+  	</aop:aspect> -->
+  	
+  	<aop:aspect id="aspect2" ref="auditor">
+  	<aop:pointcut expression="execution(* org.bankofspring.service.BankOfSpringServiceImpl.debit(org.bankofspring.model.User,..))" id="audituser"/>
+  	<aop:after pointcut-ref="audituser" method="auditAfter"  />
   	</aop:aspect>
+  	
   </aop:config>  
  </beans>
