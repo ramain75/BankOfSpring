@@ -15,7 +15,7 @@ public class Auditor {
 	public void audit() {
 		
 	}
-	@Pointcut("execution (* org.bankofspring.service.BankOfSpringService.debit(..)) && args(user)")
+	@Pointcut("execution (* org.bankofspring.service.BankOfSpringService.debit (org.bankofspring.model.User,..)) && args( user ,..)")
 	public void auditUser(User user) {
 		
 	}
