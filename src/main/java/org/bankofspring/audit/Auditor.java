@@ -15,6 +15,10 @@ public class Auditor {
 	public void audit() {
 		
 	}
+	@Pointcut("execution (* org.bankofspring.service.BankOfSpringService.debit(..)) && args(user)")
+	public void auditUser(User user) {
+		
+	}
 	@Before("audit()")
 	public void auditBefore() {
 		System.out.println("auditing before operation");
@@ -23,7 +27,7 @@ public class Auditor {
 	public void auditAfter() {
 		System.out.println("auditing after operation");
 	}
-	
+	@After("auditUser(user)")
 	public void auditAfterUser(User user) {
 		System.out.println("auditing after operation with user " +user.getUsername());
 	}
