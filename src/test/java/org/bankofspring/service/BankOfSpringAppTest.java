@@ -97,6 +97,7 @@ public class BankOfSpringAppTest {
 	 */
 	@Test
 	public void testCashDebit() {
+		System.out.println("Running debit test");
 		Customer customer1 = getCustomer("customer1");
 		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account2");

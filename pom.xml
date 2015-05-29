@@ -16,6 +16,7 @@
 
 		<!-- Spring -->
 		<spring-framework.version>3.0.6.RELEASE</spring-framework.version>
+		<aspectj.version>1.6.8</aspectj.version>
 
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
@@ -38,6 +39,25 @@
 			<artifactId>spring-core</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		
 		
 		<dependency>
 			<groupId>cglib</groupId>
