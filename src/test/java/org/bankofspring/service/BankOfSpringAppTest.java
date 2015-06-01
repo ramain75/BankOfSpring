@@ -1,6 +1,9 @@
 package org.bankofspring.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
@@ -35,7 +38,6 @@ public class BankOfSpringAppTest {
 	@Test
 	public void testCashCredit() {
 		Customer customer1 = getCustomer("customer1");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
 		long balance = account1.getAccountBalance();
 		assertTrue(service.credit(customer1, account1, 100L));
@@ -51,7 +53,6 @@ public class BankOfSpringAppTest {
 	public void testCreditToOtherAccount() {
 		Customer customer1 = getCustomer("customer1");
 		Customer customer2 = getCustomer("customer2");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
 		Account account3 = customer2.getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
@@ -69,7 +70,6 @@ public class BankOfSpringAppTest {
 	public void testCreditInvalidAmountFails() {
 		Customer customer1 = getCustomer("customer1");
 		Customer customer2 = getCustomer("customer2");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
 		Account account3 = customer2.getAccount("account3");
 		assertFalse(service.credit(customer1, account1, -100)); 
@@ -83,7 +83,6 @@ public class BankOfSpringAppTest {
 	public void testCreditToOtherAccountFailsDueToMaxValue() {
 		Customer customer1 = getCustomer("customer1");
 		Customer customer2 = getCustomer("customer2");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
 		Account account3 = customer2.getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
@@ -98,7 +97,6 @@ public class BankOfSpringAppTest {
 	@Test
 	public void testCashDebit() {
 		Customer customer1 = getCustomer("customer1");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account2");
 		//set the balance to 200 to ensure there is enough fund for the debit
 		account1.setAccountBalance(200L);
@@ -117,7 +115,6 @@ public class BankOfSpringAppTest {
 	public void testDebitWithToAccount() {
 		Customer customer1 = getCustomer("customer1");
 		Customer customer2 = getCustomer("customer2");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
 		// ensure enough funds on account 1
 		account1.setAccountBalance(200L);
@@ -136,7 +133,6 @@ public class BankOfSpringAppTest {
 	public void testDebitWithNotEnoughFunds() {
 		Customer customer1 = getCustomer("customer1");
 		Customer customer2 = getCustomer("customer2");
-		BankOfSpringService service = getService();
 		Account account1 = customer1.getAccount("account1");
 		Account account3 = customer2.getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
@@ -154,9 +150,4 @@ public class BankOfSpringAppTest {
 		return cust;
 	}
 	
-	private BankOfSpringService getService() {
-		BankOfSpringService service = appContext.getBean("bankService",BankOfSpringService.class);
-		assertNotNull(service);
-		return service;
-	}
 }
