@@ -1,13 +1,11 @@
 package org.bankofspring.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
-import org.bankofspring.service.BankOfSpringService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 /*
@@ -21,14 +19,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOfSpringAppWiringTest {
 
-	@Autowired
+	@Autowired (required = false)
 	@Qualifier("bankService")
 	BankOfSpringService service;
 	
 	@Test
 	public void testBankOfSpringContext() {
 		assertNotNull(service);
-		assertNotNull(service.getValidator());
 	}
 
 }
