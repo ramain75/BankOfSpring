@@ -118,5 +118,5 @@ public class BankOfSpringAppDataConfig {
 	public BankOperationValidator validator(){
 		return new BankOperationValidatorImpl();
 	}
-	
+
 }

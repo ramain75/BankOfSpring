@@ -29,13 +29,11 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		return false;
 	}
 
-	
 	public boolean debit(User loggedInUser, Account fromAccount, long amount) {
 		return debit(loggedInUser,fromAccount,null,amount);
 
 	}
 
-	
 	public boolean credit(User loggedInUser, Account toAccount,
 			Account fromAccount, long amount) {
 		
@@ -48,9 +46,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		return false;
 	}
 
-	
 	public boolean credit(User loggedInUser, Account toAccount, long amount) {
-		// TODO Auto-generated method stub
 		return credit(loggedInUser,toAccount,null,amount);
 	}
 
