@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( "classpath:BankOfSpring.xml" )
+@ContextConfiguration(locations = {"classpath:BankOfSpring.xml", "classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring-dao.xml"})
 public class BankOfSpringModelWiringTest {
 
 	@Autowired

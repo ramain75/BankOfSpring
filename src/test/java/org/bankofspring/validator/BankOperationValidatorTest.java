@@ -1,6 +1,10 @@
 package org.bankofspring.validator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.bankofspring.model.Account;
 import org.bankofspring.model.BankOperationType;
@@ -8,13 +12,15 @@ import org.bankofspring.model.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
-import static org.mockito.Mockito.*;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 /**
  * 
  * Check validator functions as expect
@@ -22,7 +28,9 @@ import org.mockito.runners.MockitoJUnitRunner;
  * we mock(usimg Mockito) the various dependent objects as we really only want to assert Validator itself
  *
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:BankOfSpring.xml", "classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring-dao.xml"})
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOperationValidatorTest {
 	
 	@Mock
@@ -31,13 +39,15 @@ public class BankOperationValidatorTest {
 	Account fromAccount;
 	@Mock
 	Account toAccount;
-	
+
+	@Autowired
 	private ApplicationContext context;
+
 	@Before
 	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpring.xml");
-		
+		MockitoAnnotations.initMocks(this);
 	}
+	
 	/*
 	 * if the user is null we expect a runtime exception
 	 */
@@ -47,6 +57,7 @@ public class BankOperationValidatorTest {
 		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(null, fromAccount, toAccount, amount, BankOperationType.CREDIT);
 	}
+	
 	/*
 	 * if the amount is negative, we expect a runtime exception
 	 */
@@ -56,6 +67,7 @@ public class BankOperationValidatorTest {
 		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT);
 	}
+	
 	/*
 	 * if the operation is null, we expect a runtime exception
 	 */
@@ -65,6 +77,7 @@ public class BankOperationValidatorTest {
 		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(customer, fromAccount, toAccount, amount, null);
 	}
+	
 	/*
 	 * we do a debit and there is enough funds
 	 */
@@ -76,6 +89,7 @@ public class BankOperationValidatorTest {
 		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
 		verify(fromAccount).getAccountBalance();
 	}
+	
 	/*
 	 * we do a debit and there is just enough funds: debit amount == account balance
 	 */
@@ -87,6 +101,7 @@ public class BankOperationValidatorTest {
 		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
 		verify(fromAccount).getAccountBalance();
 	}
+	
 	// we do a debit and not enough funds
 	@Test
 	public void testValidatorDebitNotEnough() {
@@ -96,6 +111,7 @@ public class BankOperationValidatorTest {
 		assertFalse("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
 		verify(fromAccount).getAccountBalance();
 	}
+	
 	@Test
 	public void testValidatorCreditHappyPath() {
 		long amount = 100L;
@@ -105,6 +121,7 @@ public class BankOperationValidatorTest {
 		verify(toAccount).getAccountBalance();
 		verify(toAccount).getMaxBalanceAmount();
 	}
+	
 	@Test
 	public void testValidatorCreditOverMaxBalance() {
 		long amount = Long.MAX_VALUE;

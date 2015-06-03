@@ -1,8 +1,8 @@
-package org.bankofspring;
+package org.bankofspring.db;
 
-import javax.sql.DataSource;
+import static org.junit.Assert.*;
 
-import org.junit.Assert;
+import org.bankofspring.model.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:BankOfSpring.xml", "classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring-dao.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class TestDAO {
+public class CustomerDAOTest {
 
 	@Autowired
-	private DataSource ds;
+	private CustomerDAO dao;
 	
 	@Test
-	public void test() throws Exception {
-		Assert.assertTrue(ds.getConnection().isValid(1));
+	public void testGetById() throws Exception {
+		Customer customer = dao.getCustomerById("1");
+		assertNotNull("Expected customer 1 to be loaded", customer);
+		assertEquals("Customer Id not as expected", "1", customer.getCustomerID());
+		assertEquals("Customer Name not as expected", "customer one", customer.getName());
+		assertEquals("Customer Username not as expected", "user1", customer.getUsername());
+		assertEquals("Customer Password not as expected", "test", customer.getPassword());
 	}
 }
