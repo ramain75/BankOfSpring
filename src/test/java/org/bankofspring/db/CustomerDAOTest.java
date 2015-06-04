@@ -21,7 +21,7 @@ public class CustomerDAOTest {
 	
 	@Test
 	public void testGetById() throws Exception {
-		Customer customer = dao.getCustomerById("1");
+		Customer customer = dao.getById("1");
 		assertNotNull("Expected customer 1 to be loaded", customer);
 		assertEquals("Customer Id not as expected", "1", customer.getCustomerID());
 		assertEquals("Customer Name not as expected", "customer one", customer.getName());

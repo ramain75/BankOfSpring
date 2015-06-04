@@ -4,5 +4,5 @@ import org.bankofspring.model.Customer;
 
 public interface CustomerDAO {
 
-	Customer getCustomerById( String id );
+	Customer getById( String id );
 }

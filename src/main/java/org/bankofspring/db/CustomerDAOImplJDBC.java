@@ -8,7 +8,6 @@ import java.util.Map;
 import org.bankofspring.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +24,7 @@ public class CustomerDAOImplJDBC implements CustomerDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 			
-	public Customer getCustomerById( String strId ) {
+	public Customer getById( String strId ) {
 		
 		Long id = null;
 		try {

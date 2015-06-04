@@ -7,6 +7,8 @@ import java.util.Date;
  *
  */
 public class AccountTransaction {
+	
+	private Long id;
 	private Account fromAccount;
 	private Account toAccount;
 	private long transactionAmount;
@@ -18,6 +20,14 @@ public class AccountTransaction {
 		setFromAccount(fromAccount);
 		setTransactionAmount(transactionAmount);
 		setTransactionDate(new Date());
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Account getFromAccount() {
