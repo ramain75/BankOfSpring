@@ -1,31 +1,33 @@
-package org.bankofspring.service;
+package org.bankofspring.dao;
 
-import static org.junit.Assert.assertNotNull;
+import java.sql.SQLException;
 
-import org.junit.Test;
+import org.junit.*;
+
+import static org.junit.Assert.*;
+
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
-/*
- * test that BankOfSpringApp.xml wires up beans (bankService and validator) as expected
- */
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"classpath:BankOfSpring.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class BankOfSpringAppWiringTest {
+public class BankOfSpringDAOTest {
 
-	@Autowired (required = false)
-	@Qualifier("bankService")
-	BankOfSpringService service;
+	@Autowired
+	BankOfSpringDAO bankOfSpringDao;
 	
+	/**
+	 * Basic test to make sure we have a DB connection
+	 * @throws SQLException 
+	 */
 	@Test
-	public void testBankOfSpringContext() {
-		assertNotNull(service);
+	public void testConnectionIsValid() throws SQLException{
+		assertTrue(bankOfSpringDao.getDataSource().getConnection().isValid(1));
 	}
-
+	
 }

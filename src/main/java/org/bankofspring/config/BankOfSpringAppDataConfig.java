@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bankofspring.dao.BankOfSpringDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
@@ -107,6 +108,15 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public BankOperationValidator validator(){
 		return new BankOperationValidatorImpl();
+	}
+	
+	/**
+	 * Setup the main DAO bean
+	 * @return DAO bean
+	 */
+	@Bean
+	public BankOfSpringDAO bankOfSpringDao(){
+		return new BankOfSpringDAO();
 	}
 	
 }
