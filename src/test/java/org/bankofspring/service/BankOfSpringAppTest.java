@@ -6,7 +6,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.model.Account;
+import org.bankofspring.model.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class BankOfSpringAppTest {
 	@Autowired
 	private AccountDAO accountDAO;
 	
+	@Autowired
+	private CustomerDAO customerDAO;
+	
 	/*
 	 * credit an account with fromAccount unknown: a cash credit
 	 * ensure balance of the toAccount is increased by the credited account
@@ -42,8 +47,8 @@ public class BankOfSpringAppTest {
 	public void testCashCredit() {
 		Account account1 = getAccount("account1");
 		long balance = account1.getAccountBalance();
-		assertTrue(service.deposit(customer1, account1, 100L));
-		assertEquals(balance + 100L, account1.getAccountBalance());
+		assertTrue(service.deposit(getCustomer(1), account1, 100L));
+		assertEquals(balance + 100L, getAccount("account1").getAccountBalance());
 		
 	}
 	/**
@@ -59,9 +64,9 @@ public class BankOfSpringAppTest {
 		long balanceAccount3 = account3.getAccountBalance();
 		System.out.println(balanceAccount1);
 		System.out.println(balanceAccount3);
-		assertTrue(service.transfer(customer1, account3, account1,100L));
-		assertEquals(balanceAccount1 + 100L, account1.getAccountBalance());
-		assertEquals(balanceAccount3 - 100L, account3.getAccountBalance());
+		assertTrue(service.transfer(getCustomer(1), account3, account1,100L));
+		assertEquals(balanceAccount1 + 100L, getAccount("account1").getAccountBalance());
+		assertEquals(balanceAccount3 - 100L, getAccount("account3").getAccountBalance());
 	}
 	/**
 	 * credit with negative amount which should thrown a runtime exception to demonstrate
@@ -71,7 +76,7 @@ public class BankOfSpringAppTest {
 	@Test(expected=RuntimeException.class)
 	public void testCreditInvalidAmountFails() {
 		Account account1 = getAccount("account1");
-		assertFalse(service.deposit(customer1, account1, -100)); 
+		assertFalse(service.deposit(getCustomer(1), account1, -100)); 
 	}
 	
 	
@@ -84,7 +89,7 @@ public class BankOfSpringAppTest {
 		Account account3 = getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
 		long balanceAccount3 = account3.getAccountBalance();
-		assertFalse(service.deposit( customer1, account1, Long.MAX_VALUE));
+		assertFalse(service.deposit( getCustomer(1), account1, Long.MAX_VALUE));
 		assertEquals(balanceAccount1, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
 	}
@@ -93,13 +98,10 @@ public class BankOfSpringAppTest {
 	 */
 	@Test
 	public void testCashDebit() {
-		Account account1 = getAccount("account2");
-		//set the balance to 200 to ensure there is enough fund for the debit
-		account1.setAccountBalance(200L);
-		assertEquals(200L,account1.getAccountBalance());
-		long balance = account1.getAccountBalance();
-		assertTrue(service.withdraw(customer1, account1, 100L));
-		assertEquals(balance - 100L, account1.getAccountBalance());
+		Account account3 = getAccount("account3");
+		long balance = account3.getAccountBalance();
+		assertTrue(service.withdraw(getCustomer(1), account3, 100L));
+		assertEquals(balance - 100L, getAccount("account3").getAccountBalance());
 		
 	}
 
@@ -113,10 +115,16 @@ public class BankOfSpringAppTest {
 		long balanceAccount1 = account1.getAccountBalance();
 		assertEquals("unexpected value for balance account1", 0L,balanceAccount1);
 		long balanceAccount3 = account3.getAccountBalance();
-		assertFalse(service.transfer(customer1, account1, account3, 100L));
+		assertFalse(service.transfer(getCustomer(1), account1, account3, 100L));
 		assertEquals(0L, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
 		
+	}
+	
+	private Customer getCustomer(Integer id) {
+		Customer customer = customerDAO.getCustomerById(id);
+		assertNotNull(customer);
+		return customer;
 	}
 	
 	private Account getAccount(String accountNumber) {

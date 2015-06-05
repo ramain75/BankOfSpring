@@ -9,90 +9,64 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
+
 public class CustomerTest {
+	
+	private Customer customer1;
+	private Customer customer2;
+	
+	@Before
+	public void setup() {
+		customer1 = new Customer();
+		customer1.setUsername("user");
+		customer1.setPassword("test");
+		customer1.setId(1);
+		customer1.setName("customer1");
+		customer2 = new Customer();
+		customer2.setUsername("user");
+		customer2.setPassword("test");
+		customer2.setId(1);
+		customer2.setName("customer1");
+	}
+	
 	@Test
 	public void testEquals() {
-		Customer customer1 = new Customer("test","password","cust1", "customer1");
-		Customer customer2 = new Customer("test","password","cust1", "customer1");
-		assertEquals(customer1, customer2);
-		
-		customer1 = new Customer("test","password","cust1", "customer1");
-		customer2 = new Customer("test","password","cust1", "customer2");
-		assertNotEquals(customer1, customer2);
-		
-		customer1 = new Customer("test","password","cust1", "customer1");
-		customer2 = new Customer("test","password","cust2", "customer1");
-		assertNotEquals(customer1, customer2);
-		
-		customer1 = new Customer("test","password",null, "customer1");
-		customer2 = new Customer("test","password",null, "customer1");
 		assertEquals(customer1, customer2);
 	}
+	
+	@Test
+	public void testEqualsDifferentName() {
+		customer2.setName("bob");
+		assertNotEquals(customer1, customer2);
+	}
+	
+	@Test
+	public void testEqualsDifferentId() {
+		customer2.setId(2);
+		assertNotEquals(customer1, customer2);
+	}
+	
+	@Test
+	public void testEqualsNoId() {
+		customer1.setId(null);
+		customer2.setId(null);
+		assertEquals(customer1, customer2);
+	}
+	
 	@Test
 	public void testBuildCustomer() {
-		Customer customer1 = new Customer("test","password", "customer1","cust1");
-		
-		ArrayList<Customer> listCustomers = new ArrayList<Customer>();
-		listCustomers.add(customer1);
 		Account account = new Account();
 		account.setAccountNumber( "account1" );
 		account.setAccountDescription( "account1description" );
-		account.setOwningCustomers( listCustomers );
 		
 		Map<String,Account> accountMap = new HashMap<String,Account>();
 		accountMap.put(account.getAccountNumber(),account);
 		
-		assertEquals("cust1",customer1.getCustomerID());
+		assertEquals((Integer)1,customer1.getId());
 		assertEquals("customer1",customer1.getName());
-		assertEquals("test",customer1.getUsername());
-		assertEquals("password",customer1.getPassword());
-		
-	}
-	/**
-	 * test setting,adding and deleting accounts from customer
-	 */
-	@Test 
-	public void testCustomerAccounts() {
-		Customer customer1 = new Customer("test","password", "customer1","cust1");
-		
-		ArrayList<Customer> listCustomers = new ArrayList<Customer>();
-		listCustomers.add(customer1);
-		Account account = new Account();
-		account.setAccountNumber( "account1" );
-		account.setAccountDescription( "account1description" );
-		account.setOwningCustomers( listCustomers );
-
-		//test set account
-		Map<String,Account> accountMap = new HashMap<String,Account>();
-		accountMap.put(account.getAccountNumber(),account);
-		customer1.setAccounts(accountMap);
-		assertEquals(accountMap,customer1.getAccounts());
-		assertEquals(account, customer1.getAccount("account1"));
-		//test add account
-		Account account2 = new Account();
-		account.setAccountNumber( "account2" );
-		account.setAccountDescription( "account2description" );
-		account.setOwningCustomers( listCustomers );
-		customer1.addAccount(account2);
-		assertEquals(2,customer1.getAccounts().keySet().size());
-		assertEquals(account2, customer1.getAccount("account2"));
-		//test adding same account does not do anyrthing
-		customer1.addAccount(account2);
-		assertEquals(2,customer1.getAccounts().keySet().size());
-		assertEquals(account2, customer1.getAccount("account2"));
-		// test get account list
-		List <Account> accounts = customer1.getAccountsList();
-		assertEquals(2,accounts.size());
-		assertTrue("does not contain expected account", accounts.contains(account));
-		assertTrue("does not contain expected account", accounts.contains(account2));
-		//test delete account
-		customer1.deleteAccount("account1");
-		assertEquals(1,customer1.getAccounts().keySet().size());
-		assertNull(customer1.getAccount("account1"));
-		//test delete unexisting account
-		customer1.deleteAccount("account1");
-		assertEquals(1,customer1.getAccounts().keySet().size());
-		assertEquals(account2, customer1.getAccount("account2"));
+		assertEquals("user",customer1.getUsername());
+		assertEquals("test",customer1.getPassword());
 	}
 }

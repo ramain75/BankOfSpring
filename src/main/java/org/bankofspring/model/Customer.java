@@ -11,23 +11,15 @@ import java.util.Map;
  */
 public class Customer extends User {
 	
-	private String customerID;
+	private Integer id;
 	private String name;
-	private Map<String, Account> accounts;
-	
-	public Customer(String username, String password, String name, String customerID){
-		super(username, password);
-		
-		setName(name);
-		setCustomerID(customerID);
-	}
-	
-	public String getCustomerID() {
-		return customerID;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCustomerID(String customerID) {
-		this.customerID = customerID;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -38,43 +30,12 @@ public class Customer extends User {
 		this.name = name;
 	}
 
-	public Map<String,Account> getAccounts() {
-		return accounts;
-	}
-	
-	public List<Account> getAccountsList() {
-		return new ArrayList<Account>(accounts.values());
-	}
-	
-	public Account getAccount(String accountNumber) {
-		return accounts.get(accountNumber);
-	}
-	
-	public void deleteAccount(String accountNumber) {
-		if (accounts.containsKey((accountNumber))) {
-			accounts.remove(accountNumber);
-		};
-	}
-	public void addAccount(Account account) {
-		if (!accounts.containsKey(account.getAccountNumber())) {
-			accounts.put(account.getAccountNumber(),account);
-		};
-	}
-
-	public void setAccounts(Map<String,Account> accounts) {
-		// just to ensure account and customer are consistent
-		for (Account account: accounts.values()) {
-			account.addCustomer(this);
-		}
-		this.accounts = accounts;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
-				+ ((customerID == null) ? 0 : customerID.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -88,10 +49,10 @@ public class Customer extends User {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (customerID == null) {
-			if (other.customerID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!customerID.equals(other.customerID))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

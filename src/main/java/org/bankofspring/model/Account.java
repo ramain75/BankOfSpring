@@ -19,10 +19,6 @@ public class Account {
 	private long accountBalance;
 	private long maxBalanceAmount;
 
-	//List of owning customers, for e.g., joint accounts
-	private List<Customer> owningCustomers = new ArrayList<Customer>();
-	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();
-
 	public String getAccountNumber() {
 		return accountNumber;
 	}
@@ -47,62 +43,12 @@ public class Account {
 		this.accountBalance = accountBalance;
 	}
 
-	public List<Customer> getOwningCustomers() {
-		return owningCustomers;
-	}
-
-	public void setOwningCustomers( List<Customer> owningCustomers ) {
-		if ( owningCustomers != null ) {
-			this.owningCustomers = owningCustomers;
-		}
-	}
-
-	public void addCustomer( Customer customer ) {
-		if ( customer == null ) {
-			return;
-		}
-		if ( !owningCustomers.contains( customer ) ) {
-			owningCustomers.add( customer );
-		}
-	}
-
 	public long getMaxBalanceAmount() {
 		return maxBalanceAmount;
 	}
 
 	public void setMaxBalanceAmount( long maxBalanceAmount ) {
 		this.maxBalanceAmount = maxBalanceAmount;
-	}
-
-	/**
-	 * Applies a transaction to the account. Ignores the transaction if it is null.
-	 * 
-	 * @param transaction an AccountTransaction
-	 * @return false if AccountTransaction could not be applied, true otherwise
-	 */
-	public boolean applyTransaction( AccountTransaction transaction ) {
-		if ( null == transaction ) {
-			return false;
-		}
-
-		// if we are taking money from this account sutract the amount
-		if ( this.equals( transaction.getFromAccount() ) ) {
-			accountBalance -= transaction.getTransactionAmount();
-		}
-		else {
-			accountBalance += transaction.getTransactionAmount();
-		}
-
-		transactions.add( transaction );
-		return true;
-	}
-
-	public List<AccountTransaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions( List<AccountTransaction> transactions ) {
-		this.transactions = transactions;
 	}
 
 	@Override

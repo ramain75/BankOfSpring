@@ -9,9 +9,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
+import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
 import org.bankofspring.service.BankOfSpringService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +39,33 @@ public class BankOfSpringTimerTest {
 	private BankOfSpringServiceTimer timer;
 	
 	@Autowired
-	@Qualifier("customer1")
-	private Customer customer1;
+	private CustomerDAO customerDAO;
 	
 	@Autowired
-	@Qualifier("customer2")
+	private AccountDAO accountDAO;
+	
+	private Account account1;
+	private Account account2;
+	private Account account3;
+	private Account account4;
+	
+	private Customer customer1;
 	private Customer customer2;
+	
+	@Before
+	public void setup() {
+		account1 = accountDAO.getAccountByName( "account1" );
+		account2 = accountDAO.getAccountByName( "account2" );
+		account3 = accountDAO.getAccountByName( "account3" );
+		account4 = accountDAO.getAccountByName( "account4" );
+		
+		customer1 = customerDAO.getCustomerById(1);
+		customer2 = customerDAO.getCustomerById(2);
+	}
 	
 	@Test
 	public void testDebit() {
-		Account account1 = customer1.getAccount( "account1" );
-		account1.setAccountBalance( 1000L );
-		service.withdraw( customer1, account1, 100L );
+		service.withdraw( customer1, account3, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -66,10 +84,7 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testDebitWithToAccount() {
-		Account account1 = customer1.getAccount( "account1" );
-		Account account3 = customer2.getAccount( "account3" );
-		account1.setAccountBalance( 1000L );
-		service.transfer( customer1, account1, account3, 100L );
+		service.transfer( customer1, account3, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -87,8 +102,7 @@ public class BankOfSpringTimerTest {
 	}
 	
 	@Test
-	public void testDebitFails() {
-		Account account1 = customer1.getAccount( "account1" );
+	public void testDebitFails() {;
 		service.withdraw( customer1, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
@@ -108,7 +122,6 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testDebitCrashes() {
-		Account account1 = customer1.getAccount( "account1" );
 		Throwable error = null;
 		
 		try {
@@ -137,7 +150,6 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCredit() {
-		Account account1 = customer1.getAccount( "account1" );
 		service.deposit( customer1, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
@@ -157,8 +169,6 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCreditWithToAccount() {
-		Account account1 = customer1.getAccount( "account1" );
-		Account account3 = customer2.getAccount("account3");
 		service.transfer( customer1, account3, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
@@ -178,7 +188,6 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCreditFails() {
-		Account account1 = customer1.getAccount( "account1" );
 		service.deposit( customer1, account1, Long.MAX_VALUE );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
@@ -198,7 +207,6 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCreditCrashes() {
-		Account account1 = customer1.getAccount( "account1" );
 		Throwable error = null;
 		
 		try {
@@ -234,7 +242,6 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testMultipleActions() {
-		Account account1 = customer1.getAccount( "account1" );
 		service.withdraw( customer1, account1, 100L );
 		service.deposit( customer1, account1, 1000L );
 		service.withdraw( customer1, account1, 100L );

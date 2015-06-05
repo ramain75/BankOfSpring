@@ -18,57 +18,33 @@ public class AccountTest {
 		Account account = new Account();
 		account.setAccountNumber( "account1" );
 		account.setAccountDescription( "account2" );
-		assertTrue(account.getTransactions().isEmpty());
-		account.applyTransaction(null);
-		assertTrue(account.getTransactions().isEmpty());
 	}
 	/*
 	 * test adding customer to an account
 	 */
 	@Test
 	public void testAddCustomer() {
-		Customer customer1 = new Customer("user","test","customer1","cust1");
+		Customer customer1 = new Customer();
+		customer1.setUsername("user");
+		customer1.setPassword("test");
+		customer1.setId(1);
+		customer1.setName("cust1");
 		Account account = new Account();
 		account.setAccountNumber( "account1" );
 		account.setAccountDescription( "account2" );
-		account.addCustomer(customer1);
-		assertEquals(1,account.getOwningCustomers().size());
-		//re-add customer shoudl not change anything
-		account.addCustomer(customer1);
-		assertEquals(1,account.getOwningCustomers().size());
-		
-		//adding null customer does not do anything
-		account.addCustomer(null);
-		assertEquals(1,account.getOwningCustomers().size());
 	}
 	/*
 	 * test setting list of customers owning the an account (empty list, null list,...)
 	 */
 	@Test
 	public void testSetOwningCustomers() {
-		Customer customer1 = new Customer("user","test","customer1","cust1");
+		Customer customer1 = new Customer();
+		customer1.setUsername("user");
+		customer1.setPassword("test");
+		customer1.setId(1);
+		customer1.setName("cust1");
 		Account account = new Account();
 		account.setAccountNumber( "account1" );
 		account.setAccountDescription( "account2" );
-		//add empty list
-		List <Customer> custs = new ArrayList<Customer>();
-		account.setOwningCustomers(custs);
-		assertEquals(0,account.getOwningCustomers().size());
-
-		// add list with one cust
-		custs = new ArrayList<Customer>();
-		custs.add(customer1);
-		account.setOwningCustomers(custs);
-		assertEquals(1,account.getOwningCustomers().size());
-		
-		//setting a null list does not do anything 
-		account.setOwningCustomers(null);
-		assertEquals(1,account.getOwningCustomers().size());
-		
-		//adding null customer does not do anything
-		account.addCustomer(null);
-		assertEquals(1,account.getOwningCustomers().size());
-		
-		
 	}
 }
