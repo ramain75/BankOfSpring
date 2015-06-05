@@ -20,7 +20,7 @@ public class Account {
 	
 	//List of owning customers, for e.g., joint accounts
 	private List<Customer> owningCustomers = new ArrayList<Customer>();
-	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();;
+	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();
 	
 	public Account(String accountNumber, String accountDescription, List<Customer> owningCustomers){
 		setAccountNumber(accountNumber);
@@ -92,7 +92,14 @@ public class Account {
 		if (null == transaction) {
 			return false;
 		}
-		accountBalance += transaction.getTransactionAmount();
+		
+		// if we are taking money from this account sutract the amount
+		if ( this.equals( transaction.getFromAccount() ) ) {
+			accountBalance -= transaction.getTransactionAmount();
+		} else {
+			accountBalance += transaction.getTransactionAmount();
+		}
+
 		transactions.add(transaction);
 		return true;
 	}

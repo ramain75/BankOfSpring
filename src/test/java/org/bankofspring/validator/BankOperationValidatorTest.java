@@ -1,6 +1,9 @@
 package org.bankofspring.validator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.bankofspring.model.Account;
 import org.bankofspring.model.BankOperationType;
@@ -8,11 +11,6 @@ import org.bankofspring.model.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
-import static org.mockito.Mockito.*;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 /**
@@ -32,20 +30,20 @@ public class BankOperationValidatorTest {
 	@Mock
 	Account toAccount;
 	
-	private ApplicationContext context;
+	private BankOperationValidator validator;
+	
 	@Before
 	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpring.xml");
-		
+		validator = new BankOperationValidatorImpl();
 	}
+
 	/*
 	 * if the user is null we expect a runtime exception
 	 */
 	@Test(expected=RuntimeException.class)
 	public void testValidatorNullUser() {
 		long amount = 100L;
-		BankOperationValidator validator = getBankOperationValidator();
-		validator.validateOperation(null, fromAccount, toAccount, amount, BankOperationType.CREDIT);
+		validator.validateOperation(null, fromAccount, toAccount, amount, BankOperationType.TRANSFER);
 	}
 	/*
 	 * if the amount is negative, we expect a runtime exception
@@ -53,8 +51,7 @@ public class BankOperationValidatorTest {
 	@Test(expected=RuntimeException.class)
 	public void testValidatorNegativeAmount() {
 		long amount = -1;
-		BankOperationValidator validator = getBankOperationValidator();
-		validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT);
+		validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.TRANSFER);
 	}
 	/*
 	 * if the operation is null, we expect a runtime exception
@@ -62,7 +59,6 @@ public class BankOperationValidatorTest {
 	@Test(expected=RuntimeException.class)
 	public void testValidatorNullBankOperationType() {
 		long amount = 100L;
-		BankOperationValidator validator = getBankOperationValidator();
 		validator.validateOperation(customer, fromAccount, toAccount, amount, null);
 	}
 	/*
@@ -72,8 +68,7 @@ public class BankOperationValidatorTest {
 	public void testValidatorDebitHappyPath() {
 		long amount = 100L;
 		when(fromAccount.getAccountBalance()).thenReturn(200L);
-		BankOperationValidator validator = getBankOperationValidator();
-		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
+		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.WITHDRAWAL));
 		verify(fromAccount).getAccountBalance();
 	}
 	/*
@@ -83,8 +78,7 @@ public class BankOperationValidatorTest {
 	public void testValidatorDebitJustEnough() {
 		long amount = 100L;
 		when(fromAccount.getAccountBalance()).thenReturn(100L);
-		BankOperationValidator validator = getBankOperationValidator();
-		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
+		assertTrue("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.WITHDRAWAL));
 		verify(fromAccount).getAccountBalance();
 	}
 	// we do a debit and not enough funds
@@ -92,16 +86,14 @@ public class BankOperationValidatorTest {
 	public void testValidatorDebitNotEnough() {
 		long amount = 101L;
 		when(fromAccount.getAccountBalance()).thenReturn(100L);
-		BankOperationValidator validator = getBankOperationValidator();
-		assertFalse("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEBIT));
+		assertFalse("debit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.WITHDRAWAL));
 		verify(fromAccount).getAccountBalance();
 	}
 	@Test
 	public void testValidatorCreditHappyPath() {
 		long amount = 100L;
 		when(toAccount.getMaxBalanceAmount()).thenReturn(Long.MAX_VALUE);
-		BankOperationValidator validator = getBankOperationValidator();
-		assertTrue("credit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT));
+		assertTrue("credit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEPOSIT));
 		verify(toAccount).getAccountBalance();
 		verify(toAccount).getMaxBalanceAmount();
 	}
@@ -109,16 +101,9 @@ public class BankOperationValidatorTest {
 	public void testValidatorCreditOverMaxBalance() {
 		long amount = Long.MAX_VALUE;
 		when(toAccount.getMaxBalanceAmount()).thenReturn(Long.MAX_VALUE);
-		BankOperationValidator validator = getBankOperationValidator();
-		assertTrue("credit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.CREDIT));
+		assertTrue("credit failed unexpectedly", validator.validateOperation(customer, fromAccount, toAccount, amount, BankOperationType.DEPOSIT));
 		verify(toAccount).getAccountBalance();
 		verify(toAccount).getMaxBalanceAmount();
-	}
-	
-	private BankOperationValidator getBankOperationValidator() {
-		BankOperationValidator validator = context.getBean("validator", BankOperationValidatorImpl.class);
-		assertNotNull(validator);
-		return validator;
 	}
 
 }
