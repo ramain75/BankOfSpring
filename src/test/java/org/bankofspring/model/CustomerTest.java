@@ -1,5 +1,8 @@
 package org.bankofspring.model;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +35,10 @@ public class CustomerTest {
 		
 		ArrayList<Customer> listCustomers = new ArrayList<Customer>();
 		listCustomers.add(customer1);
-		Account account = new Account("account1", "account1description", listCustomers);
+		Account account = new Account();
+		account.setAccountNumber( "account1" );
+		account.setAccountDescription( "account1description" );
+		account.setOwningCustomers( listCustomers );
 		
 		Map<String,Account> accountMap = new HashMap<String,Account>();
 		accountMap.put(account.getAccountNumber(),account);
@@ -52,7 +58,10 @@ public class CustomerTest {
 		
 		ArrayList<Customer> listCustomers = new ArrayList<Customer>();
 		listCustomers.add(customer1);
-		Account account = new Account("account1", "account1description", listCustomers);
+		Account account = new Account();
+		account.setAccountNumber( "account1" );
+		account.setAccountDescription( "account1description" );
+		account.setOwningCustomers( listCustomers );
 
 		//test set account
 		Map<String,Account> accountMap = new HashMap<String,Account>();
@@ -61,7 +70,10 @@ public class CustomerTest {
 		assertEquals(accountMap,customer1.getAccounts());
 		assertEquals(account, customer1.getAccount("account1"));
 		//test add account
-		Account account2 = new Account("account2", "account2description", listCustomers);
+		Account account2 = new Account();
+		account.setAccountNumber( "account2" );
+		account.setAccountDescription( "account2description" );
+		account.setOwningCustomers( listCustomers );
 		customer1.addAccount(account2);
 		assertEquals(2,customer1.getAccounts().keySet().size());
 		assertEquals(account2, customer1.getAccount("account2"));

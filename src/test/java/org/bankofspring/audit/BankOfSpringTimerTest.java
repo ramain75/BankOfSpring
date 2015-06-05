@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * This test class tests it all together
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:BankOfSpring.xml")
+@ContextConfiguration({"classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOfSpringTimerTest {
 	
@@ -159,7 +159,7 @@ public class BankOfSpringTimerTest {
 	public void testCreditWithToAccount() {
 		Account account1 = customer1.getAccount( "account1" );
 		Account account3 = customer2.getAccount("account3");
-		service.transfer( customer1, account1, account3, 100L );
+		service.transfer( customer1, account3, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
