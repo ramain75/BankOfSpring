@@ -5,7 +5,7 @@
                                                     http://www.springframework.org/schema/jdbc
                                                     http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
-	<jdbc:embedded-database id="embeddedDatasource"
+	<jdbc:embedded-database id="dataSource"
 		type="HSQL">
 		<jdbc:script location="classpath:sql/tables.sql" />
 		<jdbc:script location="classpath:sql/user.sql" />
@@ -14,5 +14,10 @@
 		<jdbc:script location="classpath:sql/customer_account.sql" />
 		<jdbc:script location="classpath:sql/account_txn.sql" />
 	</jdbc:embedded-database>
-
+	<bean id="bankOfSpringDAO" class="org.bankofspring.dao.jdbc.BankOfSpringDAOImpl" >
+		<property name="template" ref="jdbcTemplate" />
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+	<constructor-arg ref="dataSource" />
+	</bean>
 </beans>
