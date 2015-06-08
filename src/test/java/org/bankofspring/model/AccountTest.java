@@ -14,7 +14,7 @@ public class AccountTest {
 	 */
 	@Test
 	public void testApplyNullTransaction() {
-		Account account = new Account("account1", "account2",null);
+		Account account = new Account("account1", "account2",null, 0L);
 		assertTrue(account.getTransactions().isEmpty());
 		account.applyTransaction(null);
 		assertTrue(account.getTransactions().isEmpty());
@@ -25,7 +25,7 @@ public class AccountTest {
 	@Test
 	public void testAddCustomer() {
 		Customer customer1 = new Customer("user","test","customer1","cust1");
-		Account account = new Account("account1", "account2",null);
+		Account account = new Account("account1", "account2",null, 0L);
 		account.addCustomer(customer1);
 		assertEquals(1,account.getOwningCustomers().size());
 		//re-add customer shoudl not change anything
@@ -42,7 +42,7 @@ public class AccountTest {
 	@Test
 	public void testSetOwningCustomers() {
 		Customer customer1 = new Customer("user","test","customer1","cust1");
-		Account account = new Account("account1", "account2",null);
+		Account account = new Account("account1", "account2",null, 0L);
 		//add empty list
 		List <Customer> custs = new ArrayList<Customer>();
 		account.setOwningCustomers(custs);

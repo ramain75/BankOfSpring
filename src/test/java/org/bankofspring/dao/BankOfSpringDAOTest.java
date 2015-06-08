@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class BankOfSpringDAOTest {
 
 	@Autowired
-	BankOfSpringDAO bankOfSpringDao;
+	AccountsDaoImpl bankOfSpringDao;
 	
 	/**
 	 * Basic test to make sure we have a DB connection

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bankofspring.dao.BankOfSpringDAO;
+import org.bankofspring.dao.AccountsDao;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
@@ -51,7 +51,7 @@ public class BankOfSpringAppDataConfig {
 	public Account account1(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
 		
-		Account account1 = new Account("account1", "account1description", owningCustomers);
+		Account account1 = new Account("account1", "account1description", owningCustomers, 0L);
 		account1.setMaxBalanceAmount(170000000);
 		
 		return account1;
@@ -61,7 +61,7 @@ public class BankOfSpringAppDataConfig {
 	public Account account2(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
 		
-		Account account2 = new Account("account2", "account2description", owningCustomers);
+		Account account2 = new Account("account2", "account2description", owningCustomers, 0L);
 		account2.setMaxBalanceAmount(100000000);
 		
 		return account2;
@@ -71,7 +71,7 @@ public class BankOfSpringAppDataConfig {
 	public Account account3(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
 		
-		Account account3 = new Account("account3", "account3description", owningCustomers);
+		Account account3 = new Account("account3", "account3description", owningCustomers, 0L);
 		account3.setMaxBalanceAmount(150000000);
 		account3.setAccountBalance(100);
 		
@@ -82,7 +82,7 @@ public class BankOfSpringAppDataConfig {
 	public Account account4(){
 		List<Customer> owningCustomers = new ArrayList<Customer>();
 		
-		Account account4 = new Account("account4", "account4description", owningCustomers);
+		Account account4 = new Account("account4", "account4description", owningCustomers, 0L);
 		account4.setMaxBalanceAmount(100000000);
 		account4.setAccountBalance(150);
 		
@@ -108,15 +108,6 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public BankOperationValidator validator(){
 		return new BankOperationValidatorImpl();
-	}
-	
-	/**
-	 * Setup the main DAO bean
-	 * @return DAO bean
-	 */
-	@Bean
-	public BankOfSpringDAO bankOfSpringDao(){
-		return new BankOfSpringDAO();
 	}
 	
 }
