@@ -43,7 +43,7 @@ public class AccountDAOImpl implements AccountDAO {
   	params.put( "accountNumber", account.getAccountNumber() );
   	int updates = jdbc.update( "UPDATE account SET balance = balance + :amount WHERE balance + :amount <= max_balance AND number = :accountNumber", params );
   	if ( updates == 0) {
-  		throw new RuntimeException("Unable to debit amount for account");
+  		throw new RuntimeException("Unable to credit amount for account");
   	}
 	  return true;
   }
