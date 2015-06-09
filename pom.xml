@@ -15,7 +15,7 @@
 
 		<!-- Spring -->
 		<spring-framework.version>3.0.6.RELEASE</spring-framework.version>
-		
+
 		<!-- Database -->
 		<hsqldb.version>2.3.2</hsqldb.version>
 
@@ -104,17 +104,15 @@
 			<version>${mockito.version}</version>
 		</dependency>
 	</dependencies>
-<build>
-<plugins>
-<plugin>
-<artifactId>
-maven-compiler-plugin
-</artifactId>
-<configuration>
-<source>1.6</source>
-<target>1.6</target>
-</configuration>
-</plugin>
-</plugins>
-</build>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
