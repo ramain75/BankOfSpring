@@ -107,7 +107,7 @@ public class BankOfSpringDAOTest {
 		assertNotNull(account1);
 		assertNotNull(account2);
 		AccountTransaction txn = dao.createAccountTransaction(account1.getAccountNumber(),account2.getAccountNumber(),100L);
-		assertEquals(1, txn.getId());
+		assertEquals(2, txn.getId());
 		assertEquals(account1, txn.getFromAccount());
 		assertEquals(account2, txn.getToAccount());
 		assertEquals(100L, txn.getTransactionAmount());

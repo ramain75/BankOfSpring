@@ -15,9 +15,13 @@
 		<jdbc:script location="classpath:sql/account_txn.sql" />
 	</jdbc:embedded-database>
 	<bean id="bankOfSpringDAO" class="org.bankofspring.dao.jdbc.BankOfSpringDAOImpl" >
-		<property name="template" ref="jdbcTemplate" />
+		<property name="simpleTemplate" ref="simpleTemplate" />
+		<property name="namedTemplate" ref="namedTemplate" />
 	</bean>
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+	<bean id="simpleTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+	<constructor-arg ref="dataSource" />
+	</bean>
+	<bean id="namedTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 	<constructor-arg ref="dataSource" />
 	</bean>
 </beans>
