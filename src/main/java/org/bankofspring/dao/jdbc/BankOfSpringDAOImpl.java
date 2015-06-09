@@ -11,22 +11,25 @@ import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 public class BankOfSpringDAOImpl implements BankOfSpringDAO {
+	
 	private final String  CUSTOMER_SELECT = "SELECT c.id, c.name, c.username, u.password from customer c inner join user u on (c.username = u.username)";
 	private final String  CUSTOMERS_SELECT = CUSTOMER_SELECT +  " order by c.id";
 	private final String  SINGLE_CUSTOMER_SELECT =  CUSTOMER_SELECT + "where c.id = ?";
-	private final String  ACCOUNT_SELECT =  "SELECT number, description,balance from account where number=?";
-	private final String  CUSTOMERS_FOR_ACCOUNT_SELECT = "SELECT c.id, c.name, c.username, u.password from customer c "+
+		private final String  CUSTOMERS_FOR_ACCOUNT_SELECT = "SELECT c.id, c.name, c.username, u.password from customer c "+
 							"inner join user u on (c.username = u.username) inner join customer_account a "
 							+ "on (a.customer_id = c.id) where a.number =?";
 	private final String TXN_ACCOUNT_SELECT = "select id,from_account_number, to_account_number, time, amount from account_transaction where"
 			+ " id = ?";
+	private final String TXN_ACCOUNT_ADD = "insert into account_transaction (from_account_number, to_account_number,  amount, time) values " +
+			"( ?,?,?,?)";
+
+	private final String  ACCOUNT_SELECT =  "SELECT number, description,balance from account where number=?";
 	private final String ACCOUNT_UPDATE = "UPDATE account set balance=? where number = ?";
-	
 	private SimpleJdbcTemplate template;
-	
 	
 	public SimpleJdbcTemplate getTemplate() {
 		return template;
@@ -146,6 +149,14 @@ return getTemplate().queryForObject(TXN_ACCOUNT_SELECT, new RowMapper<AccountTra
 				return txn;
 			}
 		},id);
+	}
+
+	@Override
+	public AccountTransaction createAccountTransaction(
+			String fromAccountNumber, String toAccountNumber, long amount) {
+		
+		 int id = getTemplate().update(TXN_ACCOUNT_ADD, fromAccountNumber,toAccountNumber,amount, new Date());
+		 return getAccountTransaction(id);
 	}
 
 }

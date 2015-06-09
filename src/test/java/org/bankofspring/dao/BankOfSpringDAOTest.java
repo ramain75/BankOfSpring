@@ -79,7 +79,7 @@ public class BankOfSpringDAOTest {
 	}
 	
 	@Test 
-	public void updateTransaction() {
+	public void updateAccountBalance() {
 		Account account = dao.getAccount("account3");
 		assertNotNull(account);
 		assertEquals ("incorrect account number", "account3",account.getAccountNumber());
@@ -98,17 +98,19 @@ public class BankOfSpringDAOTest {
 		assertNotNull (txn.getToAccount());
 		assertEquals(100, txn.getTransactionAmount());
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		assertEquals("2008-08-08 20:08:08.0", format.format(txn.getTransactionDate()) );
+		assertEquals("2008-08-08 00:00:00.0", format.format(txn.getTransactionDate()) );
 	}
-	
+	@Test
 	public void testCreateTransaction() {
 		Account account1 = dao.getAccount("account1");
 		Account account2 = dao.getAccount("account2");
 		assertNotNull(account1);
 		assertNotNull(account2);
-		
-		AccountTransaction txn = new AccountTransaction(0, account1, account2, 100L);
-	//	dao.createAccountTransaction(txn);
+		AccountTransaction txn = dao.createAccountTransaction(account1.getAccountNumber(),account2.getAccountNumber(),100L);
+		assertEquals(1, txn.getId());
+		assertEquals(account1, txn.getFromAccount());
+		assertEquals(account2, txn.getToAccount());
+		assertEquals(100L, txn.getTransactionAmount());
 	}
 	
 	

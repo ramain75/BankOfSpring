@@ -15,6 +15,7 @@ public class AccountTransaction {
 	private Date transactionDate;
 	
 	public AccountTransaction(int id, Account toAccount, Account fromAccount, long transactionAmount){
+		this.id = id;
 		setToAccount(toAccount);
 		setFromAccount(fromAccount);
 		setTransactionAmount(transactionAmount);
@@ -52,6 +53,10 @@ public class AccountTransaction {
 
 	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 
 }
