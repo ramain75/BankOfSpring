@@ -2,6 +2,7 @@ package org.bankofspring.dao;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.bankofspring.model.Account;
@@ -70,24 +71,44 @@ public class BankOfSpringDAOTest {
 		assertEquals ("incorrect account description", "account3description",account.getAccountDescription());
 		assertEquals ("incorrect balance for account " + account.getAccountNumber(), 100L, account.getAccountBalance());
 		//assertEquals ("incorrect max balance for account " + account.getAccountNumber(), 99999999999L, account.getMaxBalanceAmount());
-//		assertNotNull(account.getOwningCustomers());
-//		assertEquals(1,account.getOwningCustomers().size());
-//		Customer customer = account.getOwningCustomers().get(0);
-//		assertNotNull(customer);
-//		assertEquals("2",customer.getCustomerID());
+		assertNotNull(account.getOwningCustomers());
+		assertEquals(1,account.getOwningCustomers().size());
+		Customer customer = account.getOwningCustomers().get(0);
+		assertNotNull(customer);
+		assertEquals("2",customer.getCustomerID());
 	}
 	
-	public void testGetAccountTransaction() {
-		
+	@Test 
+	public void updateTransaction() {
+		Account account = dao.getAccount("account3");
+		assertNotNull(account);
+		assertEquals ("incorrect account number", "account3",account.getAccountNumber());
+		assertEquals ("incorrect account description", "account3description",account.getAccountDescription());
+		assertEquals ("incorrect balance for account " + account.getAccountNumber(), 100L, account.getAccountBalance());
+		account = dao.updateAccountBalance(account.getAccountNumber(), 1500L);
+		assertEquals ("incorrect account number", "account3",account.getAccountNumber());
+		assertEquals ("incorrect account description", "account3description",account.getAccountDescription());
+		assertEquals ("incorrect balance for account " + account.getAccountNumber(), 1500L, account.getAccountBalance());
 	}
+	@Test
+	public void testGetAccountTransaction() {
+		AccountTransaction txn = dao.getAccountTransaction(1);
+		assertNotNull(txn);
+		assertNull(txn.getFromAccount());
+		assertNotNull (txn.getToAccount());
+		assertEquals(100, txn.getTransactionAmount());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		assertEquals("2008-08-08 20:08:08.0", format.format(txn.getTransactionDate()) );
+	}
+	
 	public void testCreateTransaction() {
 		Account account1 = dao.getAccount("account1");
 		Account account2 = dao.getAccount("account2");
 		assertNotNull(account1);
 		assertNotNull(account2);
 		
-		AccountTransaction txn = new AccountTransaction(account1, account2, 100L);
-		dao.createAccountTransaction(txn);
+		AccountTransaction txn = new AccountTransaction(0, account1, account2, 100L);
+	//	dao.createAccountTransaction(txn);
 	}
 	
 	

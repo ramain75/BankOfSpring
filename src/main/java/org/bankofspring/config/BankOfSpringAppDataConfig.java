@@ -95,7 +95,7 @@ public class BankOfSpringAppDataConfig {
 	@Bean
 	public AccountTransaction txn1(){
 		
-		AccountTransaction txn1 = new AccountTransaction(account4(), null, 100);
+		AccountTransaction txn1 = new AccountTransaction(0, account4(), null, 100);
 		txn1.setTransactionDate(new GregorianCalendar(2015,1,1).getTime());
 		
 		account4().getTransactions().add(txn1);

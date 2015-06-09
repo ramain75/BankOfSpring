@@ -7,13 +7,14 @@ import java.util.Date;
  *
  */
 public class AccountTransaction {
+	private int id;
 	private Account fromAccount;
 	private Account toAccount;
 	private long transactionAmount;
 	//small addition to specs, just to use spEL but it makes sense to store the date associated with an txn
 	private Date transactionDate;
 	
-	public AccountTransaction(Account toAccount, Account fromAccount, long transactionAmount){
+	public AccountTransaction(int id, Account toAccount, Account fromAccount, long transactionAmount){
 		setToAccount(toAccount);
 		setFromAccount(fromAccount);
 		setTransactionAmount(transactionAmount);
