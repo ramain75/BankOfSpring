@@ -5,17 +5,21 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.bankofspring.dao.BankOfSpringDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public class BankOfSpringDAOImpl implements BankOfSpringDAO {
 	
 	private final String  CUSTOMER_SELECT = "SELECT c.id, c.name, c.username, u.password from customer c inner join user u on (c.username = u.username)";
@@ -35,20 +39,18 @@ public class BankOfSpringDAOImpl implements BankOfSpringDAO {
 	private SimpleJdbcTemplate simpleTemplate;
 	private NamedParameterJdbcTemplate namedTemplate;
 	
+	@Autowired
+	public void setDataSource(DataSource source) {
+		this.simpleTemplate = new SimpleJdbcTemplate(source);
+		this.namedTemplate = new NamedParameterJdbcTemplate(source);
+	}
+	
 	public SimpleJdbcTemplate getSimpleTemplate() {
 		return simpleTemplate;
-	}
-
-	public void setSimpleTemplate(SimpleJdbcTemplate simpleTemplate) {
-		this.simpleTemplate = simpleTemplate;
 	}
 	
 	public NamedParameterJdbcTemplate getNamedTemplate() {
 		return namedTemplate;
-	}
-
-	public void setNamedTemplate(NamedParameterJdbcTemplate namedTemplate) {
-		this.namedTemplate = namedTemplate;
 	}
 	
 	@Override

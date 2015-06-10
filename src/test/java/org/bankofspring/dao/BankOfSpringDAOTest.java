@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.Customer;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,14 @@ public class BankOfSpringDAOTest {
 
 	@Autowired
 	BankOfSpringDAO dao;
-
+	@Autowired
+	private DataSource ds;
+	
+	@Test
+	public void testDataSource() throws Exception {
+		Assert.assertTrue(ds.getConnection().isValid(1));
+	}
+	
 	@Test
 	public void testGetSingleCustomer() {
 		Customer cust1 = dao.getCustomer("1");

@@ -1,9 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-                                                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                                                    http://www.springframework.org/schema/jdbc
-                                                    http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<jdbc:embedded-database id="dataSource"
 		type="HSQL">
@@ -14,14 +15,10 @@
 		<jdbc:script location="classpath:sql/customer_account.sql" />
 		<jdbc:script location="classpath:sql/account_txn.sql" />
 	</jdbc:embedded-database>
-	<bean id="bankOfSpringDAO" class="org.bankofspring.dao.jdbc.BankOfSpringDAOImpl" >
-		<property name="simpleTemplate" ref="simpleTemplate" />
-		<property name="namedTemplate" ref="namedTemplate" />
-	</bean>
-	<bean id="simpleTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
-	<constructor-arg ref="dataSource" />
-	</bean>
-	<bean id="namedTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-	<constructor-arg ref="dataSource" />
-	</bean>
+	
+	<context:component-scan base-package="org.bankofspring" >
+		<context:exclude-filter type="regex" expression="org.bankofspring.config.*"/>
+	</context:component-scan>
+	
+	
 </beans>

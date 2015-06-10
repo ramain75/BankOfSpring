@@ -11,6 +11,6 @@ public interface BankOfSpringDAO {
 	public List<Customer> getCustomersForAccount(String accountNumber);
 	public Account updateAccountBalance(String accountNumber, long balance);
 	public AccountTransaction getAccountTransaction(int id);
-	public AccountTransaction createAccountTransaction(String from_account_Number, String to_accountNumer, long amount );
+	public AccountTransaction createAccountTransaction(String fromAccountNumber, String toAccountNumer, long amount );
 	
 }

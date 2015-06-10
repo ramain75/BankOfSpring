@@ -10,9 +10,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.mockito.Mockito.*;
+
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 /**
@@ -35,7 +36,7 @@ public class BankOperationValidatorTest {
 	private ApplicationContext context;
 	@Before
 	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpring.xml");
+		context = new ClassPathXmlApplicationContext("BankOfSpring.xml","BankOfSpring-emptydao.xml");
 		
 	}
 	/*

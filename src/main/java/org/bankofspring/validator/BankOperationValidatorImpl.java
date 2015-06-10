@@ -3,6 +3,7 @@ package org.bankofspring.validator;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
+import org.springframework.stereotype.Component;
 /*
  * validates a bank operation 
  * checks if user is not null (throws RuntimeException if null)
@@ -10,6 +11,7 @@ import org.bankofspring.model.User;
  * for debit, check that originating amount has at least the debit amount
  * for credit, checks that not going over maximum amount
  */
+@Component
 public class BankOperationValidatorImpl implements BankOperationValidator {
 
 	
