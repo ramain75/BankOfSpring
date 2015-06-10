@@ -31,7 +31,12 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		if ( validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT ) ) {
 			AccountTransaction txn = new AccountTransaction( 0, fromAccount, toAccount, -amount );
 			// at a later stage, will ensure we credit the account receiving the money but not at this stage
-			return fromAccount.applyTransaction( txn );
+			if ( fromAccount.applyTransaction( txn )) {
+				String toAccountNumber = toAccount == null ? null : toAccount.getAccountNumber();
+				txn = dao.createAccountTransaction(fromAccount.getAccountNumber(), toAccountNumber, amount);
+				dao.updateAccountBalance(fromAccount.getAccountNumber(), fromAccount.getAccountBalance());
+				return true;
+			}
 		}
 		return false;
 	}
@@ -50,11 +55,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 
 			if (toAccount.applyTransaction( txn ) ) {
 				String fromAccountNumber = fromAccount == null ? null : fromAccount.getAccountNumber();
-				dao.createAccountTransaction(fromAccountNumber, toAccount.getAccountNumber(), amount);
+				txn = dao.createAccountTransaction(fromAccountNumber, toAccount.getAccountNumber(), amount);
 				dao.updateAccountBalance(toAccount.getAccountNumber(), toAccount.getAccountBalance());
 				return true;
-			} else {
-				return false;
 			}
 		}
 		return false;
