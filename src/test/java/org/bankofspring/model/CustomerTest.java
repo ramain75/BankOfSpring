@@ -32,7 +32,7 @@ public class CustomerTest {
 		
 		ArrayList<Customer> listCustomers = new ArrayList<Customer>();
 		listCustomers.add(customer1);
-		Account account = new Account("account1", "account1description", listCustomers);
+		Account account = new Account("account1", "account1description", listCustomers, 0L);
 		
 		Map<String,Account> accountMap = new HashMap<String,Account>();
 		accountMap.put(account.getAccountNumber(),account);
@@ -52,7 +52,7 @@ public class CustomerTest {
 		
 		ArrayList<Customer> listCustomers = new ArrayList<Customer>();
 		listCustomers.add(customer1);
-		Account account = new Account("account1", "account1description", listCustomers);
+		Account account = new Account("account1", "account1description", listCustomers, 0L);
 
 		//test set account
 		Map<String,Account> accountMap = new HashMap<String,Account>();
@@ -61,7 +61,7 @@ public class CustomerTest {
 		assertEquals(accountMap,customer1.getAccounts());
 		assertEquals(account, customer1.getAccount("account1"));
 		//test add account
-		Account account2 = new Account("account2", "account2description", listCustomers);
+		Account account2 = new Account("account2", "account2description", listCustomers, 0L);
 		customer1.addAccount(account2);
 		assertEquals(2,customer1.getAccounts().keySet().size());
 		assertEquals(account2, customer1.getAccount("account2"));

@@ -22,11 +22,11 @@ public class Account {
 	private List<Customer> owningCustomers = new ArrayList<Customer>();
 	private List<AccountTransaction> transactions = new ArrayList<AccountTransaction>();;
 	
-	public Account(String accountNumber, String accountDescription, List<Customer> owningCustomers){
+	public Account(String accountNumber, String accountDescription, List<Customer> owningCustomers, long accountBalance){
 		setAccountNumber(accountNumber);
 		setAccountDescription(accountDescription);
 		setOwningCustomers(owningCustomers);
-		setAccountBalance(0L);
+		setAccountBalance(accountBalance);
 		setMaxBalanceAmount(Long.MAX_VALUE); //Make very high unless specified 
 	}
 

@@ -1,6 +1,7 @@
 
 package org.bankofspring.service;
 
+import org.bankofspring.dao.AccountsDao;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
@@ -14,6 +15,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 
 	@Autowired
 	private BankOperationValidator validator;
+	
+	@Autowired
+	private AccountsDao accountsDao;
 
 	public BankOperationValidator getValidator() {
 		return validator;
@@ -28,7 +32,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		if ( validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT ) ) {
 			AccountTransaction txn = new AccountTransaction( fromAccount, toAccount, -amount );
 			// at a later stage, will ensure we credit the account receiving the money but not at this stage
-			return fromAccount.applyTransaction( txn );
+			if( fromAccount.applyTransaction( txn )){
+			
+			};
 		}
 		return false;
 	}
@@ -49,9 +55,18 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 		}
 		return false;
 	}
+	
+	/**
+	 * Method to initiate calls to the DAO to update the transaction and account details in the DB
+	 * for persistence
+	 * @param transaction
+	 */
+	private void updateTransactionDetails(AccountTransaction transaction)
+	{
+		
+	}
 
 	public boolean credit( User loggedInUser, Account toAccount, long amount ) {
-		// TODO Auto-generated method stub
 		return credit( loggedInUser, toAccount, null, amount );
 	}
 
