@@ -5,13 +5,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.bankofspring.dao.BankOfSpringDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * This test class tests it all together
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:BankOfSpring.xml")
+@ContextConfiguration(locations={"classpath:BankOfSpring.xml","classpath:BankOfSpring-ds-test.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOfSpringAppTest {
 	
@@ -30,6 +35,7 @@ public class BankOfSpringAppTest {
 	@Autowired
 	@Qualifier("bankService")
 	private BankOfSpringService service;
+	
 	
 	/*
 	 * credit an account with fromAccount unknown: a cash credit

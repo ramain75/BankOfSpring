@@ -1,0 +1,127 @@
+package org.bankofspring.dao;
+
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.bankofspring.model.Account;
+import org.bankofspring.model.AccountTransaction;
+import org.bankofspring.model.Customer;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:BankOfSpring-ds-test.xml")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+public class BankOfSpringDAOTest {
+
+	@Autowired
+	BankOfSpringDAO dao;
+	@Autowired
+	private DataSource ds;
+	
+	@Test
+	public void testDataSource() throws Exception {
+		Assert.assertTrue(ds.getConnection().isValid(1));
+	}
+	
+	@Test
+	public void testGetSingleCustomer() {
+		Customer cust1 = dao.getCustomer("1");
+		assertEquals ("customer id unexpected value " , "1", cust1.getCustomerID());
+		assertEquals ("customer name unexpected value " , "customer one", cust1.getName());
+	}
+	
+	@Test
+	public void testCustomersByAccount() {
+		List<Customer> customers = dao.getCustomersForAccount("account4");
+		assertEquals("unexpected number of customers for account4",2,customers.size());
+		Customer cust1 = customers.get(0);
+		assertNotNull("Customer 1 should not be null", cust1);
+		assertEquals ("cust id unexpected value " , "1", cust1.getCustomerID());
+		assertEquals ("cust id unexpected value " , "customer one", cust1.getName());
+		Customer cust2 = customers.get(1);
+		assertNotNull("Customer 2 should not be null", cust2);
+		assertEquals ("cust id unexpected value " , "2", cust2.getCustomerID());
+		assertEquals ("cust id unexpected value " , "customer two", cust2.getName());
+		
+		customers = dao.getCustomersForAccount("account1");
+		assertEquals("unexpected number of customers for account1",1,customers.size());
+		 cust1 = customers.get(0);
+		assertNotNull("Customer 1 should not be null", cust1);
+		assertEquals ("cust id unexpected value " , "1", cust1.getCustomerID());
+		assertEquals ("cust id unexpected value " , "customer one", cust1.getName());
+	}
+	@Test
+	public void testGetCustomerList() {
+		List <Customer> listCust = dao.getCustomers();
+		assertEquals("customer list has unexpected size ", 2, listCust.size());
+		Customer cust1 = listCust.get(0);
+		assertNotNull("Customer 1 should not be null", cust1);
+		assertEquals ("cust id unexpected value " , "1", cust1.getCustomerID());
+		assertEquals ("cust id unexpected value " , "customer one", cust1.getName());
+		Customer cust2 = listCust.get(1);
+		assertNotNull("Customer 2 should not be null", cust2);
+		assertEquals ("cust id unexpected value " , "2", cust2.getCustomerID());
+		assertEquals ("cust id unexpected value " , "customer two", cust2.getName());
+	}
+	@Test
+	public void getAccount() {
+		Account account = dao.getAccount("account3");
+		assertNotNull(account);
+		assertEquals ("incorrect account number", "account3",account.getAccountNumber());
+		assertEquals ("incorrect account description", "account3description",account.getAccountDescription());
+		assertEquals ("incorrect balance for account " + account.getAccountNumber(), 100L, account.getAccountBalance());
+		//assertEquals ("incorrect max balance for account " + account.getAccountNumber(), 99999999999L, account.getMaxBalanceAmount());
+		assertNotNull(account.getOwningCustomers());
+		assertEquals(1,account.getOwningCustomers().size());
+		Customer customer = account.getOwningCustomers().get(0);
+		assertNotNull(customer);
+		assertEquals("2",customer.getCustomerID());
+	}
+	
+	@Test 
+	public void updateAccountBalance() {
+		Account account = dao.getAccount("account3");
+		assertNotNull(account);
+		assertEquals ("incorrect account number", "account3",account.getAccountNumber());
+		assertEquals ("incorrect account description", "account3description",account.getAccountDescription());
+		assertEquals ("incorrect balance for account " + account.getAccountNumber(), 100L, account.getAccountBalance());
+		account = dao.updateAccountBalance(account.getAccountNumber(), 1500L);
+		assertEquals ("incorrect account number", "account3",account.getAccountNumber());
+		assertEquals ("incorrect account description", "account3description",account.getAccountDescription());
+		assertEquals ("incorrect balance for account " + account.getAccountNumber(), 1500L, account.getAccountBalance());
+	}
+	@Test
+	public void testGetAccountTransaction() {
+		AccountTransaction txn = dao.getAccountTransaction(1);
+		assertNotNull(txn);
+		assertNull(txn.getFromAccount());
+		assertNotNull (txn.getToAccount());
+		assertEquals(100, txn.getTransactionAmount());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		assertEquals("2008-08-08 00:00:00.0", format.format(txn.getTransactionDate()) );
+	}
+	@Test
+	public void testCreateTransaction() {
+		Account account1 = dao.getAccount("account1");
+		Account account2 = dao.getAccount("account2");
+		assertNotNull(account1);
+		assertNotNull(account2);
+		AccountTransaction txn = dao.createAccountTransaction(account1.getAccountNumber(),account2.getAccountNumber(),100L);
+		assertEquals(2, txn.getId());
+		assertEquals(account1, txn.getFromAccount());
+		assertEquals(account2, txn.getToAccount());
+		assertEquals(100L, txn.getTransactionAmount());
+	}
+	
+	
+}
