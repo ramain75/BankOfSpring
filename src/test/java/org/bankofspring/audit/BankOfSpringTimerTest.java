@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * This test class tests it all together
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:BankOfSpring.xml","classpath:BankOfSpring-emptydao.xml"})
+@ContextConfiguration(locations={"classpath:BankOfSpring.xml","classpath:BankOfSpring-ds-test.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOfSpringTimerTest {
 	

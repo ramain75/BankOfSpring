@@ -36,7 +36,7 @@ public class BankOperationValidatorTest {
 	private ApplicationContext context;
 	@Before
 	public void setup() {
-		context = new ClassPathXmlApplicationContext("BankOfSpring.xml","BankOfSpring-emptydao.xml");
+		context = new ClassPathXmlApplicationContext("BankOfSpring.xml", "BankOfSpring-emptydao.xml");
 		
 	}
 	/*
