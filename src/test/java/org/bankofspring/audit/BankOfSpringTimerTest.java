@@ -6,11 +6,14 @@ import java.util.Iterator;
 
 import org.bankofspring.audit.AuditResult;
 import org.bankofspring.audit.BankOfSpringServiceTimer;
+import org.bankofspring.dao.AccountDao;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
 import org.bankofspring.service.BankOfSpringService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
@@ -39,6 +42,16 @@ public class BankOfSpringTimerTest {
 	@Autowired
 	@Qualifier("customer2")
 	private Customer customer2;
+	
+	@Before
+	public void setupTest() {
+		AccountDao mockDao = Mockito.mock( AccountDao.class );
+		service.setAccountDao( mockDao );
+		
+		// We're not particularly interested in validating DAO calls here; just permit anything
+		Mockito.when( mockDao.creditAccount( Mockito.any( Account.class ), Mockito.anyLong() ) ).thenReturn( true );
+		Mockito.when( mockDao.debitAccount( Mockito.any( Account.class ), Mockito.anyLong() ) ).thenReturn( true );
+	}
 	
 	@Test
 	public void testDebit() {

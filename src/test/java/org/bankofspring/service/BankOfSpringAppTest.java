@@ -5,10 +5,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.bankofspring.dao.AccountDao;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -31,6 +34,14 @@ public class BankOfSpringAppTest {
 	@Qualifier("bankService")
 	private BankOfSpringService service;
 	
+	private AccountDao mockDao;
+	
+	@Before
+	public void setupTest() {
+		mockDao = Mockito.mock( AccountDao.class );
+		service.setAccountDao( mockDao );
+	}
+	
 	/*
 	 * credit an account with fromAccount unknown: a cash credit
 	 * ensure balance of the toAccount is increased by the credited account
@@ -40,10 +51,13 @@ public class BankOfSpringAppTest {
 		Customer customer1 = getCustomer("customer1");
 		Account account1 = customer1.getAccount("account1");
 		long balance = account1.getAccountBalance();
+		
+		Mockito.when( mockDao.creditAccount( account1, 100L ) ).thenReturn( true );
+		
 		assertTrue(service.credit(customer1, account1, 100L));
 		assertEquals(balance + 100L, account1.getAccountBalance());
-		
 	}
+	
 	/**
 	 * credit an account with a known fromAccount: a credit
 	 * ensure balance of the toAccount is increased by the credited account
@@ -57,6 +71,9 @@ public class BankOfSpringAppTest {
 		Account account3 = customer2.getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
 		long balanceAccount3 = account3.getAccountBalance();
+		
+		Mockito.when( mockDao.creditAccount( account1, 100L ) ).thenReturn( true );
+		
 		assertTrue(service.credit(customer1, account1, account3,100L));
 		assertEquals(balanceAccount1 + 100L, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
@@ -69,10 +86,10 @@ public class BankOfSpringAppTest {
 	@Test(expected=RuntimeException.class)
 	public void testCreditInvalidAmountFails() {
 		Customer customer1 = getCustomer("customer1");
-		Customer customer2 = getCustomer("customer2");
 		Account account1 = customer1.getAccount("account1");
-		Account account3 = customer2.getAccount("account3");
 		assertFalse(service.credit(customer1, account1, -100)); 
+		
+		Mockito.verify( mockDao, Mockito.never() ).creditAccount( Mockito.any( Account.class ), Mockito.anyLong() );
 	}
 	
 	
@@ -90,6 +107,8 @@ public class BankOfSpringAppTest {
 		assertFalse(service.credit(customer1, account1, Long.MAX_VALUE));
 		assertEquals(balanceAccount1, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
+		
+		Mockito.verify( mockDao, Mockito.never() ).creditAccount( Mockito.any( Account.class ), Mockito.anyLong() );
 	}
 	/**
 	 * debit from an account (no to account)
@@ -102,6 +121,9 @@ public class BankOfSpringAppTest {
 		account1.setAccountBalance(200L);
 		assertEquals(200L,account1.getAccountBalance());
 		long balance = account1.getAccountBalance();
+		
+		Mockito.when( mockDao.debitAccount( account1, 100L ) ).thenReturn( true );
+		
 		assertTrue(service.debit(customer1, account1, 100L));
 		assertEquals(balance - 100L, account1.getAccountBalance());
 		
@@ -121,11 +143,14 @@ public class BankOfSpringAppTest {
 		Account account3 = customer2.getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
 		long balanceAccount3 = account3.getAccountBalance();
+		
+		Mockito.when( mockDao.debitAccount( account1, 100L ) ).thenReturn( true );
+		
 		assertTrue(service.debit(customer1, account1,account3,100L));
 		assertEquals(balanceAccount1 - 100L, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
-		
 	}
+	
 	/**
 	 * ensure debit fails, returns false is account has not enough money
 	 */
@@ -142,6 +167,7 @@ public class BankOfSpringAppTest {
 		assertEquals(0L, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
 		
+		Mockito.verify( mockDao, Mockito.never() ).debitAccount( Mockito.any( Account.class ), Mockito.anyLong() );
 	}
 	
 	private Customer getCustomer(String beanID) {
