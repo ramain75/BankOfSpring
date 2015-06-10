@@ -1,6 +1,7 @@
 
 package org.bankofspring.service;
 
+import org.bankofspring.dao.AccountDao;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
@@ -14,6 +15,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 
 	@Autowired
 	private BankOperationValidator validator;
+	
+	@Autowired
+	private AccountDao accountDao;
 
 	public BankOperationValidator getValidator() {
 		return validator;
@@ -22,13 +26,21 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	public void setValidator( BankOperationValidator validator ) {
 		this.validator = validator;
 	}
+	
+	/** DAO setter - useful for unit tests */
+	public void setAccountDao( AccountDao dao ) {
+		this.accountDao = dao;
+	}
 
 	public boolean debit( User loggedInUser, Account fromAccount,
 	    Account toAccount, long amount ) {
 		if ( validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT ) ) {
 			AccountTransaction txn = new AccountTransaction( fromAccount, toAccount, -amount );
+			
 			// at a later stage, will ensure we credit the account receiving the money but not at this stage
-			return fromAccount.applyTransaction( txn );
+			if ( fromAccount.applyTransaction( txn ) ) {
+				return accountDao.debitAccount( fromAccount, amount );
+			}
 		}
 		return false;
 	}
@@ -45,7 +57,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 			AccountTransaction txn = new AccountTransaction( fromAccount, toAccount, amount );
 			// at a later stage, will ensure we debit the account releasing the money but not at this stage
 
-			return toAccount.applyTransaction( txn );
+			if ( toAccount.applyTransaction( txn ) ) {
+				return accountDao.creditAccount( toAccount, amount );
+			}
 		}
 		return false;
 	}

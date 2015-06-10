@@ -3,6 +3,7 @@ package org.bankofspring.service;
  * the service interface for the bank, at this stage we support credit and debit
  * also we have an BankOperationValidator
  */
+import org.bankofspring.dao.AccountDao;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.User;
 
@@ -16,4 +17,5 @@ public interface BankOfSpringService {
 	
 	public boolean credit(User loggedInUser, Account toAccount, long amount);
 
+	public void setAccountDao( AccountDao mockDao );
 }
