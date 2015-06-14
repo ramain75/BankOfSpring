@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 		http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -7,7 +6,7 @@
 	<groupId>org.bankofspring</groupId>
 	<artifactId>BankOfSpring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<properties>
 		<!-- Generic properties -->
 		<java.version>1.6</java.version>
@@ -16,6 +15,9 @@
 
 		<!-- Spring -->
 		<spring-framework.version>3.0.6.RELEASE</spring-framework.version>
+		
+		<!-- Database -->
+		<hsqldb.version>2.3.2</hsqldb.version>
 
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
@@ -24,7 +26,7 @@
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.8.4</mockito.version>
 	</properties>
-	
+
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -43,6 +45,11 @@
 			<version>${spring-framework.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.6.8</version>
@@ -52,11 +59,18 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.8</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>3.1</version>
+		</dependency>
+
+		<!-- HSQL DB -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
 		</dependency>
 
 		<!-- Logging with SLF4J -->
@@ -66,10 +80,10 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
-           <groupId>org.slf4j</groupId>
-           <artifactId>slf4j-log4j12</artifactId>
-           <version>${slf4j.version}</version>
-       </dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
 
 		<!-- Test Artifacts -->
 		<dependency>
@@ -90,5 +104,5 @@
 			<version>${mockito.version}</version>
 		</dependency>
 	</dependencies>
-	
+
 </project>
