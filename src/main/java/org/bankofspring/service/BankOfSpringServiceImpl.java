@@ -1,6 +1,8 @@
 
 package org.bankofspring.service;
 
+import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.AccountTransactionDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
@@ -15,6 +17,51 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	@Autowired
 	private BankOperationValidator validator;
 
+	@Autowired
+	private AccountDAO accountDAO;
+
+	@Autowired
+	private AccountTransactionDAO accountTransactionDAO;
+
+	/**
+   *
+   */
+	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
+		if ( !validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.TRANSFER ) ) {
+			return false;
+		}
+
+		AccountTransaction txn = new AccountTransaction( toAccount, fromAccount, amount );
+		// at a later stage, we'll ensure all these things happen
+		return accountDAO.debitAccount( fromAccount, amount ) && accountDAO.creditAccount( toAccount, amount ) && accountTransactionDAO.create( txn );
+	}
+
+	/**
+   *
+   */
+	public boolean withdraw( User loggedInUser, Account fromAccount, long amount ) {
+		if ( !validator.validateOperation( loggedInUser, fromAccount, null, amount, BankOperationType.WITHDRAWAL ) ) {
+			return false;
+		}
+		AccountTransaction txn = new AccountTransaction( null, fromAccount, amount );
+
+		// at a later stage, we'll ensure all these things happen
+		return accountDAO.debitAccount( fromAccount, amount ) && accountTransactionDAO.create( txn );
+	}
+
+	/**
+   *
+   */
+	public boolean deposit( User loggedInUser, Account toAccount, long amount ) {
+		if ( !validator.validateOperation( loggedInUser, null, toAccount, amount, BankOperationType.DEPOSIT ) ) {
+			return false;
+		}
+
+		AccountTransaction txn = new AccountTransaction( toAccount, null, amount );
+		// at a later stage, we'll ensure all these things happen
+		return accountDAO.creditAccount( toAccount, amount ) && accountTransactionDAO.create( txn );
+	}
+
 	public BankOperationValidator getValidator() {
 		return validator;
 	}
@@ -22,37 +69,4 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	public void setValidator( BankOperationValidator validator ) {
 		this.validator = validator;
 	}
-
-	public boolean debit( User loggedInUser, Account fromAccount,
-	    Account toAccount, long amount ) {
-		if ( validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.DEBIT ) ) {
-			AccountTransaction txn = new AccountTransaction( fromAccount, toAccount, -amount );
-			// at a later stage, will ensure we credit the account receiving the money but not at this stage
-			return fromAccount.applyTransaction( txn );
-		}
-		return false;
-	}
-
-	public boolean debit( User loggedInUser, Account fromAccount, long amount ) {
-		return debit( loggedInUser, fromAccount, null, amount );
-
-	}
-
-	public boolean credit( User loggedInUser, Account toAccount,
-	    Account fromAccount, long amount ) {
-
-		if ( validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.CREDIT ) ) {
-			AccountTransaction txn = new AccountTransaction( fromAccount, toAccount, amount );
-			// at a later stage, will ensure we debit the account releasing the money but not at this stage
-
-			return toAccount.applyTransaction( txn );
-		}
-		return false;
-	}
-
-	public boolean credit( User loggedInUser, Account toAccount, long amount ) {
-		// TODO Auto-generated method stub
-		return credit( loggedInUser, toAccount, null, amount );
-	}
-
 }

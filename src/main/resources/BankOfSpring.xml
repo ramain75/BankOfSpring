@@ -11,4 +11,8 @@
 
     <context:component-scan base-package="org.bankofspring"/>
     <aop:aspectj-autoproxy/>
+    
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+       <constructor-arg ref="dataSource"/>
+    </bean>
 </beans>
