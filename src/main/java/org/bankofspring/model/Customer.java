@@ -1,27 +1,26 @@
 package org.bankofspring.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * Class to represent a bank customer - extends user
  * 
  *
  */
-public class Customer extends User {
+@Entity
+@Table(name = "customer")
+@PrimaryKeyJoinColumn(name="user_id")
+public class Customer extends User implements Serializable {
+   
+
+	private static final long serialVersionUID = -1761880572951633458L;
 	
-	private Integer id;
 	private String name;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -34,8 +33,6 @@ public class Customer extends User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -49,11 +46,6 @@ public class Customer extends User {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;

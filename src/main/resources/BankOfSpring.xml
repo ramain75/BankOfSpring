@@ -15,4 +15,18 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
        <constructor-arg ref="dataSource"/>
     </bean>
+    
+    <bean id="sessionFactory"
+      class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	  	<property name="dataSource" ref="dataSource" />
+	  	<property name="packagesToScan"
+	     value="org.bankofspring" />
+	 	<property name="hibernateProperties">
+	  	<props>
+	   		<prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
+	  	</props>
+		</property>
+	</bean>
+	
+    
 </beans>
