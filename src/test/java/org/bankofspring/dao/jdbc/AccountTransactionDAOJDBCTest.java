@@ -1,7 +1,9 @@
-package org.bankofspring.dao;
+package org.bankofspring.dao.jdbc;
 
 import static org.junit.Assert.assertEquals;
 
+import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.AccountTransactionDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.junit.Before;
@@ -18,7 +20,7 @@ import org.springframework.test.jdbc.SimpleJdbcTestUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class AccountTransactionDAOTest {
+public class AccountTransactionDAOJDBCTest {
 
 	@Autowired
 	private AccountTransactionDAO accountTransactionDAO;
