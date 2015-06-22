@@ -1,7 +1,8 @@
-package org.bankofspring.dao;
+package org.bankofspring.dao.jdbc;
 
 import static org.junit.Assert.*;
 
+import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class AccountDAOTest {
+public class AccountDAOJDBCTest {
 
 	@Autowired
 	private AccountDAO accountDAO;
