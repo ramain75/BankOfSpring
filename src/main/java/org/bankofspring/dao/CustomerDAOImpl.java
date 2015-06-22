@@ -1,6 +1,6 @@
 package org.bankofspring.dao;
 
-import org.bankofspring.dao.rowmapper.CustomerRowMapper;
+import org.bankofspring.dao.jdbc.rowmapper.CustomerRowMapper;
 import org.bankofspring.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;

@@ -3,7 +3,7 @@ package org.bankofspring.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bankofspring.dao.rowmapper.AccountRowMapper;
+import org.bankofspring.dao.jdbc.rowmapper.AccountRowMapper;
 import org.bankofspring.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
