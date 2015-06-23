@@ -26,5 +26,7 @@ public class CustomerDAOTest {
 		assertEquals("customer one", customer.getName());
 		assertEquals("test", customer.getPassword());
 		assertEquals("user1", customer.getUsername());
+		assertEquals("Customer should have some accounts", 3, customer.getAccounts().size());
+		
 	}
 }

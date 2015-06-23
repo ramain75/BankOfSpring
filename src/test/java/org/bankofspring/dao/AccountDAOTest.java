@@ -34,6 +34,7 @@ public class AccountDAOTest {
 		long expectedAmount = account1.getAccountBalance() + 100;
 		assertTrue(accountDAO.creditAccount(account1, 100L));
 		assertEquals(expectedAmount, accountDAO.getAccountByName("account1").getAccountBalance());
+		
 	}
 	
 	@Test
@@ -74,5 +75,15 @@ public class AccountDAOTest {
 		assertEquals("account3description", testAccount.getAccountDescription());
 		assertEquals("account3", testAccount.getAccountNumber());
 		assertEquals(1000000000, testAccount.getMaxBalanceAmount()); 
+	}
+	
+	@Test
+	public void testGetAccountAndEnsureWeGetMultipleCustomers() {
+		Account testAccount = accountDAO.getAccountByName("account4");
+		assertEquals(150L, testAccount.getAccountBalance());
+		assertEquals("account4description", testAccount.getAccountDescription());
+		assertEquals("account4", testAccount.getAccountNumber());
+		assertEquals(1000000000, testAccount.getMaxBalanceAmount()); 
+		assertEquals("The account should have some customers", 2,testAccount.getCustomers().size());
 	}
 }

@@ -2,10 +2,14 @@
 package org.bankofspring.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -37,6 +41,10 @@ public class Account implements Serializable {
 	
 	@Column(name = "max_balance")
 	private long maxBalanceAmount;
+	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy="accounts")  
+	private List<Customer> customers;
+
 	
 	//Add a version column to allow Hibernate optimistic locking to ensure that concurrency is handled properly
 	@Version
@@ -73,6 +81,14 @@ public class Account implements Serializable {
 
 	public void setMaxBalanceAmount( long maxBalanceAmount ) {
 		this.maxBalanceAmount = maxBalanceAmount;
+	}
+	
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+	
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
 	}
 
 	@Override
