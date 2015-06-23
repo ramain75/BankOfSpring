@@ -33,6 +33,7 @@ public class Customer extends User implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((this.getId() == null) ? 0 : this.getId().hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -46,6 +47,11 @@ public class Customer extends User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
+		if (this.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!this.getId().equals(other.getId()))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
