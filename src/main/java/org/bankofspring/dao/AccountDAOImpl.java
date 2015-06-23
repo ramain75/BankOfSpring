@@ -1,67 +1,63 @@
 package org.bankofspring.dao;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bankofspring.dao.rowmapper.AccountRowMapper;
 import org.bankofspring.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 
 /**
  * @author slc
  *
  */
 @Repository
-public class AccountDAOImpl implements AccountDAO {
+public class AccountDAOImpl extends AbstractDao implements AccountDAO {
 
 	@Autowired
 	private SimpleJdbcTemplate jdbc;
-	
-	/**
-   *
-   */
-  public boolean debitAccount( Account account, Long amount ) {
-  	Map<String, Object> params = new HashMap<String, Object>();
-  	params.put( "amount", amount );
-  	params.put( "accountNumber", account.getAccountNumber() );
-  	int updates = jdbc.update( "UPDATE account SET balance = balance - :amount WHERE balance - :amount >= 0 AND number = :accountNumber", params );
-  	return updates > 0;
-  }
 
 	/**
-   *
-   */
-  public boolean creditAccount( Account account, Long amount ) {
-  	Map<String, Object> params = new HashMap<String, Object>();
-  	params.put( "amount", amount );
-  	params.put( "accountNumber", account.getAccountNumber() );
-  	int updates = jdbc.update( "UPDATE account SET balance = balance + :amount WHERE balance + :amount <= max_balance AND number = :accountNumber", params );
-  	return updates > 0;
-  }
-  
-	/**
-  *
-  */
- public Account getAccountByName( String accountName ) {
-	 return jdbc.queryForObject( "SELECT number, description, balance, max_balance FROM account WHERE number = ?", new AccountRowMapper(), accountName );
- }
+	 * Debit an account
+	 * @param account
+	 * @param amount
+	 */
+	public boolean debitAccount(Account account, Long amount) {
+		try {
+			if (account.debitAccount(amount)) {
+				getHibernateTemplate().update(account);
+				return true;
+			}
+		} catch (NullPointerException npe) {
+			System.err.println("Incorrect Amount: " + npe.getMessage());
+		}
+		return false;
 
-  
-  /**
-   * @param jdbc the jdbc to set
-   */
-  public void setJdbc( SimpleJdbcTemplate jdbc ) {
-	  this.jdbc = jdbc;
-  }
-  
-  
-  /**
-   * @return the jdbc
-   */
-  public SimpleJdbcTemplate getJdbc() {
-	  return jdbc;
-  }
+	}
+
+	/**
+	 * Credit an account
+	 * @param account
+	 * @param amount
+	 */
+	public boolean creditAccount(Account account, Long amount) {
+		try {
+			if (account.creditAccount(amount)) {
+				getHibernateTemplate().update(account);
+				return true;
+			}
+		} catch (NullPointerException npe) {
+			System.err.println("Incorrect Amount: " + npe.getMessage());
+		}
+		return false;
+	}
+
+	/**
+	 * Get an account by its account number
+	 * 
+	 * @param accountNumber
+	 * @return account object
+	 */
+	public Account getAccountByName(String accountNumber) {
+		return getHibernateTemplate().get(Account.class, accountNumber);
+	}
+
 }

@@ -31,8 +31,9 @@ public class AccountDAOTest {
 	
 	@Test
 	public void testCreditAccount() throws Exception {
+		long expectedAmount = account1.getAccountBalance() + 100;
 		assertTrue(accountDAO.creditAccount(account1, 100L));
-		assertEquals(account1.getAccountBalance() + 100, accountDAO.getAccountByName("account1").getAccountBalance());
+		assertEquals(expectedAmount, accountDAO.getAccountByName("account1").getAccountBalance());
 	}
 	
 	@Test
@@ -49,8 +50,9 @@ public class AccountDAOTest {
 	
 	@Test
 	public void testDebitAccount() throws Exception {
+		long expectedBalance = account3.getAccountBalance() - 100; //Move this here as the account object is now synchronised with the DB
 		assertTrue(accountDAO.debitAccount(account3, 100L));
-		assertEquals(account3.getAccountBalance() - 100, accountDAO.getAccountByName("account3").getAccountBalance());
+		assertEquals(expectedBalance, accountDAO.getAccountByName("account3").getAccountBalance());
 	}
 	
 	@Test
