@@ -21,6 +21,9 @@
 
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
+		
+		<!-- Hibernate -->
+		<hibernate.version>3.5.6-Final</hibernate.version>
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -48,6 +51,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-orm</artifactId>
+		    <version>${spring-framework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -103,6 +111,31 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 		</dependency>
+		
+		<!-- Hibernate -->
+	    <dependency>
+	      	<groupId>org.hibernate</groupId>
+	      	<artifactId>hibernate-core</artifactId>
+	      	<version>${hibernate.version}</version>
+	    </dependency>
+	    
+	    <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>3.12.1.GA</version>
+		</dependency>
+		
+		
 	</dependencies>
+	
+	
+	
+	 
 
 </project>

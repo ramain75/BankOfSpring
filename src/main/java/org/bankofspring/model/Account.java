@@ -1,8 +1,18 @@
 
 package org.bankofspring.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.springframework.core.style.ToStringCreator;
 
@@ -12,13 +22,35 @@ import org.springframework.core.style.ToStringCreator;
  * that more than one customer can be linked to an account (joined account) we have added facilities
  * to add customer against the account but no facilities as yet to remove an customer from account
  */
-public class Account {
 
+@Entity
+@Table(name = "account")
+public class Account implements Serializable {
+	
+	private static final long serialVersionUID = -1189672094336961978L;
+
+	@Id
+	@Column(name = "number")
 	private String accountNumber;
+	
+	@Column(name = "description")
 	private String accountDescription;
+	
+	@Column(name = "balance")
 	private long accountBalance;
+	
+	@Column(name = "max_balance")
 	private long maxBalanceAmount;
+	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy="accounts")  
+	private List<Customer> customers;
 
+	
+	//Add a version column to allow Hibernate optimistic locking to ensure that concurrency is handled properly
+	@Version
+	private long version;
+
+	
 	public String getAccountNumber() {
 		return accountNumber;
 	}
@@ -50,6 +82,14 @@ public class Account {
 	public void setMaxBalanceAmount( long maxBalanceAmount ) {
 		this.maxBalanceAmount = maxBalanceAmount;
 	}
+	
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+	
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
 
 	@Override
 	public int hashCode() {
@@ -58,6 +98,14 @@ public class Account {
 		result = prime * result
 		    + ((accountNumber == null) ? 0 : accountNumber.hashCode());
 		return result;
+	}
+	
+	public long getVersion() {
+		return version;
+	}
+	
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 	@Override
@@ -88,6 +136,33 @@ public class Account {
 		    .append( "description", accountDescription )
 		    .append( "balance", accountBalance )
 		    .toString();
+	}
+	
+	/**
+	 * Method to debit the account
+	 * - not this is set to be transient to show that it is not
+	 * related to the database table, and is performing an operation
+	 * @param amount
+	 * @return
+	 */
+	@Transient
+	public boolean debitAccount(long amount){
+		if(getAccountBalance() - amount >= 0){
+			this.setAccountBalance(getAccountBalance() - amount);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	@Transient
+	public boolean creditAccount(long amount){
+		if(getAccountBalance() + amount <= maxBalanceAmount){
+			this.setAccountBalance(getAccountBalance() + amount);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }

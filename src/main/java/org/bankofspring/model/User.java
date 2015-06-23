@@ -1,14 +1,40 @@
 package org.bankofspring.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Class to represent a bank User
  *
  */
-public class User {
+@Entity
+@Table(name = "user")
+@Inheritance(strategy=InheritanceType.JOINED)
+public class User implements Serializable {
 
+	private static final long serialVersionUID = -5538745813599152617L;
+
+	@Id 
+	@GeneratedValue
+	private Integer id;
+	   
 	private String username;
 	private String password;
 
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
