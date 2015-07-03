@@ -1,9 +1,10 @@
-package org.bankofspring.dao;
+package org.bankofspring.dao.jdbc;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bankofspring.dao.rowmapper.AccountRowMapper;
+import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.jdbc.rowmapper.AccountRowMapper;
 import org.bankofspring.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -14,8 +15,8 @@ import org.springframework.stereotype.Repository;
  * @author slc
  *
  */
-@Repository
-public class AccountDAOImpl implements AccountDAO {
+@Repository("jdbcAccountDao")
+public class AccountDAOJDBCImpl implements AccountDAO {
 
 	@Autowired
 	private SimpleJdbcTemplate jdbc;

@@ -34,6 +34,7 @@ public class BankOfSpringAppTest {
 	private BankOfSpringService service;
 	
 	@Autowired
+	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
 	
 	@Autowired
