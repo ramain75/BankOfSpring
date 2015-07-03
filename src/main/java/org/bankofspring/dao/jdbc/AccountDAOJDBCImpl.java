@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author slc
  *
  */
-@Repository
+@Repository("jdbcAccountDao")
 public class AccountDAOJDBCImpl implements AccountDAO {
 
 	@Autowired

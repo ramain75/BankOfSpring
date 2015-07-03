@@ -9,6 +9,7 @@ import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service( "bankService" )
@@ -18,6 +19,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	private BankOperationValidator validator;
 
 	@Autowired
+	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
 
 	@Autowired
