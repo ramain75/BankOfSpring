@@ -1,8 +1,9 @@
-package org.bankofspring.dao;
+package org.bankofspring.dao.jdbc;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bankofspring.dao.AccountTransactionDAO;
 import org.bankofspring.model.AccountTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class AccountTransactionDAOImpl implements AccountTransactionDAO {
+public class AccountTransactionDAOJDBCImpl implements AccountTransactionDAO {
 
 	@Autowired
 	private SimpleJdbcTemplate jdbc;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+N.B. If we had a newer version of Spring, we could avoid this file entirely in favour of
+LocalContainerEntityManagerFactoryBean#packagesToScan
+Alas, we don't.
+-->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="accountPersistenceUnit" transaction-type="RESOURCE_LOCAL" >
+		<class>org.bankofspring.model.Account</class>
+	</persistence-unit>
+</persistence>

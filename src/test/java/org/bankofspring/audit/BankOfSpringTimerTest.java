@@ -42,25 +42,20 @@ public class BankOfSpringTimerTest {
 	private CustomerDAO customerDAO;
 	
 	@Autowired
+	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
 	
 	private Account account1;
-	private Account account2;
 	private Account account3;
-	private Account account4;
 	
 	private Customer customer1;
-	private Customer customer2;
 	
 	@Before
 	public void setup() {
-		account1 = accountDAO.getAccountByName( "account1" );
-		account2 = accountDAO.getAccountByName( "account2" );
-		account3 = accountDAO.getAccountByName( "account3" );
-		account4 = accountDAO.getAccountByName( "account4" );
+		account1 = accountDAO.getAccountByNumber( "account1" );
+		account3 = accountDAO.getAccountByNumber( "account3" );
 		
 		customer1 = customerDAO.getCustomerById(1);
-		customer2 = customerDAO.getCustomerById(2);
 	}
 	
 	@Test
