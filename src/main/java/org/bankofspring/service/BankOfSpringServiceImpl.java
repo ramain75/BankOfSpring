@@ -26,42 +26,52 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	private AccountTransactionDAO accountTransactionDAO;
 
 	/**
-   *
-   */
+	 *
+	 */
 	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.TRANSFER ) ) {
 			return false;
 		}
-
-		AccountTransaction txn = new AccountTransaction( toAccount, fromAccount, amount );
-		// at a later stage, we'll ensure all these things happen
-		return accountDAO.debitAccount( fromAccount, amount ) && accountDAO.creditAccount( toAccount, amount ) && accountTransactionDAO.create( txn );
+		
+		if ( !accountDAO.updateAccountBalance( fromAccount, fromAccount.getAccountBalance() - amount ) ) {
+			return false;
+		}
+		
+		if ( !accountDAO.updateAccountBalance( toAccount, toAccount.getAccountBalance() + amount ) ) {
+			return false;
+		}
+		
+		return accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) );
 	}
 
 	/**
-   *
-   */
+	 *
+	 */
 	public boolean withdraw( User loggedInUser, Account fromAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, fromAccount, null, amount, BankOperationType.WITHDRAWAL ) ) {
 			return false;
 		}
-		AccountTransaction txn = new AccountTransaction( null, fromAccount, amount );
 
-		// at a later stage, we'll ensure all these things happen
-		return accountDAO.debitAccount( fromAccount, amount ) && accountTransactionDAO.create( txn );
+		if ( !accountDAO.updateAccountBalance( fromAccount, fromAccount.getAccountBalance() - amount ) ) {
+			return false;
+		}
+		
+		return accountTransactionDAO.create( new AccountTransaction( null, fromAccount, amount ) );
 	}
 
 	/**
-   *
-   */
+	 *
+	 */
 	public boolean deposit( User loggedInUser, Account toAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, null, toAccount, amount, BankOperationType.DEPOSIT ) ) {
 			return false;
 		}
 
-		AccountTransaction txn = new AccountTransaction( toAccount, null, amount );
-		// at a later stage, we'll ensure all these things happen
-		return accountDAO.creditAccount( toAccount, amount ) && accountTransactionDAO.create( txn );
+		if ( !accountDAO.updateAccountBalance( toAccount, toAccount.getAccountBalance() + amount ) ) {
+			return false;
+		}
+		
+		return accountTransactionDAO.create( new AccountTransaction( toAccount, null, amount ) );
 	}
 
 	public BankOperationValidator getValidator() {

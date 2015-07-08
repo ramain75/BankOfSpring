@@ -52,8 +52,8 @@ public class BankOfSpringTimerTest {
 	
 	@Before
 	public void setup() {
-		account1 = accountDAO.getAccountByName( "account1" );
-		account3 = accountDAO.getAccountByName( "account3" );
+		account1 = accountDAO.getAccountByNumber( "account1" );
+		account3 = accountDAO.getAccountByNumber( "account3" );
 		
 		customer1 = customerDAO.getCustomerById(1);
 	}

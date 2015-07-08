@@ -44,4 +44,15 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <!-- Hibernate -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="org.bankofspring" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">org.hibernate.dialect.HSQLDialect</prop>
+            </props>
+        </property>
+    </bean>
 </beans>

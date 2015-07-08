@@ -129,7 +129,7 @@ public class BankOfSpringAppTest {
 	}
 	
 	private Account getAccount(String accountNumber) {
-		Account account  = accountDAO.getAccountByName( accountNumber );
+		Account account  = accountDAO.getAccountByNumber( accountNumber );
 		assertNotNull(account);
 		return account;
 	}
