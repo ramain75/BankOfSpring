@@ -8,7 +8,7 @@ import org.bankofspring.model.Account;
  *
  */
 public interface AccountDAO {
-	boolean debitAccount(Account account, Long amount);
-	boolean creditAccount(Account account, Long amount);
-	Account getAccountByName(String accountName);
+	Account getAccountByNumber( String accountName );
+	boolean updateAccountBalance( Account account, Long amount );
+	boolean addNewAccount( Account account );
 }

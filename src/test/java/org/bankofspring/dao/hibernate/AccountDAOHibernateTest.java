@@ -1,4 +1,4 @@
-package org.bankofspring.dao.jpa;
+package org.bankofspring.dao.hibernate;
 
 import org.bankofspring.dao.AbstractAccountDAOTest;
 import org.bankofspring.dao.AccountDAO;
@@ -13,10 +13,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:BankOfSpring-ds-test.xml", "classpath:BankOfSpring.xml"})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class AccountDAOJPATest extends AbstractAccountDAOTest {
+public class AccountDAOHibernateTest extends AbstractAccountDAOTest {
 
 	@Autowired
-	@Qualifier("jpaAccountDao")
+	@Qualifier("hibernateAccountDao")
 	private AccountDAO accountDAO;
 
 	@Override
