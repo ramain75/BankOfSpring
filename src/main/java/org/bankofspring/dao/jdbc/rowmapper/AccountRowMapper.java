@@ -1,4 +1,4 @@
-package org.bankofspring.dao.rowmapper;
+package org.bankofspring.dao.jdbc.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
