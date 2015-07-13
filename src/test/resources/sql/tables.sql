@@ -13,7 +13,7 @@ create table account (
 	number VARCHAR(255) PRIMARY KEY,
 	description VARCHAR(255) NOT NULL,
 	balance BIGINT NOT NULL,
-  max_balance BIGINT NOT NULL
+	max_balance BIGINT NOT NULL
 );
 
 create table customer_account (

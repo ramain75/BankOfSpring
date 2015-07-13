@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -26,6 +27,7 @@ public class AccountTransactionDAOJDBCTest {
 	private AccountTransactionDAO accountTransactionDAO;
 	
 	@Autowired
+	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
 	
 	@Autowired
@@ -36,8 +38,8 @@ public class AccountTransactionDAOJDBCTest {
 	
 	@Before
 	public void setup() {
-		account1 = accountDAO.getAccountByName("account1");
-		account3 = accountDAO.getAccountByName("account3");
+		account1 = accountDAO.getAccountByNumber("account1");
+		account3 = accountDAO.getAccountByNumber("account3");
 	}
 	
 	@Test
