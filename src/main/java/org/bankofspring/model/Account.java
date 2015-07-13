@@ -1,8 +1,10 @@
 
 package org.bankofspring.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.springframework.core.style.ToStringCreator;
 
@@ -12,6 +14,8 @@ import org.springframework.core.style.ToStringCreator;
  * that more than one customer can be linked to an account (joined account) we have added facilities
  * to add customer against the account but no facilities as yet to remove an customer from account
  */
+@Entity
+@Table(name = "ACCOUNT")
 public class Account {
 
 	private String accountNumber;
@@ -19,6 +23,8 @@ public class Account {
 	private long accountBalance;
 	private long maxBalanceAmount;
 
+	@Id
+	@Column(name = "NUMBER")
 	public String getAccountNumber() {
 		return accountNumber;
 	}
@@ -27,6 +33,7 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 
+	@Column(name = "DESCRIPTION")
 	public String getAccountDescription() {
 		return accountDescription;
 	}
@@ -35,6 +42,7 @@ public class Account {
 		this.accountDescription = accountDescription;
 	}
 
+	@Column(name = "BALANCE")
 	public long getAccountBalance() {
 		return accountBalance;
 	}
@@ -43,6 +51,7 @@ public class Account {
 		this.accountBalance = accountBalance;
 	}
 
+	@Column(name = "MAX_BALANCE")
 	public long getMaxBalanceAmount() {
 		return maxBalanceAmount;
 	}
