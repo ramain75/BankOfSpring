@@ -8,6 +8,8 @@ import org.bankofspring.model.AccountTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -23,6 +25,7 @@ public class AccountTransactionDAOJDBCImpl implements AccountTransactionDAO {
 	/**
 	 *
 	 */
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public boolean create( AccountTransaction accountTransaction ) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put( "from", accountTransaction.getFromAccount() != null ? accountTransaction.getFromAccount().getAccountNumber() : null );

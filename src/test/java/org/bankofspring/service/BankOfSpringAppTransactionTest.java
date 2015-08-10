@@ -60,9 +60,9 @@ public class BankOfSpringAppTransactionTest {
 		} catch (Exception e) {
 			
 		}
-		// the amount should not have changed
+		// the amounts should not have changed
 		assertEquals(balanceAccount1 , getAccount("account1").getAccountBalance());
-		assertEquals(balanceAccount3 , getAccount("account3").getAccountBalance());
+		assertEquals(balanceAccount3, getAccount("account3").getAccountBalance());
 		
 	}
 	

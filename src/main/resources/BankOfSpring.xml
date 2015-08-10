@@ -43,7 +43,11 @@
         <property name="jpaDialect" ref="jpaDialect" />
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="jdbcTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource" />
+    
+	</bean>
+    <tx:annotation-driven transaction-manager="jdbcTransactionManager" />
     
     <!-- Hibernate -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
