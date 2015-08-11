@@ -25,7 +25,7 @@ public class AccountTransactionDAOJDBCImpl implements AccountTransactionDAO {
 	/**
 	 *
 	 */
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	@Transactional(propagation=Propagation.MANDATORY)
 	public boolean create( AccountTransaction accountTransaction ) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put( "from", accountTransaction.getFromAccount() != null ? accountTransaction.getFromAccount().getAccountNumber() : null );

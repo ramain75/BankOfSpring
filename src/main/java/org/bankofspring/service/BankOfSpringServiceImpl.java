@@ -11,6 +11,8 @@ import org.bankofspring.validator.BankOperationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service( "bankService" )
 public class BankOfSpringServiceImpl implements BankOfSpringService {
@@ -28,6 +30,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	/**
 	 *
 	 */
+	@Transactional(propagation=Propagation.REQUIRED)
 	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.TRANSFER ) ) {
 			return false;

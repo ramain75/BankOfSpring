@@ -39,7 +39,7 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	}
 
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	@Transactional(propagation=Propagation.MANDATORY)
 	public boolean updateAccountBalance( Account account, Long amount ) {
 		if ( ( account == null ) || ( amount == null ) ) {
 			return false;
