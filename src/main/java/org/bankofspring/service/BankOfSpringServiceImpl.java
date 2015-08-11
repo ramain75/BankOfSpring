@@ -1,4 +1,3 @@
-
 package org.bankofspring.service;
 
 import org.bankofspring.dao.AccountDAO;
@@ -11,6 +10,7 @@ import org.bankofspring.validator.BankOperationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service( "bankService" )
 public class BankOfSpringServiceImpl implements BankOfSpringService {
@@ -26,22 +26,27 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	private AccountTransactionDAO accountTransactionDAO;
 
 	/**
-	 *
+	 * transfer will now rollback for either a TransferException or any other Exception
 	 */
+	@Transactional( rollbackFor=TransferException.class )
 	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.TRANSFER ) ) {
-			return false;
+			throw new TransferException("Validation failed");
 		}
 		
 		if ( !accountDAO.updateAccountBalance( fromAccount, fromAccount.getAccountBalance() - amount ) ) {
-			return false;
+			throw new TransferException("Failed to update from account");
 		}
 		
 		if ( !accountDAO.updateAccountBalance( toAccount, toAccount.getAccountBalance() + amount ) ) {
-			return false;
+			throw new TransferException("Failed to update to account");
 		}
 		
-		return accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) );
+		if ( !accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) ) ) {
+			throw new TransferException("Failed to create account transaction");
+		}
+		
+		return true;
 	}
 
 	/**

@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.HashMap;
 
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.dao.CustomerDAO;
@@ -14,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,6 +30,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankOfSpringAppTest {
 	
+	@Autowired
+	private SimpleJdbcTemplate jdbc;
+
 	@Autowired
 	private ApplicationContext appContext;
 	
@@ -116,10 +123,49 @@ public class BankOfSpringAppTest {
 		long balanceAccount1 = account1.getAccountBalance();
 		assertEquals("unexpected value for balance account1", 0L,balanceAccount1);
 		long balanceAccount3 = account3.getAccountBalance();
-		assertFalse(service.transfer(getCustomer(1), account1, account3, 100L));
+		
+		try {
+			service.transfer(getCustomer(1), account1, account3, 100L);
+			fail("Transfer should throw a TransferException");
+		} catch (TransferException te) {
+			// Expected
+		}
+
 		assertEquals(0L, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
 		
+		// Now check the database post updates
+		Account fromDbAccount1 = getAccount("account1");
+		Account fromDbAccount3 = getAccount("account3");
+		
+		assertEquals(0L, fromDbAccount1.getAccountBalance());
+		assertEquals(balanceAccount3 , fromDbAccount3.getAccountBalance());
+	}
+	
+	/**
+	 * Ensure a transfer fails by dropping a table. 
+	 * Check that an exception is thrown (by the DAO) and that the balance hasn't changed in either account.
+	 */
+	@Test
+	public void testTransferFails() {
+		Account account1 = getAccount("account1");
+		Account account3 = getAccount("account3");
+		long balanceAccount1 = account1.getAccountBalance();
+		long balanceAccount3 = account3.getAccountBalance();
+		System.out.println(balanceAccount1);
+		System.out.println(balanceAccount3);
+		
+		jdbc.update("drop table account_transaction", new HashMap<String, String>());
+
+		try {
+			service.transfer(getCustomer(1), account3, account1, 100L);
+			fail("Transfer should throw a TransferException");
+		} catch (Throwable t) {
+			// Expected
+		}
+		
+		assertEquals(balanceAccount1, getAccount("account1").getAccountBalance());
+		assertEquals(balanceAccount3, getAccount("account3").getAccountBalance());
 	}
 	
 	private Customer getCustomer(Integer id) {
@@ -133,5 +179,6 @@ public class BankOfSpringAppTest {
 		assertNotNull(account);
 		return account;
 	}
+	
 	
 }
