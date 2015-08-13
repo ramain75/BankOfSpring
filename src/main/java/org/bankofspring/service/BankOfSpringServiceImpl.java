@@ -26,7 +26,7 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	private AccountTransactionDAO accountTransactionDAO;
 
 	/**
-	 * transfer will now rollback for either a TransferException or any other Exception
+	 * transfer will now rollback if any issues encountered
 	 */
 	@Transactional
 	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
