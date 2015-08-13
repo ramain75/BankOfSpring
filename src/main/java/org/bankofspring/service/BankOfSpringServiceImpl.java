@@ -1,4 +1,3 @@
-
 package org.bankofspring.service;
 
 import org.bankofspring.dao.AccountDAO;
@@ -11,6 +10,7 @@ import org.bankofspring.validator.BankOperationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service( "bankService" )
 public class BankOfSpringServiceImpl implements BankOfSpringService {
@@ -26,8 +26,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	private AccountTransactionDAO accountTransactionDAO;
 
 	/**
-	 *
+	 * transfer will now rollback if any issues encountered
 	 */
+	@Transactional
 	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.TRANSFER ) ) {
 			return false;
@@ -41,7 +42,8 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 			return false;
 		}
 		
-		return accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) );
+		return accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) ) ;
+	
 	}
 
 	/**
