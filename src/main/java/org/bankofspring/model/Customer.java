@@ -1,8 +1,5 @@
 package org.bankofspring.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class to represent a bank customer - extends user

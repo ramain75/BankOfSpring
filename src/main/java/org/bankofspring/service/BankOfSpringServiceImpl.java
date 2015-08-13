@@ -28,25 +28,22 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	/**
 	 * transfer will now rollback for either a TransferException or any other Exception
 	 */
-	@Transactional( rollbackFor=TransferException.class )
+	@Transactional
 	public boolean transfer( User loggedInUser, Account fromAccount, Account toAccount, long amount ) {
 		if ( !validator.validateOperation( loggedInUser, fromAccount, toAccount, amount, BankOperationType.TRANSFER ) ) {
-			throw new TransferException("Validation failed");
+			return false;
 		}
 		
 		if ( !accountDAO.updateAccountBalance( fromAccount, fromAccount.getAccountBalance() - amount ) ) {
-			throw new TransferException("Failed to update from account");
+			return false;
 		}
 		
 		if ( !accountDAO.updateAccountBalance( toAccount, toAccount.getAccountBalance() + amount ) ) {
-			throw new TransferException("Failed to update to account");
+			return false;
 		}
 		
-		if ( !accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) ) ) {
-			throw new TransferException("Failed to create account transaction");
-		}
-		
-		return true;
+		return accountTransactionDAO.create( new AccountTransaction( toAccount, fromAccount, amount ) ) ;
+	
 	}
 
 	/**

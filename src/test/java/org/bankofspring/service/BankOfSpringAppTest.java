@@ -124,13 +124,8 @@ public class BankOfSpringAppTest {
 		assertEquals("unexpected value for balance account1", 0L,balanceAccount1);
 		long balanceAccount3 = account3.getAccountBalance();
 		
-		try {
-			service.transfer(getCustomer(1), account1, account3, 100L);
-			fail("Transfer should throw a TransferException");
-		} catch (TransferException te) {
-			// Expected
-		}
-
+		assertFalse(service.transfer(getCustomer(1), account1, account3, 100L));
+	
 		assertEquals(0L, account1.getAccountBalance());
 		assertEquals(balanceAccount3 , account3.getAccountBalance());
 		
@@ -143,27 +138,27 @@ public class BankOfSpringAppTest {
 	}
 	
 	/**
+	 * Testing that transferring money is in a transaction
+	 * we do a transfer but we drop the account_transaction table before hand
+	 * this means that the transfer operations should rollback and that 
+	 * the accounts are not debited/credited
 	 * Ensure a transfer fails by dropping a table. 
 	 * Check that an exception is thrown (by the DAO) and that the balance hasn't changed in either account.
 	 */
 	@Test
-	public void testTransferFails() {
+	public void testTransferShouldRollBack() {
 		Account account1 = getAccount("account1");
 		Account account3 = getAccount("account3");
 		long balanceAccount1 = account1.getAccountBalance();
 		long balanceAccount3 = account3.getAccountBalance();
-		System.out.println(balanceAccount1);
-		System.out.println(balanceAccount3);
 		
 		jdbc.update("drop table account_transaction", new HashMap<String, String>());
-
 		try {
 			service.transfer(getCustomer(1), account3, account1, 100L);
 			fail("Transfer should throw a TransferException");
 		} catch (Throwable t) {
 			// Expected
 		}
-		
 		assertEquals(balanceAccount1, getAccount("account1").getAccountBalance());
 		assertEquals(balanceAccount3, getAccount("account3").getAccountBalance());
 	}
