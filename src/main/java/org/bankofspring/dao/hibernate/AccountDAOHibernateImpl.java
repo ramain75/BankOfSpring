@@ -1,9 +1,16 @@
 package org.bankofspring.dao.hibernate;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -66,5 +73,11 @@ public class AccountDAOHibernateImpl extends HibernateDaoSupport implements Acco
 		
 		create( account );
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Account> getAccounts() {
+		return getHibernateTemplate().loadAll(Account.class);
 	}
 }

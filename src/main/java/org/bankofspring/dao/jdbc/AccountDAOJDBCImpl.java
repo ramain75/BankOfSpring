@@ -1,6 +1,7 @@
 package org.bankofspring.dao.jdbc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bankofspring.dao.AccountDAO;
@@ -82,5 +83,11 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 		catch ( EmptyResultDataAccessException e ) {
 			return null; // Account not found
 		}
+	}
+
+	@Override
+	public List<Account> getAccounts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
