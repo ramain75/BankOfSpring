@@ -20,7 +20,7 @@
     
     <mvc:annotation-driven/>
     
-    <mvc:resources mapping="/resources/***" location="/resources/*"/>
+    <mvc:resources mapping="/resources/**" location="/resources/*"/>
     
         
     <bean class=
