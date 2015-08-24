@@ -1,6 +1,7 @@
 package org.bankofspring.dao.jdbc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bankofspring.dao.AccountDAO;
@@ -8,6 +9,7 @@ import org.bankofspring.dao.jdbc.rowmapper.AccountRowMapper;
 import org.bankofspring.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -82,5 +84,10 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 		catch ( EmptyResultDataAccessException e ) {
 			return null; // Account not found
 		}
+	}
+
+	@Override
+	public List<Account> getCustomerAccounts(Integer customer) {
+		return jdbc.query("select number, description, balance, max_balance FROM account acc LEFT JOIN customer_account ca ON acc.number = ca.number WHERE customer_id = ?", new AccountRowMapper(), customer);
 	}
 }
