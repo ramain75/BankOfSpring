@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 	<head>
-		<title>Hello</title>
+		<title>Home</title>
 	</head>
 	<body>
 		<h2>Home</h2>

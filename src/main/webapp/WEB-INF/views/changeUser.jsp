@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 	<head>
-		<title>Hello</title>
+		<title>Select User</title>
 	</head>
 	<body>
 		<h2>Change User</h2>
@@ -16,6 +16,9 @@
 				</select>
 				<input type="submit" value="Go"/>
 			</form>
+		</p>
+		<p>
+			<a href="<c:url value="/home"/>">Back</a>
 		</p>
 	</body>
 </html>

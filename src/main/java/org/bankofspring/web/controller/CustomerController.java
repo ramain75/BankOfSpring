@@ -41,4 +41,12 @@ public class CustomerController {
 		map.addAttribute("id", customer);
 		return "accountList";
 	}
+	
+	@RequestMapping(value = "/{id}/{accountNumber}", method = RequestMethod.GET)
+	public String showAccountDetails(@PathVariable("id") Integer customer, @PathVariable("accountNumber") String accountNumber, ModelMap map) {
+		map.addAttribute("account", accountDAO.getAccountByNumber(accountNumber));
+		map.addAttribute("id", customer);
+		map.addAttribute("accountNumber", accountNumber);
+		return "accountDetails";
+	}
 }

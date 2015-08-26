@@ -3,13 +3,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 	<head>
-		<title>Hello</title>
+		<title>Show Customers</title>
 	</head>
 	<body>
 		<h2>Customer List</h2>
 		<p>
 			<c:if test="${not empty customers}">
-			Here are a list of the customers associated with this account:
+			Here are a list of the customers associated with this login:
 				<ul>
 					<c:forEach items="${customers}" var="customer">
 						<c:url value="/customer/${customer.id}" var="url"/>
@@ -20,6 +20,9 @@
 			<c:if test="${empty customers}">
 				There are no customers associated with this login.
 			</c:if>
+		</p>
+		<p>
+			<a href="<c:url value="/home"/>">Back</a>
 		</p>
 	</body>
 </html>

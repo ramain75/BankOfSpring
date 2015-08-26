@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 	<head>
-		<title>Hello</title>
+		<title>Account Details</title>
 	</head>
 	<body>
 		<h2>Account Details: ${account.accountNumber}</h2>
@@ -16,6 +16,9 @@
 				<dt>Account Balance</dt>
 				<dd>${account.accountBalance}</dd>
 			</dl>
+		</p>
+		<p>
+			<a href="<c:url value="/customer/${id}"/>">Back</a>
 		</p>
 	</body>
 </html>
