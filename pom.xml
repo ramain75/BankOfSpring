@@ -26,10 +26,11 @@
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.8.4</mockito.version>
-		
+
 		<!-- Web -->
 		<jstl.version>1.2</jstl.version>
 		<servlet.version>3.0.1</servlet.version>
+		<sitemesh.version>3.0.1</sitemesh.version>
 	</properties>
 
 	<dependencies>
@@ -112,7 +113,7 @@
 			<version>${hsqldb.version}</version>
 		</dependency>
 
-		<!-- -->
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -125,6 +126,13 @@
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${jstl.version}</version>
+		</dependency>
+
+		<!-- Sitemesh -->
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 
 		<!-- Logging with SLF4J -->
