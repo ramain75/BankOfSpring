@@ -17,9 +17,11 @@
         		Not logged in yet.
         	</c:if>
 	    </div>
+	    <hr/>
 		<div class="container">
         	<sitemesh:write property='body'/>
 	    </div>
+	    <hr/>
 	    <div class="footer">
 	    	&copy; Bank Of Spring <fmt:formatDate value="${footer_date}" pattern="yyyy" />
 	    </div>
