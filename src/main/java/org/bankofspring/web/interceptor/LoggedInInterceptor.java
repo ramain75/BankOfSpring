@@ -16,23 +16,10 @@ public class LoggedInInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession s = request.getSession();
 		if (s.getAttribute(USER_SESSION_ATTRIBUTE_KEY) == null && !(handler instanceof ChangeUserController) && !(handler instanceof DecoratorController)) {
-			response.sendRedirect(createRedirectUrl(request, "/selectUser"));
+			response.sendRedirect(request.getContextPath() + "/selectUser");
 			return false;
 		}
 		return true;
 	}
 	
-	/**
-	 * This could be in a ytil class, I've left it here for laziness
-	 * @param request the {@link HttpServletRequest}
-	 * @param redirect the url to create. A leading <code>/</code> indicates that the url should be context relative. Otherwise it should be relative.
-	 * @return The url
-	 */
-	private String createRedirectUrl(HttpServletRequest request, String redirect) {
-		if (redirect.startsWith("/")) {
-			return request.getContextPath() + redirect;
-		} else {
-			return redirect;
-		}
-	}
 }

@@ -90,4 +90,14 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	public List<Account> getCustomerAccounts(Integer customer) {
 		return jdbc.query("select number, description, balance, max_balance FROM account acc LEFT JOIN customer_account ca ON acc.number = ca.number WHERE customer_id = ?", new AccountRowMapper(), customer);
 	}
+	
+	@Override
+	public List<Account> getAccountsForUsername(String username) {
+		return jdbc.query("select number, description, balance, max_balance FROM account acc LEFT JOIN customer_account ca ON acc.number = ca.number LEFT JOIN customer cust ON cust.id = ca.customer_id WHERE cust.username = ?", new AccountRowMapper(), username);
+	}
+	
+	@Override
+	public List<Account> getAllAccounts() {
+		return jdbc.query("select number, description, balance, max_balance FROM account acc", new AccountRowMapper());
+	}
 }

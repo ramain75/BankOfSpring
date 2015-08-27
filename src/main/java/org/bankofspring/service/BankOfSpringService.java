@@ -5,6 +5,7 @@ package org.bankofspring.service;
  */
 import org.bankofspring.model.Account;
 import org.bankofspring.model.User;
+import org.bankofspring.web.TransferForm;
 
 public interface BankOfSpringService {
 	
@@ -13,5 +14,7 @@ public interface BankOfSpringService {
 	public boolean withdraw(User loggedInUser, Account fromAccount, long amount);
 	
 	public boolean deposit(User loggedInUser, Account toAccount, long amount);
+
+	public boolean transfer(String username, TransferForm transferForm);
 
 }

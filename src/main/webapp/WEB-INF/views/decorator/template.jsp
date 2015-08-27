@@ -10,12 +10,16 @@
 	<body>
 		<div class="header">
         	<h1>Bank Of Spring</h1>
+        	<p>
+        	<a href="<c:url value="/home"/>">Home</a> | 
         	<c:if test="${not empty sessionScope.bos_current_user}">
         		Logged in as <c:out value="${bos_current_user}"/> (<a href="<c:url value="/logout"/>">logout</a>)
         	</c:if>
         	<c:if test="${empty sessionScope.bos_current_user}">
         		Not logged in yet.
         	</c:if>
+        	</p>
+        	<p></p>
 	    </div>
 	    <hr/>
 		<div class="container">

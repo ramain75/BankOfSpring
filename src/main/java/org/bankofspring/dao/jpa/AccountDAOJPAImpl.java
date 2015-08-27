@@ -81,7 +81,17 @@ public class AccountDAOJPAImpl implements AccountDAO {
 
 	@Override
 	public List<Account> getCustomerAccounts(Integer customer) {
-		throw new RuntimeException("OOOOPS");
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public List<Account> getAccountsForUsername(String username) {
+		throw new RuntimeException("Not implemented");
+	}
+	
+	@Override
+	public List<Account> getAllAccounts() {
+		throw new RuntimeException("Not implemented");
 	}
 
 }

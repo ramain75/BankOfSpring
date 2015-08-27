@@ -14,4 +14,6 @@ public interface AccountDAO {
 	boolean updateAccountBalance( Account account, Long amount );
 	boolean addNewAccount( Account account );
 	List<Account> getCustomerAccounts(Integer customer);
+	List<Account> getAccountsForUsername(String username);
+	List<Account> getAllAccounts();
 }

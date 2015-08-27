@@ -10,6 +10,7 @@
 		<p>Actions:
 			<ul>
 				<li><a href="<c:url value="/customer"/>">View Customers</a></li>
+				<li><a href="<c:url value="/transfer"/>">Transfer Cash</a></li>
 				<li><a href="<c:url value="/selectUser"/>">Select User</a></li>
 			</ul>
 		</p>
