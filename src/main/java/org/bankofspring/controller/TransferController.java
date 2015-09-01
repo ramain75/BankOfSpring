@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,11 +61,13 @@ public class TransferController {
 		return modelandview;
 	}
 	
-	@RequestMapping(value = "/transferAmount", method = RequestMethod.POST)
-	public String transferAmount(@ModelAttribute("TransferDetails")TransferDetails transferDetails, 
+	@RequestMapping(value = "/transfer", method = RequestMethod.POST)
+	public ModelAndView transferAmount(@ModelAttribute("TransferDetails")TransferDetails transferDetails, 
 			ModelMap model) {
 		
-		return "result";
+		ModelAndView mv = new ModelAndView("redirect:transfer");
+		
+		return mv;
 	}
 	
 	

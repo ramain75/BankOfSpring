@@ -8,7 +8,7 @@
 	  <div class="panel-heading">Transfer</div>
 	  <div class="panel-body">
 		
-		<sf:form method="POST" action="transferAmount" >
+		<sf:form method="POST" action="transfer" >
 			<b>From: </b><sf:select cssClass="selectpicker" path="fromNumber" items="${accounts}"></sf:select>
 			<b>To: </b><sf:select cssClass="selectpicker" path="toNumber" items="${accounts}"></sf:select>
 			<input name="submit" type="submit" value="Transfer" class="btn btn-primary" style="margin-left:10px;"/>
