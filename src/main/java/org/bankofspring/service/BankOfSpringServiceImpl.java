@@ -1,5 +1,7 @@
 package org.bankofspring.service;
 
+import java.util.List;
+
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.dao.AccountTransactionDAO;
 import org.bankofspring.model.Account;
@@ -24,6 +26,11 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 
 	@Autowired
 	private AccountTransactionDAO accountTransactionDAO;
+
+	@Override
+	public List<Account> listAccounts() {
+		return this.accountDAO.listAccounts();
+	}
 
 	/**
 	 * transfer will now rollback if any issues encountered

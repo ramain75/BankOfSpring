@@ -1,5 +1,7 @@
 package org.bankofspring.dao.hibernate;
 
+import java.util.List;
+
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
 import org.hibernate.SessionFactory;
@@ -33,6 +35,11 @@ public class AccountDAOHibernateImpl extends HibernateDaoSupport implements Acco
 	
 	public void delete( Account account ) {
 		getHibernateTemplate().delete( account );
+	}
+
+	@Override
+	public List<Account> listAccounts() {
+		throw new UnsupportedOperationException( "TODO" );
 	}
 
 	@Override
