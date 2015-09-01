@@ -70,11 +70,6 @@ public class AccountDAOHibernateImpl extends HibernateDaoSupport implements Acco
 		create( account );
 		return true;
 	}
-
-	@Override
-	public List<Account> getCustomerAccounts(Integer customer) {
-		throw new RuntimeException("Not implemented");
-	}
 	
 	@Override
 	public List<Account> getAccountsForUsername(String username) {

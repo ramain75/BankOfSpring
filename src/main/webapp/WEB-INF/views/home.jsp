@@ -9,9 +9,9 @@
 		<h2>Home</h2>
 		<p>Actions:
 			<ul>
-				<li><a href="<c:url value="/customer"/>">View Customers</a></li>
+				<li><a href="<c:url value="/me"/>">View Accounts</a></li>
 				<li><a href="<c:url value="/transfer"/>">Transfer Cash</a></li>
-				<li><a href="<c:url value="/selectUser"/>">Select User</a></li>
+				<li><a href="<c:url value="/selectUser"/>">Select User</a> (Demo only)</li>
 			</ul>
 		</p>
 	</body>

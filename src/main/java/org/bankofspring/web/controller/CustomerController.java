@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/me")
 public class CustomerController {
 
 	@Autowired
@@ -28,24 +28,17 @@ public class CustomerController {
 	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String selectCustomer(HttpSession session, ModelMap map) {
-		map.addAttribute("customers", customerDAO.getCustomersForUser((String) session.getAttribute(LoggedInInterceptor.USER_SESSION_ATTRIBUTE_KEY)));
-		return "showCustomers";
-	}
-	
-	@RequestMapping( value = "/{id}", method = RequestMethod.GET)
-	public String showAccounts(@PathVariable("id") Integer customer, ModelMap map) {
-		List<Account> accounts = accountDAO.getCustomerAccounts(customer);
+	@RequestMapping( method = RequestMethod.GET)
+	public String showAccounts(HttpSession session, ModelMap map) {
+		String username = (String) session.getAttribute(LoggedInInterceptor.USER_SESSION_ATTRIBUTE_KEY);
+		List<Account> accounts = accountDAO.getAccountsForUsername(username);
 		map.addAttribute("accounts", accounts);
-		map.addAttribute("id", customer);
 		return "accountList";
 	}
 	
-	@RequestMapping(value = "/{id}/{accountNumber}", method = RequestMethod.GET)
-	public String showAccountDetails(@PathVariable("id") Integer customer, @PathVariable("accountNumber") String accountNumber, ModelMap map) {
+	@RequestMapping(value = "/{accountNumber}", method = RequestMethod.GET)
+	public String showAccountDetails(@PathVariable("accountNumber") String accountNumber, ModelMap map) {
 		map.addAttribute("account", accountDAO.getAccountByNumber(accountNumber));
-		map.addAttribute("id", customer);
 		map.addAttribute("accountNumber", accountNumber);
 		return "accountDetails";
 	}

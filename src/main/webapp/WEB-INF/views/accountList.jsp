@@ -12,7 +12,7 @@
 			Here are your accounts:
 				<ul>
 					<c:forEach items="${accounts}" var="account">
-						<c:url value="/customer/${id}/${account.accountNumber}" var="url"/>
+						<c:url value="/me/${account.accountNumber}" var="url"/>
 						<li><a href="${url}">${account.accountNumber}</a></li>
 					</c:forEach>
 				</ul>
@@ -22,7 +22,7 @@
 			</c:if>
 		</p>
 		<p>
-			<a href="<c:url value="/customer"/>">Back</a>
+			<a href="<c:url value="/home"/>">Back</a>
 		</p>
 	</body>
 </html>

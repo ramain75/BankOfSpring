@@ -18,7 +18,7 @@
 			</dl>
 		</p>
 		<p>
-			<a href="<c:url value="/customer/${id}"/>">Back</a>
+			<a href="<c:url value="/me"/>">Back</a>
 		</p>
 	</body>
 </html>
