@@ -3,15 +3,32 @@
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
      version="2.5">
-<display-name>Bank Of Spring</display-name>
+     
+<display-name>BankOfSpring</display-name>
 <description>Spring Training: a bank webapp</description>
+
+<listener>
+<listener-class>
+org.springframework.web.context.ContextLoaderListener
+</listener-class>
+</listener>
+<context-param>
+<param-name>contextConfigLocation</param-name>
+<param-value>
+/WEB-INF/BankOfSpring-servlet.xml
+</param-value>
+</context-param>
+
+
 <servlet>
 <servlet-name>BankOfSpring</servlet-name>
 <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 <load-on-startup>1</load-on-startup>
 </servlet>
+
 <servlet-mapping>
 <servlet-name>BankOfSpring</servlet-name>
 <url-pattern>/</url-pattern>
 </servlet-mapping>
+
 </web-app>
