@@ -4,10 +4,20 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
   
-    <definition name="defaultTemplate" template="/WEB-INF/views/default/template.jsp">
+    <definition name="baseLayout" template="/WEB-INF/views/default/template.jsp">
         <put-attribute name="header" value="/WEB-INF/views/default/header.jsp" />
         <put-attribute name="menu" value="/WEB-INF/views/default/menu.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/default/footer.jsp" />
     </definition>
+    
+    <definition name="accounts" extends="baseLayout">
+	  <put-attribute name="title" value="Bank of Spring Accounts" />
+	  <put-attribute name="body" value="/WEB-INF/views/accounts.jsp" />
+	</definition>
+	
+	<definition name="about" extends="baseLayout">
+	  <put-attribute name="title" value="About Bank of Spring" />
+	  <put-attribute name="body" value="/WEB-INF/views/about.jsp" />
+	</definition>
   
 </tiles-definitions>

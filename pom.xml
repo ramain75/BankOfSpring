@@ -20,10 +20,10 @@
 		<hsqldb.version>2.3.2</hsqldb.version>
 
 		<!-- Logging -->
-		<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.5.8</slf4j.version>
 		
 		<!-- Tiles -->
-		<tiles-version>3.0.5</tiles-version>
+		<tiles-version>2.2.2</tiles-version>
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -170,6 +170,7 @@
 			<version>${tiles-version}</version>
 		</dependency>
 	</dependencies>
+	
 	
 	<build>
 		<finalName>BankOfSpringWeb</finalName>
