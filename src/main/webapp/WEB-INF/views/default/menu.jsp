@@ -12,6 +12,7 @@
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/accounts">Accounts</a></li>
+        <li><a href="/transfer">Transfer</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </div><!--/.nav-collapse -->

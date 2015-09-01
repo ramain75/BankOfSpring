@@ -8,11 +8,17 @@
         <put-attribute name="header" value="/WEB-INF/views/default/header.jsp" />
         <put-attribute name="menu" value="/WEB-INF/views/default/menu.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/default/footer.jsp" />
+        <put-attribute name="title" value="Bank of Spring" />
     </definition>
     
     <definition name="accounts" extends="baseLayout">
 	  <put-attribute name="title" value="Bank of Spring Accounts" />
 	  <put-attribute name="body" value="/WEB-INF/views/accounts.jsp" />
+	</definition>
+	
+	<definition name="transfer" extends="baseLayout">
+	  <put-attribute name="title" value="Transfer Between Accounts" />
+	  <put-attribute name="body" value="/WEB-INF/views/transfer.jsp" />
 	</definition>
 	
 	<definition name="about" extends="baseLayout">

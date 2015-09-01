@@ -7,6 +7,7 @@
 
     <!-- Bootstrap -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/bootstrap-select.css" rel="stylesheet">
     
     <!-- Bank of Spring Style -->
     <link href="/resources/css/bankofspring.css" rel="stylesheet">
