@@ -8,8 +8,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.TransferDetails;
+import org.bankofspring.model.User;
 import org.bankofspring.service.BankOfSpringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +38,10 @@ public class TransferController {
 	@Autowired
 	@Qualifier("hibernateAccountDao")
 	private AccountDAO accountDAO;
+	
+	@Autowired
+	@Qualifier("jdbcCustomerDao")
+	private CustomerDAO customerDAO;
 
 	@RequestMapping(value = "/transfer", method = RequestMethod.GET)
 	public ModelAndView transfer(HttpServletResponse response) throws IOException{
@@ -65,7 +71,42 @@ public class TransferController {
 	public ModelAndView transferAmount(@ModelAttribute("TransferDetails")TransferDetails transferDetails, 
 			ModelMap model) {
 		
+		System.out.println("From: "+transferDetails.getFromNumber());
+		System.out.println("To: "+transferDetails.getToNumber());
+		
+		//Just get a user for now.... Don't really care which
+		User user1 = customerDAO.getCustomerById(1);
+		Account fromAccount;
+		Account toAccount;
+		
+		String error = "";
+		
+		//Get from account
+		if(	transferDetails.getFromNumber() != null && transferDetails.getToNumber() != null 
+			&& !"N/A".equals(transferDetails.getFromNumber()) && !"N/A".equals(transferDetails.getToNumber())){
+			
+			try{
+				fromAccount = accountDAO.getAccountByNumber(transferDetails.getFromNumber());
+				toAccount = accountDAO.getAccountByNumber(transferDetails.getToNumber());
+				
+				if(!service.transfer(user1, fromAccount, toAccount, (long)transferDetails.getAmount())){
+					error = "An error occurred trying to transfer money";
+					System.err.println("Error");
+				}
+			}
+			catch(Exception e){
+				error = "An error occurred trying to transfer money";
+				System.err.println("Error");
+			}
+		}
+		else{
+			error = "Account Details not valid";
+			System.err.println("Error");
+		}
+		
+		
 		ModelAndView mv = new ModelAndView("redirect:transfer");
+		mv.addObject("errorString", error);
 		
 		return mv;
 	}

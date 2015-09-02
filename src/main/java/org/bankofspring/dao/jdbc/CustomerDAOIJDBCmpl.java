@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("jdbcCustomerDao")
 public class CustomerDAOIJDBCmpl implements CustomerDAO {
 
 	@Autowired
