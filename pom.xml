@@ -25,6 +25,7 @@
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.8.4</mockito.version>
+		<thymeleaf-version>2.1.4.RELEASE</thymeleaf-version>
 	</properties>
 
 	<dependencies>
@@ -132,7 +133,12 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring3</artifactId>
+			<version>${thymeleaf-version}</version>
+		</dependency>
 	</dependencies>
 <build>
 <finalName>BankOfSpring</finalName>
