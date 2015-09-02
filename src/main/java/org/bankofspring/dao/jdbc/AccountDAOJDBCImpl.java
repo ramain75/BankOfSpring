@@ -1,6 +1,7 @@
 package org.bankofspring.dao.jdbc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bankofspring.dao.AccountDAO;
@@ -34,6 +35,11 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	  */
 	public SimpleJdbcTemplate getJdbc() {
 		return this.jdbc;
+	}
+
+	@Override
+	public List<Account> listAccounts() {
+		return jdbc.query( "SELECT number, description, balance, max_balance FROM account", new AccountRowMapper() );
 	}
 
 	@Override

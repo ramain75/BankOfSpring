@@ -5,8 +5,7 @@
                                                     http://www.springframework.org/schema/jdbc
                                                     http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
-	<jdbc:embedded-database id="dataSource"
-		type="HSQL">
+	<jdbc:embedded-database id="dataSource" type="HSQL">
 		<jdbc:script location="classpath:sql/tables.sql" />
 		<jdbc:script location="classpath:sql/user.sql" />
 		<jdbc:script location="classpath:sql/customer.sql" />
@@ -14,5 +13,4 @@
 		<jdbc:script location="classpath:sql/customer_account.sql" />
 		<jdbc:script location="classpath:sql/account_txn.sql" />
 	</jdbc:embedded-database>
-
 </beans>

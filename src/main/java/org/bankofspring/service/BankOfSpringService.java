@@ -3,10 +3,14 @@ package org.bankofspring.service;
  * the service interface for the bank, at this stage we support credit and debit
  * also we have an BankOperationValidator
  */
+import java.util.List;
+
 import org.bankofspring.model.Account;
 import org.bankofspring.model.User;
 
 public interface BankOfSpringService {
+	
+	public List<Account> listAccounts();
 	
 	public boolean transfer(User loggedInUser, Account fromAccount, Account toAccount, long amount);
 	

@@ -1,0 +1,23 @@
+body {
+	font-family: Helvetica, arial, sans-serif;
+}
+
+#logo {
+	background-image: url("bosp.jpg");
+	background-size: 90px 90px;
+	background-repeat: no-repeat;
+	padding-left: 100px;
+	height: 90px;
+	font-size: 62px;
+	font-family: "Comic Sans MS";
+	font-weight: bold;
+}
+
+table.grid {
+	border-collapse: collapse;
+}
+
+table.grid th, table.grid td {
+	border: 1px solid black;
+	padding: 3px 8px;
+}

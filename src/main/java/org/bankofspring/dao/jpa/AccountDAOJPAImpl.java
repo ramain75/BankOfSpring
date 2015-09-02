@@ -1,5 +1,7 @@
 package org.bankofspring.dao.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -42,6 +44,11 @@ public class AccountDAOJPAImpl implements AccountDAO {
 	
 	public void delete( Account account ) {
 		this.entityManager.remove( account );
+	}
+
+	@Override
+	public List<Account> listAccounts() {
+		throw new UnsupportedOperationException( "TODO" );
 	}
 
 	@Override
