@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 <title>BankOfSpring- Customers</title>
 </head>
 <body>
-<H1>Bank Of Spring - Customers</H1>
-
-
+<H1>Customers</H1>
+<table>
+<thead>
+</thead>
+<tbody>
+<tr th:each="customer : ${customers}">
+<td th:text="${customer.id}">1</td>
+<td th:text="${customer.name}">smith </td>
+</tr>
+</tbody>
+</table>
 </body>
 
 </html>

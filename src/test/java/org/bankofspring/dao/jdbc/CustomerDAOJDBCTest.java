@@ -2,6 +2,8 @@ package org.bankofspring.dao.jdbc;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.model.Customer;
 import org.junit.Test;
@@ -27,5 +29,11 @@ public class CustomerDAOJDBCTest {
 		assertEquals("customer one", customer.getName());
 		assertEquals("test", customer.getPassword());
 		assertEquals("user1", customer.getUsername());
+	}
+	@Test
+	public void testGetCustomers() throws Exception {
+		List<Customer> list = customerDAO.getCustomers();
+		assertEquals("invalid number of customers",2,list.size() );
+		
 	}
 }

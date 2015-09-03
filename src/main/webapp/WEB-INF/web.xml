@@ -16,6 +16,8 @@ org.springframework.web.context.ContextLoaderListener
 <param-name>contextConfigLocation</param-name>
 <param-value>
 /WEB-INF/BankOfSpring-servlet.xml
+classpath:BankOfSpring.xml
+classpath:BankOfSpring-ds-test.xml
 </param-value>
 </context-param>
 

@@ -11,14 +11,8 @@
      http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
  <mvc:resources mapping="/resources/**" location="/resources/" />
  <mvc:annotation-driven />
-  <context:component-scan base-package="org.bankofspring.controllers"/>
+ <context:component-scan base-package="org.bankofspring.controllers"/>
  
- <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
- <property name="prefix" value="/WEB-INF/views/"/>
- <property name="suffix" value=".jsp"/> 
- <property name="order" value="2" />
-  </bean>
-  -->
  <!--  thymeleaf beans -->
  <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver" >
  <property name="prefix" value="/WEB-INF/views/" />

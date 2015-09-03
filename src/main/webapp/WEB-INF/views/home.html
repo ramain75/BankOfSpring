@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 <title>BankOfSpring- Home</title>
 </head>
 <body>
 <H1>Bank Of Spring</H1>
-
-<p> <A href="customerslist.html">CustomerList</A> </p>
+<p th:text="${welcome}">welcome to our bank! </p>
+<br></br>
+<p> <A href="/customer/list/">CustomerList</A> </p>
 <p> <A href="accountslist.html">Account List</A> </p>
 
 </body>
