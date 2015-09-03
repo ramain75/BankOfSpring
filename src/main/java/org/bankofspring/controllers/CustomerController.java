@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
 	@Autowired
 	CustomerDAO customerDao;
-	@RequestMapping ("/list")
+	@RequestMapping ("/")
 	public String showCustomerList(Map<String,Object> model) {
 		List<Customer> customers = customerDao.getCustomers();
 		model.put("customers",customers);
