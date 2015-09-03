@@ -9,11 +9,15 @@
 <H1>Customers</H1>
 <table>
 <thead>
+<th th:text="#{customer.name}">Customer Name </th>
+<th th:text="#{customer.email}">Customer Name </th>
+<th th:text="#{customer.description}">Customer Name </th>
 </thead>
 <tbody>
 <tr th:each="customer : ${customers}">
-<td th:text="${customer.id}">1</td>
 <td th:text="${customer.name}">smith </td>
+<td th:text="${customer.email}">test@gmail.com </td>
+<td th:text="${customer.description}">my customer </td>
 </tr>
 </tbody>
 </table>

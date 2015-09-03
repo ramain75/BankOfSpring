@@ -27,8 +27,8 @@ public class CustomerDAOJDBCTest {
 		Customer customer = customerDAO.getCustomerById(1);
 		assertEquals((Integer) 1, customer.getId());
 		assertEquals("customer one", customer.getName());
-		assertEquals("test", customer.getPassword());
-		assertEquals("user1", customer.getUsername());
+		assertEquals("cust1@gmail.com", customer.getEmail());
+		assertEquals("happy customer", customer.getDescription());
 	}
 	@Test
 	public void testGetCustomers() throws Exception {

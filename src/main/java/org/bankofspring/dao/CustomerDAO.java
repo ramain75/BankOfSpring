@@ -8,4 +8,6 @@ import org.bankofspring.model.Customer;
 public interface CustomerDAO {
 	Customer getCustomerById(Integer id);
 	List<Customer> getCustomers();
+	boolean updateCustomer(Customer customer);
+	boolean deleteCustomer (Integer id);
 }

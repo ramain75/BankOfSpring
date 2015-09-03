@@ -10,9 +10,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.Iterator;
 
 import org.bankofspring.dao.AccountDAO;
-import org.bankofspring.dao.CustomerDAO;
+import org.bankofspring.dao.UserDAO;
 import org.bankofspring.model.Account;
-import org.bankofspring.model.Customer;
+import org.bankofspring.model.User;
 import org.bankofspring.service.BankOfSpringService;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class BankOfSpringTimerTest {
 	private BankOfSpringServiceTimer timer;
 	
 	@Autowired
-	private CustomerDAO customerDAO;
+	private UserDAO userDAO;
 	
 	@Autowired
 	@Qualifier("jdbcAccountDao")
@@ -48,19 +48,19 @@ public class BankOfSpringTimerTest {
 	private Account account1;
 	private Account account3;
 	
-	private Customer customer1;
+	private User user;
 	
 	@Before
 	public void setup() {
 		account1 = accountDAO.getAccountByNumber( "account1" );
 		account3 = accountDAO.getAccountByNumber( "account3" );
 		
-		customer1 = customerDAO.getCustomerById(1);
+		user = userDAO.getUserByName("user1");
 	}
 	
 	@Test
 	public void testDebit() {
-		service.withdraw( customer1, account3, 100L );
+		service.withdraw( user, account3, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -68,7 +68,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "withdraw", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertTrue( "Expected success", audit.wasSuccess() );
 		assertNull( "Expected no error", audit.getThrown() );
 		assertTrue( "Start time should be > 0", audit.getStart() > 0 );
@@ -79,7 +79,7 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testDebitWithToAccount() {
-		service.transfer( customer1, account3, account1, 100L );
+		service.transfer( user, account3, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -87,7 +87,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "transfer", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertTrue( "Expected success", audit.wasSuccess() );
 		assertNull( "Expected no error", audit.getThrown() );
 		assertTrue( "Start time should be > 0", audit.getStart() > 0 );
@@ -98,7 +98,7 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testDebitFails() {;
-		service.withdraw( customer1, account1, 100L );
+		service.withdraw( user, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -106,7 +106,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "withdraw", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertFalse( "Expected failure", audit.wasSuccess() );
 		assertNull( "Expected no error", audit.getThrown() );
 		assertTrue( "Start time should be > 0", audit.getStart() > 0 );
@@ -120,7 +120,7 @@ public class BankOfSpringTimerTest {
 		Throwable error = null;
 		
 		try {
-			service.withdraw( customer1, account1, -100 );
+			service.withdraw( user, account1, -100 );
 		}
 		catch ( Throwable t ) {
 			error = t;
@@ -132,7 +132,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "withdraw", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertSame( "Expected same throwable as caught", error, audit.getThrown() );
 		assertEquals( "Unexpected error class", RuntimeException.class, error.getClass() );
 		assertEquals( "Unexpected error message", "amount must be positive", error.getMessage() );
@@ -145,7 +145,7 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCredit() {
-		service.deposit( customer1, account1, 100L );
+		service.deposit( user, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -153,7 +153,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "deposit", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertTrue( "Expected success", audit.wasSuccess() );
 		assertNull( "Expected no error", audit.getThrown() );
 		assertTrue( "Start time should be > 0", audit.getStart() > 0 );
@@ -164,7 +164,7 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCreditWithToAccount() {
-		service.transfer( customer1, account3, account1, 100L );
+		service.transfer( user, account3, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -172,7 +172,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "transfer", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertTrue( "Expected success", audit.wasSuccess() );
 		assertNull( "Expected no error", audit.getThrown() );
 		assertTrue( "Start time should be > 0", audit.getStart() > 0 );
@@ -183,7 +183,7 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testCreditFails() {
-		service.deposit( customer1, account1, Long.MAX_VALUE );
+		service.deposit( user, account1, Long.MAX_VALUE );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
@@ -191,7 +191,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "deposit", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertFalse( "Expected failure", audit.wasSuccess() );
 		assertNull( "Expected no error", audit.getThrown() );
 		assertTrue( "Start time should be > 0", audit.getStart() > 0 );
@@ -205,7 +205,7 @@ public class BankOfSpringTimerTest {
 		Throwable error = null;
 		
 		try {
-			service.deposit( customer1, account1, -100 );
+			service.deposit( user, account1, -100 );
 		}
 		catch ( Throwable t ) {
 			error = t;
@@ -217,7 +217,7 @@ public class BankOfSpringTimerTest {
 		
 		AuditResult audit = timedActions.next();
 		assertEquals( "Action name mismatch", "deposit", audit.getActionName() );
-		assertSame( "User mismatch", customer1, audit.getUser() );
+		assertSame( "User mismatch", user, audit.getUser() );
 		assertSame( "Expected same throwable as caught", error, audit.getThrown() );
 		assertEquals( "Unexpected error class", RuntimeException.class, error.getClass() );
 		assertEquals( "Unexpected error message", "amount must be positive", error.getMessage() );
@@ -237,9 +237,9 @@ public class BankOfSpringTimerTest {
 	
 	@Test
 	public void testMultipleActions() {
-		service.withdraw( customer1, account1, 100L );
-		service.deposit( customer1, account1, 1000L );
-		service.withdraw( customer1, account1, 100L );
+		service.withdraw( user, account1, 100L );
+		service.deposit( user, account1, 1000L );
+		service.withdraw( user, account1, 100L );
 		
 		Iterator<AuditResult> timedActions = timer.getActions();
 		assertNotNull( "Timer actions null", timedActions );
