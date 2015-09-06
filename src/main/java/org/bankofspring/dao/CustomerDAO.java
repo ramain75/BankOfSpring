@@ -10,4 +10,5 @@ public interface CustomerDAO {
 	List<Customer> getCustomers();
 	boolean updateCustomer(Customer customer);
 	boolean deleteCustomer (Integer id);
+	Customer addCustomer (String name, String email, String description);
 }

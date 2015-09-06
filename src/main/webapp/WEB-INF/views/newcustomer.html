@@ -1,0 +1,31 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+<title>BankOfSpring- New Customer</title>
+</head>
+<body>
+<H1>New Customer</H1>
+
+<form action="#" th:action="" th:object="${customerform}"
+method="post">
+<fieldset>
+<legend th:text="#{customer.form}"> New Customer</legend>
+<div>
+<label tx:text="#{customer.name}" for="name">Name</label>
+<input type="text" th:field="*{name}" />
+</div>
+<div>
+<label tx:text="#{customer.email}" for="email">Email</label>
+<input type="text" th:field="*{email}" />
+</div>
+<div>
+<label tx:text="#{customer.description}" for="description">Description</label>
+<input type="text" th:field="*{description}" />
+</div>
+</fieldset>
+</form>
+</body>
+
+</html>

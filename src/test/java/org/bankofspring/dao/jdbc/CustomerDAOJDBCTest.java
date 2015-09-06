@@ -36,4 +36,13 @@ public class CustomerDAOJDBCTest {
 		assertEquals("invalid number of customers",2,list.size() );
 		
 	}
+	@Test
+	public void testAddCustomer() throws Exception {
+		Customer newCust = customerDAO.addCustomer("newcustomer", "newcust@hotmail.com", "description");
+		assertNotNull(newCust);
+		assertEquals("newcustomer",newCust.getName());
+		assertEquals("newcust@hotmail.com",newCust.getEmail());
+		assertEquals("description",newCust.getDescription());
+	}
+	
 }

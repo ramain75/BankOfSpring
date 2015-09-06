@@ -19,4 +19,8 @@ public class CustomerController {
 		model.put("customers",customers);
 		return "customerslist";
 	}
+	@RequestMapping ("/new")
+	public String newCustomer(Map<String,Object> model) {
+		return "newcustomer";
+	}
 }
