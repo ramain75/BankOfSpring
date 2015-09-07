@@ -8,7 +8,7 @@
 <body>
 <H1>New Customer</H1>
 
-<form action="#" th:action="@{/addcustomer}" th:object="${customerform}"
+<form action="#" th:action="@{/customers/addcustomer}" th:object="${customerform}"
 method="post">
 <fieldset>
 <legend th:text="#{customer.form}"> New Customer</legend>
@@ -24,6 +24,10 @@ method="post">
 <label tx:text="#{customer.description}" for="description">Description</label>
 <input type="text" th:field="*{description}" />
 </div>
+<div class="submit">
+<button type="submit" name="save" th:text="#{button.save}">Save</button>
+</div>
+
 </fieldset>
 </form>
 </body>
