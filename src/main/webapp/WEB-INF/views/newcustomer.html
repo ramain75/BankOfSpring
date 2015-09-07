@@ -8,7 +8,7 @@
 <body>
 <H1>New Customer</H1>
 
-<form action="#" th:action="" th:object="${customerform}"
+<form action="#" th:action="@{/addcustomer}" th:object="${customerform}"
 method="post">
 <fieldset>
 <legend th:text="#{customer.form}"> New Customer</legend>
