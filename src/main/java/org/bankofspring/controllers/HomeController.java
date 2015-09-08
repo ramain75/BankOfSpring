@@ -14,7 +14,6 @@ public class HomeController {
 	
 	@RequestMapping ( { "/", "/home"})
 	public String showHomePage(Map<String,Object> model) {
-		model.put("welcome", "Hello There");
 		return "home";
 	}
 }

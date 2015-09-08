@@ -1,11 +1,16 @@
 package org.bankofspring.web;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerForm {
 	private String name;
+	private String email;
+	private String description;
 	@NotNull (message="Name is mandatory")
 	@NotBlank (message="Name is mandatory")
 	public String getName() {
@@ -14,6 +19,7 @@ public class CustomerForm {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Email
 	public String getEmail() {
 		return email;
 	}
@@ -26,7 +32,6 @@ public class CustomerForm {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	private String email;
-	private String description;
+	
 	
 }

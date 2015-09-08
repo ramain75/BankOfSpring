@@ -9,20 +9,22 @@
 <body>
 <H1>New Customer</H1>
 
-<form action="#" th:action="@{/customers/addcustomer}" th:object="${customerform}"
+<form action="#" th:action="@{/customers/addcustomer}" th:object="${customerForm}"
 method="post">
 <fieldset>
 <legend th:text="#{customer.form}"> New Customer</legend>
 <div>
-<label tx:text="#{customer.name}" for="name" >Name</label>
+<label th:text="#{customer.name}" for="name" >name</label>
 <input type="text" th:field="*{name}" th:errorclass="fieldError" />
+<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldErrorTxt">error name </p>
 </div>
 <div>
-<label tx:text="#{customer.email}" for="email" >Email</label>
-<input type="text" th:field="*{email}" />
+<label th:text="#{customer.email}" for="email" >email</label>
+<input type="text" th:field="*{email}"  th:errorclass="fieldErrorTxt" />
+<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldErrorTxt">error email </p>
 </div>
 <div>
-<label tx:text="#{customer.description}" for="description">Description</label>
+<label th:text="#{customer.description}" for="description">Description</label>
 <input type="text" th:field="*{description}" />
 </div>
 <div class="submit">

@@ -11,6 +11,7 @@ import org.bankofspring.web.CustomerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class CustomerController {
 	@Autowired
 	CustomerDAO customerDao;
-	@Autowired
-	CustomerForm form;
 	@RequestMapping (value="/",method=RequestMethod.GET)
 	public String showCustomerList(Map<String,Object> model) {
 		List<Customer> customers = customerDao.getCustomers();
@@ -27,16 +26,16 @@ public class CustomerController {
 		return "customerslist";
 	}
 	@RequestMapping (value="/new", method=RequestMethod.GET)
-	public String newCustomer(Map<String,Object> model) {
-		model.put("customerform",form);
+	public String newCustomer( @ModelAttribute("customerForm") final CustomerForm customerForm, Map<String,Object> model) {
+		model.put("customerForm",customerForm);
 		return "newcustomer";
 	}
 	@RequestMapping (value="/addcustomer", method=RequestMethod.POST)
-	public String addCustomer(@Valid CustomerForm form, final BindingResult result) {
+	public String addCustomer(@Valid @ModelAttribute("customerForm")  CustomerForm customerForm, final BindingResult result) {
 		if (result.hasErrors()) {
 			return "newcustomer";
 		}
-		customerDao.addCustomer(form.getName(), form.getEmail(), form.getDescription());
+		customerDao.addCustomer(customerForm.getName(), customerForm.getEmail(), customerForm.getDescription());
 		return "redirect:/customers/";
 	}
 }
