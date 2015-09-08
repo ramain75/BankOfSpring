@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 <title>BankOfSpring- New Customer</title>
+<link rel="stylesheet" type="text/css" media="all" href="../../css/bankofspring.css" th:href="@{/resources/css/bankofspring.css}"/>
 </head>
 <body>
 <H1>New Customer</H1>
@@ -13,11 +14,11 @@ method="post">
 <fieldset>
 <legend th:text="#{customer.form}"> New Customer</legend>
 <div>
-<label tx:text="#{customer.name}" for="name">Name</label>
-<input type="text" th:field="*{name}" />
+<label tx:text="#{customer.name}" for="name" >Name</label>
+<input type="text" th:field="*{name}" th:errorclass="fieldError" />
 </div>
 <div>
-<label tx:text="#{customer.email}" for="email">Email</label>
+<label tx:text="#{customer.email}" for="email" >Email</label>
 <input type="text" th:field="*{email}" />
 </div>
 <div>
@@ -27,7 +28,6 @@ method="post">
 <div class="submit">
 <button type="submit" name="save" th:text="#{button.save}">Save</button>
 </div>
-
 </fieldset>
 </form>
 </body>
