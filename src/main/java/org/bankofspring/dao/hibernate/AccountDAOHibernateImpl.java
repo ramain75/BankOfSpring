@@ -1,5 +1,7 @@
 package org.bankofspring.dao.hibernate;
 
+import java.util.List;
+
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
 import org.hibernate.SessionFactory;
@@ -66,5 +68,11 @@ public class AccountDAOHibernateImpl extends HibernateDaoSupport implements Acco
 		
 		create( account );
 		return true;
+	}
+
+	@Override
+	public List<Account> getAccountsForUsername( String username ) {
+	// TODO Auto-generated method stub
+	return null;
 	}
 }

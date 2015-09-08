@@ -1,5 +1,7 @@
 package org.bankofspring.service;
 
+import java.util.List;
+
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.dao.AccountTransactionDAO;
 import org.bankofspring.model.Account;
@@ -24,6 +26,16 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 
 	@Autowired
 	private AccountTransactionDAO accountTransactionDAO;
+
+	@Override
+	public List<Account> getAccounts( User loggedInUser ) {
+	
+	if ( null == loggedInUser || null == loggedInUser.getUsername() ) {
+		return null;
+	}
+
+	return accountDAO.getAccountsForUsername( loggedInUser.getUsername() );
+	}
 
 	/**
 	 * transfer will now rollback if any issues encountered
@@ -83,4 +95,5 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	public void setValidator( BankOperationValidator validator ) {
 		this.validator = validator;
 	}
+
 }
