@@ -157,18 +157,13 @@
 	    	<version>1.2</version>
 		</dependency>
 		
-		<!-- Tiles -->
+		<!-- Sitemesh -->
 		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-core</artifactId>
-			<version>${tiles-version}</version>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-extras</artifactId>
-			<version>${tiles-version}</version>
-		</dependency>
 	</dependencies>
 	
 	

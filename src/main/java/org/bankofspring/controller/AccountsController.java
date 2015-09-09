@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -28,7 +29,7 @@ public class AccountsController {
 	@Qualifier("hibernateAccountDao")
 	private AccountDAO accountDAO;
 
-	@RequestMapping({"/", "/accounts*"})
+	@RequestMapping(value = "/accounts", method = RequestMethod.GET)
 	public ModelAndView showAccounts(HttpServletResponse response) throws IOException{
 		
 		//Create the model and view object to send back

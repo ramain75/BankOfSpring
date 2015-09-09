@@ -8,9 +8,8 @@
 	  <div class="panel-heading">Transfer</div>
 	  <div class="panel-body">
 		
-		<c:if test="${not empty errorString}">
-			<div class="alert alert-danger" role="alert"><c:out value="${errorString}" /></div>
-		</c:if>
+	
+			<div class="alert alert-danger" role="alert">Error!!!</div>
 
 		<sf:form method="POST" action="transfer" >
 			<b>From: </b><sf:select cssClass="selectpicker" path="fromNumber" items="${accounts}"></sf:select>

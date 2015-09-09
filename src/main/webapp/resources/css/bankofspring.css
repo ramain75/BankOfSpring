@@ -1,3 +1,15 @@
+html {
+    -webkit-font-smoothing: antialiased;
+}
+
+.navbar{
+	font-size: 1.1em;
+}
+
+body{
+	padding-top:50px;
+}
+
 .bankofspring_body_container{
 	padding: 50px 15px;
 }
@@ -9,5 +21,32 @@ h1{
 
 .navbar-brand{
 	padding: 5px 15px;
+}
+
+.body-container{
+	
+}
+
+.home-header{
+	background-image: url("/resources/img/bankofspringcover.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+	border-top: 1px;
+}
+
+.home-text{
+	margin-top:5%;
+	background-image: url("/resources/img/homedivback.png");
+	background-color: transparent;
+	color: #1f138d;
+}
+
+
+.home-text h1{
+	text-shadow: 2px 2px #b7b0f4;
+	color: #1f138d;
+	
 }
 
