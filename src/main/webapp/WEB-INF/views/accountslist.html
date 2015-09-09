@@ -22,10 +22,10 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </thead>
 <tbody>
 <tr th:each="account : ${accounts}">
-<td th:text="#{account.number}">Account Number </td>
-<td th:text="#{account.description}">Account Description </td>
-<td th:text="#{account.balance}">Not Much </td>
-<td th:text="#{account.maxbalance}">Millions </td>
+<td th:text="${account.accountNumber}">Account Number </td>
+<td th:text="${account.accountDescription}">Account Description </td>
+<td th:text="${account.accountBalance}">Not Much </td>
+<td th:text="${account.maxBalanceAmount}">Millions </td>
 </tr>
 </tbody>
 </table>

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 @Repository("jdbcAccountDao")
 public class AccountDAOJDBCImpl implements AccountDAO {
 	private static final String LIST_ACCOUNTS = "select number, description, balance, max_balance from"
-			+ " accounts a join customer_accounts ca on (a.number = ca.number) where ca.customer_id = ?";
+			+ " account a join customer_account ca on (a.number = ca.number) where ca.customer_id = ?";
 	@Autowired
 	private SimpleJdbcTemplate jdbc;
 	
