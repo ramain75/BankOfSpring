@@ -11,9 +11,34 @@ body {
   padding: 20px 20px; 
   width: 850px;
 }
+div.bostable > table {
+	width: 100%;
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+div.bostable > table > tbody > tr > td, div.bostable > table > thead > tr > th {
+	padding: 2px 10px;
+	border-left: 1px dotted #000000;
+	vertical-align: top;
+	line-height: 20px;
+}
+div.bostable > table > tbody > tr, div.bostable > table > thead > tr {
+	border-bottom: 1px solid #000000;
+}
+div.bostable > table > tbody > tr > td > table {
+	width: 100%;
+	border-collapse: separate;
+}
+div.bostable > table > tbody > tr > td > table > tbody > tr> td {
+	background-color: #ddff77;
+	padding: 0px 5px;
+}
+
+
 .fieldError {
     border: 1px solid red;
 }
 .fieldErrorTxt {
    color: red;
 }
+

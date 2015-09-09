@@ -2,12 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<head>
-<title>BankOfSpring- Customers</title>
-</head>
+<div th:replace="header :: header"></div>
 <body>
-<H1>Customers</H1>
+<H1>Bank Of Spring - Customers</H1>
 <p><a href="/customers/new"> new customer </a></p>
+<div class="bostable">
 <table>
 <thead>
 <th th:text="#{customer.name}">Customer Name </th>
@@ -22,6 +21,10 @@
 </tr>
 </tbody>
 </table>
+<br/>
+</div>
+<div th:replace="footer :: footer">
+</div>
 </body>
 
 </html>

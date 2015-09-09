@@ -2,12 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<head>
-<title>BankOfSpring- New Customer</title>
-<link rel="stylesheet" type="text/css" media="all" href="../../css/bankofspring.css" th:href="@{/resources/css/bankofspring.css}"/>
-</head>
+<div th:replace="header :: header"></div>
 <body>
-<H1>New Customer</H1>
+<H1>Bank Of Spring - New Customer</H1>
 
 <form action="#" th:action="@{/customers/addcustomer}" th:object="${customerForm}"
 method="post">
@@ -32,6 +29,8 @@ method="post">
 </div>
 </fieldset>
 </form>
+<div th:replace="footer :: footer">
+</div>
 </body>
 
 </html>

@@ -2,18 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<head>
-<title>BankOfSpring- Home</title>
-</head>
+<div th:replace="header :: header"></div>
 <body>
-<img alt="no image loaded" src="/resources/img/piggybank.jpg">
+<img alt="no image loaded" src="../../resources/img/piggybank-logo.jpg" th:src="@{/resources/img/piggybank-logo-small.jpg}">
 </img>
 <H1>Bank Of Spring</H1>
 <p th:text="${welcome}">welcome to our bank! </p>
 <br></br>
 <p> <A href="/customers/">CustomerList</A> </p>
 <p> <A href="accountslist.html">Account List</A> </p>
-
+<div th:replace="footer :: footer">
+</div>
 </body>
 
 </html>
