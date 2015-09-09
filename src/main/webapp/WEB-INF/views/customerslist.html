@@ -2,10 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<div th:replace="header :: header"></div>
+<div th:replace="header :: header">
+<div>
+<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bankofspring.css" 
+th:href="@{/resources/css/bankofspring.css}"/>
+</div>
+</div>
 <body>
-<H1>Bank Of Spring - Customers</H1>
-<p><a href="/customers/new"> new customer </a></p>
+<H1 th:text="#{customer.list}"> Customers</H1>
+<p><a th:text= "#{customer.new}" th:href="@{/customers/new} " href="/customers/new"> new customer </a></p>
 <div class="bostable">
 <table>
 <thead>

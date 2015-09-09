@@ -1,6 +1,7 @@
 package org.bankofspring.dao.jdbc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bankofspring.dao.AccountDAO;
@@ -18,7 +19,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("jdbcAccountDao")
 public class AccountDAOJDBCImpl implements AccountDAO {
-
+	private static final String LIST_ACCOUNTS = "select number, description, balance, max_balance from"
+			+ " accounts a join customer_accounts ca on (a.number = ca.number) where ca.customer_id = ?";
 	@Autowired
 	private SimpleJdbcTemplate jdbc;
 	
@@ -82,5 +84,11 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 		catch ( EmptyResultDataAccessException e ) {
 			return null; // Account not found
 		}
+	}
+
+	@Override
+	public List<Account> getAccountsForCustomer(int id) {
+		// TODO Auto-generated method stub
+		return jdbc.query(LIST_ACCOUNTS, new AccountRowMapper(),id);
 	}
 }

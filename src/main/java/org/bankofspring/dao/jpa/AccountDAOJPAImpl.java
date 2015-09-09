@@ -1,5 +1,7 @@
 package org.bankofspring.dao.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -75,5 +77,11 @@ public class AccountDAOJPAImpl implements AccountDAO {
 		
 		create( account );
 		return true;
+	}
+
+	@Override
+	public List<Account> getAccountsForCustomer(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
