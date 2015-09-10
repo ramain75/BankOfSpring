@@ -11,7 +11,7 @@ th:href="@{/resources/css/bankofspring.css}"/>
 <body>
 
 <H1 th:text="#{account.list}"> Accounts List</H1>
-<p><a th:text= "#{account.new}" th:href="@{/accounts/new} " href="/accounts/new"> new account </a></p>
+<p><a th:text= "#{account.new}" th:href="@{'/customers/'+ ${customerid} + '/accounts/new/'}" href="/accounts/new"> new account </a></p>
 <div class="bostable">
 <table>
 <thead>
