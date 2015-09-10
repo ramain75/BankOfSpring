@@ -23,7 +23,6 @@ method="post">
 <label th:text="#{account.balance}" for="balance" >balance</label>
 <input type="text" th:field="*{balance}"  th:errorclass="fieldErrorTxt" />
 <p th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" th:errorclass="fieldErrorTxt">error balance </p>
-</div>
 <div>
 
 <label th:text="#{account.description}" for="description">Description</label>

@@ -29,11 +29,13 @@ public class AccountController {
 	@RequestMapping (value="/",method=RequestMethod.GET)
 	public String showAccountListForCustomer(@PathVariable("customerid") int customerId, Model model) {
 		List<Account> accounts = accountDao.getAccountsForCustomer(customerId);
+		model.addAttribute("customerid", customerId);
 		model.addAttribute("accounts",accounts);
 		return "accountslist";
 	}
 	@RequestMapping (value="/new", method=RequestMethod.GET)
 	public String newCustomer( @PathVariable("customerid") int customerId, @ModelAttribute("accountForm") final AccountForm accountForm, Map<String,Object> model) {
+		model.put("customerid", customerId);
 		model.put("accountForm",accountForm);
 		return "newaccount";
 	}
