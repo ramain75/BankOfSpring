@@ -1,0 +1,30 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<body>
+<H1>Customer Form</H1>
+
+<fieldset th:fragment="customerFieldSet">
+	<legend th:text="#{customer.form}"> Customer</legend>
+	<div>
+	<label th:text="#{customer.name}" for="name" >name</label>
+	<input type="text" th:field="*{name}" th:errorclass="fieldError" />
+	<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldErrorTxt">error name </p>
+	</div>
+	<div>
+	<label th:text="#{customer.email}" for="email" >email</label>
+	<input type="text" th:field="*{email}"  th:errorclass="fieldErrorTxt" />
+	<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="fieldErrorTxt">error email </p>
+	</div>
+	<div>
+	<label th:text="#{customer.description}" for="description">Description</label>
+	<input type="text" th:field="*{description}" />
+	</div>
+	<div class="submit">
+	<button type="submit" name="save" th:text="#{button.save}">Save</button>
+	</div>
+</fieldset>
+</body>
+
+</html>

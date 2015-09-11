@@ -1,6 +1,8 @@
 package org.bankofspring.dao.jdbc;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.dao.jdbc.rowmapper.CustomerRowMapper;
@@ -34,7 +36,15 @@ public class CustomerDAOIJDBCmpl implements CustomerDAO {
 
 	@Override
 	public boolean updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+		Map<String,Object > map = new HashMap<String,Object>();
+		map.put("name", customer.getName());
+		map.put("email", customer.getEmail());
+		map.put("description", customer.getDescription());
+		map.put("id", customer.getId());
+		int result = jdbc.update("UPDATE CUSTOMER SET name = :name, email = :email, description = :description where id = :id",map);
+		if (result == 1) {
+			return true;
+		}
 		return false;
 	}
 

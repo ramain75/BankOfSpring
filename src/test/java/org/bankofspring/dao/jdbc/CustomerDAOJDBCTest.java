@@ -44,5 +44,22 @@ public class CustomerDAOJDBCTest {
 		assertEquals("newcust@hotmail.com",newCust.getEmail());
 		assertEquals("description",newCust.getDescription());
 	}
+	@Test
+	public void testUpdateCustomer() throws Exception {
+		Customer customer = customerDAO.getCustomerById(1);
+		assertEquals((Integer) 1, customer.getId());
+		assertEquals("customer one", customer.getName());
+		assertEquals("cust1@gmail.com", customer.getEmail());
+		assertEquals("happy customer", customer.getDescription());
+		customer.setDescription("changed customer");
+		customer.setName("customer one changed");
+		customer.setEmail("email@changed.com");
+		assertTrue(customerDAO.updateCustomer(customer));
+		customer = customerDAO.getCustomerById(1);
+		assertEquals((Integer) 1, customer.getId());
+		assertEquals("customer one changed", customer.getName());
+		assertEquals("email@changed.com", customer.getEmail());
+		assertEquals("changed customer", customer.getDescription());
+	}
 	
 }

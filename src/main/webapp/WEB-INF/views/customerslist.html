@@ -22,7 +22,7 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </thead>
 <tbody>
 <tr th:each="customer : ${customers}">
-<td th:text="${customer.id}">1 </td>
+<td ><a th:text="${customer.id}" th:href="@{'/customers/'+ ${customer.id} + '/'}" href="../views/editcustomer.html">1</a> </td>
 <td th:text="${customer.name}">smith </td>
 <td th:text="${customer.email}">test@gmail.com </td>
 <td th:text="${customer.description}">my customer </td>
