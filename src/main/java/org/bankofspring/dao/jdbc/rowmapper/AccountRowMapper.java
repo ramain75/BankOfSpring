@@ -22,6 +22,7 @@ public class AccountRowMapper implements RowMapper<Account> {
 		account.setAccountDescription( rs.getString( "description" ) );
 		account.setAccountBalance( rs.getLong( "balance" ) );
 		account.setMaxBalanceAmount( rs.getLong( "max_balance") );
+		account.setCustomerId(rs.getInt("customer_id"));
 		return account;
 	}
 

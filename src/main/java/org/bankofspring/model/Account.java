@@ -22,6 +22,7 @@ public class Account {
 	private String accountDescription;
 	private long accountBalance;
 	private long maxBalanceAmount;
+	private int customerId;
 
 	@Id
 	@Column(name = "NUMBER")
@@ -58,6 +59,14 @@ public class Account {
 
 	public void setMaxBalanceAmount( long maxBalanceAmount ) {
 		this.maxBalanceAmount = maxBalanceAmount;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	@Override

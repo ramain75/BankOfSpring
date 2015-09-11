@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bankofspring.dao.AbstractAccountDAOTest;
 import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.model.Account;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,10 @@ public class AccountDAOJDBCTest extends AbstractAccountDAOTest {
 	@Autowired
 	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
+	
+	@Autowired
+	@Qualifier("jdbcCustomerDao")
+	private CustomerDAO customerDAO;
 
 	@Override
 	protected AccountDAO getDao() {
@@ -37,6 +42,22 @@ public class AccountDAOJDBCTest extends AbstractAccountDAOTest {
 		assertEquals(accounts.size(),2);
 		accounts = accountDAO.getAccountsForCustomer(3);
 		assertEquals(accounts.size(),0);
+	}
+	@Test
+	public void testCreateNewAccount() {
+		List<Account> accounts = accountDAO.getAccountsForCustomer(1);
+		assertEquals(accounts.size(),3);
+		Account newAccount  = new Account();
+		newAccount.setAccountNumber("newaccount");
+		newAccount.setAccountDescription("newAccountDescription");
+		newAccount.setAccountBalance(100L);
+		newAccount.setMaxBalanceAmount(10000L);
+		newAccount.setCustomerId(1);
+		accountDAO.addNewAccount(newAccount);
+		accounts = accountDAO.getAccountsForCustomer(1);
+		assertEquals(accounts.size(),4);
+		Account account = accountDAO.getAccountByNumber("newaccount");
+		assertEquals(account.getAccountDescription(), "newAccountDescription");
 	}
 	
 }

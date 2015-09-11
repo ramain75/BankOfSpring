@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("jdbcCustomerDao")
 public class CustomerDAOIJDBCmpl implements CustomerDAO {
 	private final String CUSTOMERS_SELECT = "SELECT c.id, c.name, c.email, c.description  from customer c order by c.id";
 	private final String CUSTOMER_INSERT = "INSERT INTO CUSTOMER (name,email,description) values " +

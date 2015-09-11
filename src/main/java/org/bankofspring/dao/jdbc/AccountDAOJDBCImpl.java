@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("jdbcAccountDao")
 public class AccountDAOJDBCImpl implements AccountDAO {
-	private static final String LIST_ACCOUNTS = "select number, description, balance, max_balance from"
+	private static final String LIST_ACCOUNTS = "select number, description, balance, max_balance, ca.customer_id from"
 			+ " account a join customer_account ca on (a.number = ca.number) where ca.customer_id = ?";
 	@Autowired
 	private SimpleJdbcTemplate jdbc;
@@ -51,6 +51,8 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	  	return ( updates == 1 );
 	}
 	
+	
+	
 	@Override
 	public boolean addNewAccount( Account account ) {
 		if ( ( account == null ) ||
@@ -59,19 +61,34 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 			
 			return false;
 		}
-		
+				
 		Map<String, Object> params = new HashMap<String, Object>();
 	  	params.put( "accountNumber", account.getAccountNumber() );
 	  	params.put( "description", account.getAccountDescription() );
 	  	params.put( "balance", account.getAccountBalance() );
 	  	params.put( "maxBalance", account.getMaxBalanceAmount() );
-	  	
-	  	int updates = jdbc.update(
+	  		  	
+	  	int noUpdate = jdbc.update(
 	  		"INSERT INTO account ( number, description, balance, max_balance )" +
 	  		" VALUES ( :accountNumber, :description, :balance, :maxBalance )",
 	  		params );
+	    
+	  	if (noUpdate == 1) {
+	  		return addCustomerAccount(account.getAccountNumber(),account.getCustomerId());
+	  	}
+	  	return false;
 	  	
-	  	return ( updates == 1 );
+	}
+	
+	private boolean addCustomerAccount (String accountNumber, int customerId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+	  	params.put( "accountNumber", accountNumber );
+	  	params.put( "customerId", customerId );
+		int noUpdate = jdbc.update(
+		  		"INSERT INTO customer_account ( customer_id, number)" +
+		  		" VALUES ( :customerId, :accountNumber )",
+		  		params );
+		return noUpdate == 1 ;
 	}
   
 	@Override

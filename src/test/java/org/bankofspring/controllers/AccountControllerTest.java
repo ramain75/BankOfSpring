@@ -2,15 +2,12 @@ package org.bankofspring.controllers;
 
 import static org.junit.Assert.*;
 
-import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.dao.jdbc.AccountDAOJDBCImpl;
 import org.bankofspring.model.Account;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.ExtendedModelMap;
 import static org.mockito.Mockito.*;

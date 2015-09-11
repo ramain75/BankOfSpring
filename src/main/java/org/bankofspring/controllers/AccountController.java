@@ -33,7 +33,7 @@ public class AccountController {
 		return "accountslist";
 	}
 	@RequestMapping (value="/new", method=RequestMethod.GET)
-	public String newCustomer( @PathVariable("customerid") int customerId, @ModelAttribute("accountForm") final AccountForm accountForm, Map<String,Object> model) {
+	public String newAccount( @PathVariable("customerid") int customerId, @ModelAttribute("accountForm") final AccountForm accountForm, Map<String,Object> model) {
 		model.put("customerid", customerId);
 		model.put("accountForm",accountForm);
 		return "newaccount";
@@ -43,6 +43,13 @@ public class AccountController {
 		if (result.hasErrors()) {
 			return "newaccount";
 		}
+		Account account = new Account();
+		account.setAccountNumber(account.getAccountNumber());
+		account.setAccountDescription(account.getAccountDescription());
+		account.setAccountBalance(account.getAccountBalance());
+		account.setMaxBalanceAmount(account.getMaxBalanceAmount());
+		account.setCustomerId(customerId);
+		accountDao.addNewAccount(account);
 		model.addAttribute("customerid", customerId);
 		return "redirect:/customers/{customerid}/accounts";
 	}
