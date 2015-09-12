@@ -44,13 +44,12 @@ public class AccountController {
 			return "newaccount";
 		}
 		Account account = new Account();
-		account.setAccountNumber(account.getAccountNumber());
-		account.setAccountDescription(account.getAccountDescription());
-		account.setAccountBalance(account.getAccountBalance());
-		account.setMaxBalanceAmount(account.getMaxBalanceAmount());
+		account.setAccountNumber(accountForm.getNumber());
+		account.setAccountDescription(accountForm.getDescription());
+		account.setAccountBalance(accountForm.getBalance());
+		account.setMaxBalanceAmount(accountForm.getMaxbalance());
 		account.setCustomerId(customerId);
 		accountDao.addNewAccount(account);
-		model.addAttribute("customerid", customerId);
-		return "redirect:/customers/{customerid}/accounts";
+		return "redirect:/customers/" + customerId + "/accounts/";
 	}
 }

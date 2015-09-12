@@ -95,7 +95,7 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	public Account getAccountByNumber( String accountNumber ) {
 		try {
 			return jdbc.queryForObject(
-					"SELECT number, description, balance, max_balance FROM account WHERE number = ?",
+					"SELECT number, description, balance, max_balance, customer_id FROM account a join customer_account ca on (a.number = ca.number)  WHERE number = ?",
 					new AccountRowMapper(), accountNumber );
 		}
 		catch ( EmptyResultDataAccessException e ) {
