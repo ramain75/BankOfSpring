@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div th:replace="header :: header"></div>
+<body>
+<H1>Bank Of Spring - Edit Account</H1>
+
+<form action="#" th:action="@{'/customers/'+${customerid}+'/account/' + ${account.accountNumber} + '/save'}" th:object="${account}"
+method="post">
+<div th:replace ="accountform :: accountFieldSet">
+</div>
+</form>
+<div th:replace="footer :: footer">
+</div>
+</body>
+
+</html>

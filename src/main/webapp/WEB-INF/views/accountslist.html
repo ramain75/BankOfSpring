@@ -15,14 +15,16 @@ th:href="@{/resources/css/bankofspring.css}"/>
 <div class="bostable">
 <table>
 <thead>
+<tr>
 <th th:text="#{account.number}">Account Number </th>
 <th th:text="#{account.description}">Account Description </th>
 <th th:text="#{account.balance}">Account Balance </th>
 <th th:text="#{account.maxbalance}">Account Max Balance </th>
+</tr>
 </thead>
 <tbody>
 <tr th:each="account : ${accounts}">
-<td th:text="${account.accountNumber}">Account Number </td>
+<td><a th:text="${account.accountNumber}" th:href="@{'/customers/'+ ${customerid} + '/accounts/' + ${account.accountNumber} +'/'}" href="../views/editaccount.html">accountNumber</a></td>
 <td th:text="${account.accountDescription}">Account Description </td>
 <td th:text="${account.accountBalance}">Not Much </td>
 <td th:text="${account.maxBalanceAmount}">Millions </td>

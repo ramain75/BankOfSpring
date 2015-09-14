@@ -7,7 +7,9 @@ import javax.validation.Valid;
 
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
+import org.bankofspring.model.Customer;
 import org.bankofspring.web.AccountForm;
+import org.bankofspring.web.CustomerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -51,5 +53,25 @@ public class AccountController {
 		account.setCustomerId(customerId);
 		accountDao.addNewAccount(account);
 		return "redirect:/customers/" + customerId + "/accounts/";
+	}
+	@RequestMapping (value="/{accountNumber}",method=RequestMethod.GET)
+	public String getAccount(@PathVariable("customerid") int customerId, @PathVariable("accountNumber") String accountNumber, Map<String,Object> model) {
+		Account account = accountDao.getAccountByNumber(accountNumber);
+		model.put("account",account);
+		model.put("customerid", customerId);
+		return "editaccount";
+	}
+	@RequestMapping (value="/{customerid}/save",method=RequestMethod.POST)
+	public String saveCustomer(@PathVariable("customerid") int customerId, @Valid @ModelAttribute("customerForm") CustomerForm customerForm, final BindingResult result) {
+		if (result.hasErrors()) {
+			return "editcustomer";
+		}
+		Customer cust = new Customer();
+		cust.setId(customerId);
+		cust.setEmail(customerForm.getEmail());
+		cust.setName(customerForm.getName());
+		cust.setDescription(customerForm.getDescription());
+		customerDao.updateCustomer(cust);
+		return "redirect:/customers/";
 	}
 }

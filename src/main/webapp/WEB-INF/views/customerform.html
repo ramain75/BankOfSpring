@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <body>
 <H1>Customer Form</H1>
-
+<form>
 <fieldset th:fragment="customerFieldSet">
 	<legend th:text="#{customer.form}"> Customer</legend>
 	<div>
@@ -25,6 +25,7 @@
 	<button type="submit" name="save" th:text="#{button.save}">Save</button>
 	</div>
 </fieldset>
+</form>
 </body>
 
 </html>
