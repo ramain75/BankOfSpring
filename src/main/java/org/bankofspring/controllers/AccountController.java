@@ -61,12 +61,11 @@ public class AccountController {
 		model.put("customerid", customerId);
 		return "editaccount";
 	}
-	@RequestMapping (value="/{customerid}/save",method=RequestMethod.POST)
-	public String saveAccount(@PathVariable("customerid") int customerId,  @ModelAttribute("account") Account account , final BindingResult result) {
+	@RequestMapping (value="/{customerid}/accounts/{accountNumber}/save",method=RequestMethod.POST)
+	public String saveAccountr(@PathVariable("customerid") int customerId,  @PathVariable("accountNumber") String accountNumber, @ModelAttribute("account") Account account, final BindingResult result) {
 		if (result.hasErrors()) {
 			return "editaccount";
 		}
-		
 		accountDao.updateAccount(account);
 		return "redirect:/customers/" + customerId + "/accounts/";
 	}
