@@ -2,15 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<div th:replace="header :: header"></div>
-<body>
-<div th:replace="logo :: logo"></div>
-<H1>Bank Of Spring</H1>
-<p th:text="${welcome}">welcome to our bank! </p>
-<br></br>
-<p> <A href="/customers/">CustomerList</A> </p>
-<div th:replace="footer :: footer">
-</div>
-</body>
 
+
+<body>
+<img th:fragment="logo" alt="no image loaded" src="../../resources/img/piggybank-logo.jpg" th:src="@{/resources/img/piggybank-logo-small.jpg}">
+</img>
+<title>Bank Of Spring Logo</title>
+</body>
 </html>
+

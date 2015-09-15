@@ -9,6 +9,7 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </div>
 </div>
 <body>
+<div th:replace="logo :: logo"></div>
 <H1 th:text="#{customer.list}"> Customers</H1>
 <p><a th:text= "#{customer.new}" th:href="@{/customers/new} " href="../views/newcustomer.html"> new customer </a></p>
 <div class="bostable">

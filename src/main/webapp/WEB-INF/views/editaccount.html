@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div th:replace="header :: header"></div>
 <body>
+<div th:replace="logo :: logo"></div>
 <H1>Bank Of Spring - Edit Account</H1>
 
 <form action="#" th:action="@{'/customers/'+${customerid}+'/account/' + ${account.accountNumber} + '/save'}" th:object="${account}"
