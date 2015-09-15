@@ -84,4 +84,10 @@ public class AccountDAOJPAImpl implements AccountDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean updateAccount(Account account) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

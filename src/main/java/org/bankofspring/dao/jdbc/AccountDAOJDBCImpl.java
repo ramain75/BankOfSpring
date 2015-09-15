@@ -108,4 +108,10 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 		// TODO Auto-generated method stub
 		return jdbc.query(LIST_ACCOUNTS, new AccountRowMapper(),id);
 	}
+
+	@Override
+	public boolean updateAccount(Account account) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -62,16 +62,12 @@ public class AccountController {
 		return "editaccount";
 	}
 	@RequestMapping (value="/{customerid}/save",method=RequestMethod.POST)
-	public String saveCustomer(@PathVariable("customerid") int customerId, @Valid @ModelAttribute("customerForm") CustomerForm customerForm, final BindingResult result) {
+	public String saveAccount(@PathVariable("customerid") int customerId,  @ModelAttribute("account") Account account , final BindingResult result) {
 		if (result.hasErrors()) {
-			return "editcustomer";
+			return "editaccount";
 		}
-		Customer cust = new Customer();
-		cust.setId(customerId);
-		cust.setEmail(customerForm.getEmail());
-		cust.setName(customerForm.getName());
-		cust.setDescription(customerForm.getDescription());
-		customerDao.updateCustomer(cust);
-		return "redirect:/customers/";
+		
+		accountDao.updateAccount(account);
+		return "redirect:/customers/" + customerId + "/accounts/";
 	}
 }
