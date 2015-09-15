@@ -115,9 +115,9 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	  	params.put( "amount", account.getAccountBalance() );
 	  	params.put( "accountNumber", account.getAccountNumber());
 	  	params.put( "description", account.getAccountDescription());
-	  	params.put( "balanceaccountmax", account.getMaxBalanceAmount());
+	  	params.put( "maxbalance", account.getMaxBalanceAmount());
 	  	int updates = jdbc.update( "UPDATE account SET balance = :amount, description = :description, "
-	  			+ " max_balance WHERE number = :accountNumber", params );
+	  			+ " max_balance = :maxbalance  WHERE number = :accountNumber", params );
 	  	return ( updates == 1 );
 	}
 }

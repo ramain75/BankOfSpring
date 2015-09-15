@@ -13,7 +13,6 @@ public interface AccountDAO {
 	Account getAccountByNumber( String accountName );
 	boolean updateAccount (Account account);
 	boolean updateAccountBalance( Account account, Long amount );
-	boolean updateAccount(Account account);
 	boolean addNewAccount( Account account );
 	List<Account> getAccountsForCustomer (int id);
 }

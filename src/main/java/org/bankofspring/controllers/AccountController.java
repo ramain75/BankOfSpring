@@ -61,7 +61,7 @@ public class AccountController {
 		model.put("customerid", customerId);
 		return "editaccount";
 	}
-	@RequestMapping (value="/{customerid}/accounts/{accountNumber}/save",method=RequestMethod.POST)
+	@RequestMapping (value="/{accountNumber}/save",method=RequestMethod.POST)
 	public String saveAccountr(@PathVariable("customerid") int customerId,  @PathVariable("accountNumber") String accountNumber, @ModelAttribute("account") Account account, final BindingResult result) {
 		if (result.hasErrors()) {
 			return "editaccount";

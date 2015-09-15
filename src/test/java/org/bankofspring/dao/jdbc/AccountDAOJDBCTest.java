@@ -63,5 +63,23 @@ public class AccountDAOJDBCTest extends AbstractAccountDAOTest {
 		assertEquals(account.getMaxBalanceAmount(), 10000L);
 
 	}
+	@Test
+	public void updateAccount() {
+		Account account = accountDAO.getAccountByNumber("account1");
+		assertEquals(account.getAccountDescription(), "account1description");
+		assertEquals(account.getAccountNumber(), "account1");
+		assertEquals(account.getAccountBalance(), 0L);
+		assertEquals(account.getMaxBalanceAmount(), 1000000000L);
+		account.setAccountDescription("blah");
+		account.setAccountBalance(10L);
+		account.setMaxBalanceAmount(30L);
+		accountDAO.updateAccount(account);
+		account = accountDAO.getAccountByNumber("account1");
+		assertEquals(account.getAccountDescription(), "blah");
+		assertEquals(account.getAccountNumber(), "account1");
+		assertEquals(account.getAccountBalance(), 10L);
+		assertEquals(account.getMaxBalanceAmount(), 30L);
+		
+	}
 	
 }
