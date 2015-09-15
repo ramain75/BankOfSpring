@@ -108,4 +108,16 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 		// TODO Auto-generated method stub
 		return jdbc.query(LIST_ACCOUNTS, new AccountRowMapper(),id);
 	}
+
+	@Override
+	public boolean updateAccount(Account account) {
+		Map<String, Object> params = new HashMap<String, Object>();
+	  	params.put( "amount", account.getAccountBalance() );
+	  	params.put( "accountNumber", account.getAccountNumber());
+	  	params.put( "description", account.getAccountDescription());
+	  	params.put( "balanceaccountmax", account.getMaxBalanceAmount());
+	  	int updates = jdbc.update( "UPDATE account SET balance = :amount, description = :description, "
+	  			+ " max_balance WHERE number = :accountNumber", params );
+	  	return ( updates == 1 );
+	}
 }
