@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,6 +48,64 @@ public class TransferController {
 	@RequestMapping(value = "/transfer", method = RequestMethod.GET)
 	public ModelAndView transfer(HttpServletResponse response) throws IOException{
 		
+		ModelAndView modelAndView = getModelAndView();
+				
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/transfer", method = RequestMethod.POST)
+	public ModelAndView transferAmount(@ModelAttribute("TransferDetails")TransferDetails transferDetails, 
+			ModelMap model) {
+		
+		System.out.println("From: "+transferDetails.getFromNumber());
+		System.out.println("To: "+transferDetails.getToNumber());
+		
+		//Just get a user for now.... Don't really care which
+		User user1 = customerDAO.getCustomerById(1);
+		Account fromAccount;
+		Account toAccount;
+		
+		String error = null;
+		String success = null;
+		
+		//Get from account
+		if(	transferDetails.getFromNumber() != null && transferDetails.getToNumber() != null 
+			&& !"N/A".equals(transferDetails.getFromNumber()) && !"N/A".equals(transferDetails.getToNumber())){
+			
+			try{
+				fromAccount = accountDAO.getAccountByNumber(transferDetails.getFromNumber());
+				toAccount = accountDAO.getAccountByNumber(transferDetails.getToNumber());
+				
+				if(!service.transfer(user1, fromAccount, toAccount, (long)transferDetails.getAmount())){
+					error = "An error occurred trying to transfer money";
+					System.err.println("Error");
+				}
+				else{
+					success = "&pound;"+transferDetails.getAmount()+" was successfully transferred";
+				}
+			}
+			catch(Exception e){
+				error = "An error occurred trying to transfer money";
+				System.err.println("Error");
+			}
+		}
+		else{
+			error = "Account Details not valid";
+			System.err.println("Error");
+		}
+		
+		
+		ModelAndView mv = getModelAndView();
+		mv.addObject("errorString", error);
+		
+		if(error == null){
+			mv.addObject("successString",success);
+		}
+		
+		return mv;
+	}
+	
+	private ModelAndView getModelAndView(){
 		//Create the model and view object to send back
 		ModelAndView modelandview = new ModelAndView("transfer", "command", new TransferDetails());
 		
@@ -67,46 +127,10 @@ public class TransferController {
 		return modelandview;
 	}
 	
-	@RequestMapping(value = "/transfer", method = RequestMethod.POST)
-	public ModelAndView transferAmount(@ModelAttribute("TransferDetails")TransferDetails transferDetails, 
-			ModelMap model) {
-		
-		System.out.println("From: "+transferDetails.getFromNumber());
-		System.out.println("To: "+transferDetails.getToNumber());
-		
-		//Just get a user for now.... Don't really care which
-		User user1 = customerDAO.getCustomerById(1);
-		Account fromAccount;
-		Account toAccount;
-		
-		String error = "";
-		
-		//Get from account
-		if(	transferDetails.getFromNumber() != null && transferDetails.getToNumber() != null 
-			&& !"N/A".equals(transferDetails.getFromNumber()) && !"N/A".equals(transferDetails.getToNumber())){
-			
-			try{
-				fromAccount = accountDAO.getAccountByNumber(transferDetails.getFromNumber());
-				toAccount = accountDAO.getAccountByNumber(transferDetails.getToNumber());
-				
-				if(!service.transfer(user1, fromAccount, toAccount, (long)transferDetails.getAmount())){
-					error = "An error occurred trying to transfer money";
-					System.err.println("Error");
-				}
-			}
-			catch(Exception e){
-				error = "An error occurred trying to transfer money";
-				System.err.println("Error");
-			}
-		}
-		else{
-			error = "Account Details not valid";
-			System.err.println("Error");
-		}
-		
-		
-		ModelAndView mv = new ModelAndView("redirect:transfer");
-		mv.addObject("errorString", error);
+	@ExceptionHandler(BindException.class)
+	public ModelAndView handleBindException(Exception ex, HttpServletResponse response){
+		ModelAndView mv = getModelAndView();
+		mv.addObject("errorString", "An error occurred trying to transfer between accounts");
 		
 		return mv;
 	}

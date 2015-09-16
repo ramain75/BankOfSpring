@@ -35,12 +35,12 @@
 	      <ul class="nav pull-right navbar-nav">
           <li class="dropdown" id="menuLogin">
             <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
-            <div class="dropdown-menu" style="padding:17px;">
-              <sf:form method="POST" action="loginForm" >
+            <div class="dropdown-menu pull-right ddLoginMenu" style="padding:17px;">
+              <sf:form method="POST" action="loginForm" cssClass="ddLoginForm" >
               	<p>Login to the Bank of Spring</p>
-                <input name="username" id="username" type="text" placeholder="Username"> 
-                <input name="password" id="password" type="password" placeholder="Password"><br>
-                <button type="button" id="btnLogin" class="btn btn-primary">Login</button>
+                <input name="username" id="username" type="text" class="form-control" placeholder="Username"> 
+                <input name="password" id="password" type="password" class="form-control" placeholder="Password"><br>
+                <button type="button" id="btnLogin" class="btn btn-primary form-control">Login</button>
               </sf:form>
             </div>
           </li>
