@@ -7,9 +7,7 @@ import javax.validation.Valid;
 
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
-import org.bankofspring.model.Customer;
 import org.bankofspring.web.AccountForm;
-import org.bankofspring.web.CustomerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
