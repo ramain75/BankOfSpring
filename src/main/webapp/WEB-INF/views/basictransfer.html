@@ -12,12 +12,24 @@ method="post">
 <fieldset>
 <legend th:text="#{basictransfer.form}"> Basic Transfer</legend>
 <div>
-<label th:text="#{account.number}" for="fromAccount" >Number</label>
-<input type="text" th:field="*{fromAccount}"  />
+<label th:text="#{basictransfer.fromAccount}" for="fromAccount" >from account</label>
+<select th:field = "*{fromAccount}">
+<option th:each = "account : ${allAccounts}"
+		th:value = "${account.accountNumber}"
+		th:text = "${account.accountNumber}">
+		fromAccountNumber
+</option>
+</select>
 </div>
 <div>
-<label th:text="#{account.number}" for="toAccount" >Number</label>
-<input type="text" th:field="*{toAccount}"  />
+<label th:text="#{basictransfer.toAccount}" for="toAccount" >to account</label>
+<select th:field = "*{toAccount}">
+<option th:each = "account : ${allAccounts}"
+		th:value = "${account.accountNumber}"
+		th:text = "${account.accountNumber}">
+		toAccountNumber
+</option>
+</select>
 </div>
 <div>
 <label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
