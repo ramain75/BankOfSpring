@@ -23,6 +23,9 @@ method="post">
 <label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
 <input type="text" th:field="*{amount}"  />
 </div>
+<div class="submit">
+<button type="submit" name="save" th:text="#{button.save}">Save</button>
+</div>
 </fieldset>
 </form>
 <div th:replace="footer :: footer">
