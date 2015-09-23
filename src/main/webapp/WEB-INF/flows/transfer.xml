@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<var name="transfer" class="org.bankofspring.web.flow.TransferFlow" />
+	
+	<view-state id="selectFromAccount">
+	<transition to="checkOwnAccount" on="fromAccountSelected"></transition>	
+	</view-state>
+	
+	<decision-state id="checkOwnAccount">
+	<if test="transfer.checkOwnAccount()"
+	then="selectTargetAccount"
+	else="selectCustomer"
+	/>
+	
+	</decision-state>
+	
+	<view-state id ="selectCustomer">
+	<transition to="selectTargetAccount" on="customerSelected"></transition>
+	
+	</view-state>
+	<view-state id="selectTargetAccount">
+	<transition to="executeTransfer" on="targetAccountSelected"></transition>
+	</view-state>
+	<action-state id="executeTransfer">
+	<evaluate expression="transfer.transfer()"></evaluate>
+	<transition to="thankUser"></transition>
+	</action-state>
+	<view-state id="thankUser">
+	<transition to="endState" />
+	</view-state>
+	<end-state id="endState"></end-state>
+	<global-transitions>
+	<transition on="cancel" to="endState"></transition>
+	</global-transitions>
+
+</flow>
