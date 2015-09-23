@@ -1,0 +1,17 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div th:replace="header :: header"></div>
+<body>
+<div th:replace="logo :: logo"></div>
+<H1 th:text="#{header}">Bank Of Spring test</H1>
+<p th:text="#{welcome}">welcome to our bank! </p>
+<br></br>
+<p> <A th:text = "#{customer.list}" href="/customers/">CustomerList</A> </p>
+<p> <A th:text = "#{basictransfer.form}" href="/basictransfer/">Basic Transfer</A> </p>
+<div th:replace="footer :: footer">
+</div>
+</body>
+
+</html>

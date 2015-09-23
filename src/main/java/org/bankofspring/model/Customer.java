@@ -6,10 +6,12 @@ package org.bankofspring.model;
  * 
  *
  */
-public class Customer extends User {
+public class Customer {
 	
 	private Integer id;
 	private String name;
+	private String email;
+	private String description;
 
 	public Integer getId() {
 		return id;
@@ -41,8 +43,6 @@ public class Customer extends User {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
@@ -57,6 +57,22 @@ public class Customer extends User {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	

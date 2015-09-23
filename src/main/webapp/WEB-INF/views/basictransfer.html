@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div th:replace="header :: header"></div>
+<body>
+<div th:replace="logo :: logo"></div>
+<H1>Bank Of Spring - Basic Transfer</H1>
+
+<form action="#" th:action="@{'/basictransfer/do'}" th:object="${basicTransferForm}"
+method="post">
+<fieldset>
+<legend th:text="#{basictransfer.form}"> Basic Transfer</legend>
+<div>
+<label th:text="#{basictransfer.fromAccount}" for="fromAccount" >from account</label>
+<select th:field = "*{fromAccount}">
+<option th:each = "account : ${allAccounts}"
+		th:value = "${account.accountNumber}"
+		th:text = "${account.accountNumber}">
+		fromAccountNumber
+</option>
+</select>
+</div>
+<div>
+<label th:text="#{basictransfer.toAccount}" for="toAccount" >to account</label>
+<select th:field = "*{toAccount}">
+<option th:each = "account : ${allAccounts}"
+		th:value = "${account.accountNumber}"
+		th:text = "${account.accountNumber}">
+		toAccountNumber
+</option>
+</select>
+</div>
+<div>
+<label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
+<input type="text" th:field="*{amount}"  />
+</div>
+<div class="submit">
+<button type="submit" name="save" th:text="#{button.save}">Save</button>
+</div>
+</fieldset>
+</form>
+<div th:replace="footer :: footer">
+</div>
+</body>
+
+</html>

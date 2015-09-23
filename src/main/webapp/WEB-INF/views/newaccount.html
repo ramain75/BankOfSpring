@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div th:replace="header :: header"></div>
+<body>
+<div th:replace="logo :: logo"></div>
+	<H1>Bank Of Spring - New Account</H1>
+
+	<form action="#"
+		th:action="@{'/customers/'+ ${customerid} + '/accounts/addaccount'}"
+		th:object="${accountForm}" method="post">
+		<fieldset>
+			<legend th:text="#{account.form}"> New Account</legend>
+			<div>
+				<label th:text="#{account.number}" for="number">Number</label> <input
+					type="text" th:field="*{number}" th:errorclass="fieldError" />
+				<p th:if="${#fields.hasErrors('number')}" th:errors="*{number}"
+					th:errorclass="fieldErrorTxt">error number</p>
+			</div>
+			<div>
+				<label th:text="#{account.maxbalance}" for="maxbalance">max
+					balance</label> <input type="text" th:field="*{maxbalance}"
+					th:errorclass="fieldErrorTxt" />
+				<p th:if="${#fields.hasErrors('maxbalance')}"
+					th:errors="*{maxbalance}" th:errorclass="fieldErrorTxt">error
+					max balance</p>
+			</div>
+			<label th:text="#{account.balance}" for="balance">balance</label> <input
+				type="text" th:field="*{balance}" th:errorclass="fieldErrorTxt" />
+			<p th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}"
+				th:errorclass="fieldErrorTxt">error balance</p>
+			<div>
+
+				<label th:text="#{account.description}" for="description">Description</label>
+				<input type="text" th:field="*{description}" />
+			</div>
+			<div class="submit">
+				<button type="submit" name="save" th:text="#{button.save}">Save</button>
+			</div>
+		</fieldset>
+	</form>
+	<div th:replace="footer :: footer"></div>
+</body>
+
+</html>

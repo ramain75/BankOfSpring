@@ -16,15 +16,15 @@ public class CustomerTest {
 	@Before
 	public void setup() {
 		customer1 = new Customer();
-		customer1.setUsername("user");
-		customer1.setPassword("test");
 		customer1.setId(1);
 		customer1.setName("customer1");
+		customer1.setEmail("customer1@gmail.com");
+		customer1.setDescription("blahblah");
 		customer2 = new Customer();
-		customer2.setUsername("user");
-		customer2.setPassword("test");
 		customer2.setId(1);
 		customer2.setName("customer1");
+		customer1.setEmail("customer1@gmail.com");
+		customer1.setDescription("blahblah");
 	}
 	
 	@Test
@@ -33,13 +33,13 @@ public class CustomerTest {
 	}
 	
 	@Test
-	public void testEqualsDifferentName() {
+	public void testNotEqualsDifferentName() {
 		customer2.setName("bob");
 		assertNotEquals(customer1, customer2);
 	}
 	
 	@Test
-	public void testEqualsDifferentId() {
+	public void testNotEqualsDifferentId() {
 		customer2.setId(2);
 		assertNotEquals(customer1, customer2);
 	}
@@ -48,6 +48,18 @@ public class CustomerTest {
 	public void testEqualsNoId() {
 		customer1.setId(null);
 		customer2.setId(null);
+		assertEquals(customer1, customer2);
+	}
+	@Test
+	public void testEqualsDifferentEmail() {
+		customer1.setEmail("customer1@gmail.com");
+		customer2.setEmail("customer2@hotmail.com");
+		assertEquals(customer1, customer2);
+	}
+	@Test
+	public void testEqualsDifferentDescriptionl() {
+		customer1.setDescription("I am customer 1");
+		customer2.setDescription("I am NOT customer 1");
 		assertEquals(customer1, customer2);
 	}
 	
@@ -62,7 +74,6 @@ public class CustomerTest {
 		
 		assertEquals((Integer)1,customer1.getId());
 		assertEquals("customer1",customer1.getName());
-		assertEquals("user",customer1.getUsername());
-		assertEquals("test",customer1.getPassword());
+		
 	}
 }

@@ -1,7 +1,14 @@
 package org.bankofspring.dao.jdbc;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.bankofspring.dao.AbstractAccountDAOTest;
 import org.bankofspring.dao.AccountDAO;
+import org.bankofspring.dao.CustomerDAO;
+import org.bankofspring.model.Account;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,9 +25,71 @@ public class AccountDAOJDBCTest extends AbstractAccountDAOTest {
 	@Autowired
 	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
+	
+	@Autowired
+	@Qualifier("jdbcCustomerDao")
+	private CustomerDAO customerDAO;
 
 	@Override
 	protected AccountDAO getDao() {
 		return this.accountDAO;
 	}
+	@Test
+	public void testListAccountsByCustomer () {
+		List<Account> accounts = accountDAO.getAccountsForCustomer(1);
+		assertEquals(accounts.size(),3);
+		accounts = accountDAO.getAccountsForCustomer(2);
+		assertEquals(accounts.size(),2);
+		accounts = accountDAO.getAccountsForCustomer(3);
+		assertEquals(accounts.size(),0);
+	}
+	
+	@Test
+	public void testListOtherAccounts () {
+		List<Account> accounts = accountDAO.getOtherAccounts(1);
+		assertEquals(accounts.size(),2);
+		accounts = accountDAO.getOtherAccounts(2);
+		assertEquals(accounts.size(),3);
+		accounts = accountDAO.getOtherAccounts(3);
+		assertEquals(5,accounts.size());
+	}
+	@Test
+	public void testCreateNewAccount() {
+		List<Account> accounts = accountDAO.getAccountsForCustomer(1);
+		assertEquals(accounts.size(),3);
+		Account newAccount  = new Account();
+		newAccount.setAccountNumber("newaccount");
+		newAccount.setAccountDescription("newAccountDescription");
+		newAccount.setAccountBalance(100L);
+		newAccount.setMaxBalanceAmount(10000L);
+		newAccount.setCustomerId(1);
+		accountDAO.addNewAccount(newAccount);
+		accounts = accountDAO.getAccountsForCustomer(1);
+		assertEquals(accounts.size(),4);
+		Account account = accountDAO.getAccountByNumber("newaccount");
+		assertEquals(account.getAccountDescription(), "newAccountDescription");
+		assertEquals(account.getAccountNumber(), "newaccount");
+		assertEquals(account.getAccountBalance(), 100L);
+		assertEquals(account.getMaxBalanceAmount(), 10000L);
+
+	}
+	@Test
+	public void updateAccount() {
+		Account account = accountDAO.getAccountByNumber("account1");
+		assertEquals(account.getAccountDescription(), "account1description");
+		assertEquals(account.getAccountNumber(), "account1");
+		assertEquals(account.getAccountBalance(), 0L);
+		assertEquals(account.getMaxBalanceAmount(), 1000000000L);
+		account.setAccountDescription("blah");
+		account.setAccountBalance(10L);
+		account.setMaxBalanceAmount(30L);
+		accountDAO.updateAccount(account);
+		account = accountDAO.getAccountByNumber("account1");
+		assertEquals(account.getAccountDescription(), "blah");
+		assertEquals(account.getAccountNumber(), "account1");
+		assertEquals(account.getAccountBalance(), 10L);
+		assertEquals(account.getMaxBalanceAmount(), 30L);
+		
+	}
+	
 }

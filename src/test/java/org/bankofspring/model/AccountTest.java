@@ -19,8 +19,6 @@ public class AccountTest {
 	@Test
 	public void testAddCustomer() {
 		Customer customer1 = new Customer();
-		customer1.setUsername("user");
-		customer1.setPassword("test");
 		customer1.setId(1);
 		customer1.setName("cust1");
 		Account account = new Account();
@@ -33,8 +31,6 @@ public class AccountTest {
 	@Test
 	public void testSetOwningCustomers() {
 		Customer customer1 = new Customer();
-		customer1.setUsername("user");
-		customer1.setPassword("test");
 		customer1.setId(1);
 		customer1.setName("cust1");
 		Account account = new Account();
