@@ -43,6 +43,16 @@ public class AccountDAOJDBCTest extends AbstractAccountDAOTest {
 		accounts = accountDAO.getAccountsForCustomer(3);
 		assertEquals(accounts.size(),0);
 	}
+	
+	@Test
+	public void testListOtherAccounts () {
+		List<Account> accounts = accountDAO.getOtherAccounts(1);
+		assertEquals(accounts.size(),2);
+		accounts = accountDAO.getOtherAccounts(2);
+		assertEquals(accounts.size(),3);
+		accounts = accountDAO.getOtherAccounts(3);
+		assertEquals(5,accounts.size());
+	}
 	@Test
 	public void testCreateNewAccount() {
 		List<Account> accounts = accountDAO.getAccountsForCustomer(1);

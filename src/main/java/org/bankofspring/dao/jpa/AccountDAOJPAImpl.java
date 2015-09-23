@@ -90,4 +90,10 @@ public class AccountDAOJPAImpl implements AccountDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<Account> getOtherAccounts(int customerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

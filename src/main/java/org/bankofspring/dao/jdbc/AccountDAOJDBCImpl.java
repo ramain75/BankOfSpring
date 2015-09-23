@@ -21,6 +21,9 @@ import org.springframework.stereotype.Repository;
 public class AccountDAOJDBCImpl implements AccountDAO {
 	private static final String LIST_ACCOUNTS = "select number, description, balance, max_balance, ca.customer_id from"
 			+ " account a join customer_account ca on (a.number = ca.number) where ca.customer_id = ?";
+	
+	private static final String LIST_OTHER_ACCOUNTS = "select number, description, balance, max_balance, ca.customer_id from"
+			+ " account a join customer_account ca on (a.number = ca.number) where ca.customer_id != ?";
 	@Autowired
 	private SimpleJdbcTemplate jdbc;
 	
@@ -104,9 +107,9 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	}
 
 	@Override
-	public List<Account> getAccountsForCustomer(int id) {
+	public List<Account> getAccountsForCustomer(int customerId) {
 		// TODO Auto-generated method stub
-		return jdbc.query(LIST_ACCOUNTS, new AccountRowMapper(),id);
+		return jdbc.query(LIST_ACCOUNTS, new AccountRowMapper(),customerId);
 	}
 
 	@Override
@@ -119,5 +122,11 @@ public class AccountDAOJDBCImpl implements AccountDAO {
 	  	int updates = jdbc.update( "UPDATE account SET balance = :amount, description = :description, "
 	  			+ " max_balance = :maxbalance  WHERE number = :accountNumber", params );
 	  	return ( updates == 1 );
+	}
+
+	@Override
+	public List<Account> getOtherAccounts(int customerId) {
+		// TODO Auto-generated method stub
+		return jdbc.query(LIST_OTHER_ACCOUNTS, new AccountRowMapper(),customerId);
 	}
 }
