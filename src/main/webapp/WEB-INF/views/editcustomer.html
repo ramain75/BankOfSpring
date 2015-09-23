@@ -5,7 +5,7 @@
 <div th:replace="header :: header"></div>
 <body>
 <div th:replace="logo :: logo"></div>
-<H1>Bank Of Spring - Edit Customer</H1>
+<H1 th:text="#{customer.form}">Bank Of Spring - Edit Customer</H1>
 
 <form action="#" th:action="@{'/customers/'+${customer.id}+'/save'}" th:object="${customer}"
 method="post">
