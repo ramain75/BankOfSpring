@@ -29,7 +29,7 @@
 	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 	</bean>
-	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="order" value="1" />
 	</bean>
@@ -61,6 +61,9 @@
 	<flow:flow-location id="transfer" path="transfer.xml"/>
 	</flow:flow-registry>
 	
+	<flow:flow-builder-services development="true" id="flowBuilderServices"
+	 view-factory-creator="mvcViewFactoryCreator"/>
+	
 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
 		<property name="flowRegistry" ref="flowRegistry"></property>
 	</bean>
@@ -68,4 +71,9 @@
 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
 		<property name="flowExecutor" ref="flowExecutor"></property>
 	</bean>
+	
+	<bean id="mvcViewFactoryCreator" 
+      class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+    <property name="viewResolvers" ref="thymeleafViewResolver"/>
+</bean>
 </beans>

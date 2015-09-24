@@ -1,12 +1,15 @@
 package org.bankofspring.web.flow;
 
+import java.io.Serializable;
+
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
 import org.bankofspring.model.User;
 import org.bankofspring.service.BankOfSpringService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class TransferFlow {
+public class TransferFlow implements Serializable {
+	private static final long serialVersionUID = 8075291799126328918L;
 	
 	Account fromAccount;
 	Account toAccount;
