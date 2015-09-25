@@ -6,7 +6,7 @@
 	
 	<!-- <var name="transfer" class="org.bankofspring.web.flow.TransferFlow" />-->
 	
-	<view-state id="selectFromAccount" view="selectfromAccount.html">
+	<view-state id="selectFromAccount" >
 	<transition to="checkOwnAccount" on="fromAccountSelected"></transition>	
 	</view-state>
 	
