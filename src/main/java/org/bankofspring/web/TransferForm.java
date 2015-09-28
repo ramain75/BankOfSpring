@@ -1,9 +1,11 @@
 package org.bankofspring.web;
 
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
-public class TransferForm {
+public class TransferForm implements Serializable {
 
 	@NotEmpty
 	private String fromAccount;

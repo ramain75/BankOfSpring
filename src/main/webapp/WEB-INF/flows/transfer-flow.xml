@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="transferForm" class="org.bankofspring.web.TransferForm"/>
+
+	<view-state id="start" view="flow/transferStart">
+		<on-entry>
+			<evaluate expression="flowRequestContext.externalContext.sessionMap.bos_current_user" result="flowScope.currentUsername"/>
+		</on-entry>
+		<transition on="continue" to="fromAccount"/>
+	</view-state>
+	
+	<view-state id="fromAccount" view="flow/transferSelectFrom" model="transferForm">
+		<on-entry>
+			<set name="viewScope.fromAccounts" value="jdbcAccountDao.getAccountsForUsername(flowScope.currentUsername)"/>
+		</on-entry>
+		<transition on="continue" to="toAccountType"/>
+	</view-state>
+	
+	<view-state id="toAccountType" view="flow/toAccountType">
+		<transition on="myAccount" to="selectAccount"/>
+<!-- 		<transition on="anotherAccount" to="selectCustomer"/> -->
+	</view-state>
+	
+	<view-state id="selectAccount" view="flow/transferSelectTo" model="transferForm">
+		<on-entry>
+			<set name="viewScope.toAccounts" value="jdbcAccountDao.getAccountsForUsername(flowScope.currentUsername)"/>
+		</on-entry>
+		<transition on="continue" to="selectAmount"/>
+	</view-state>
+	
+	<view-state id="selectAmount" view="flow/selectAmount" model="transferForm">
+		<transition on="continue" to="transfer"/>
+	</view-state>
+	
+	<action-state id="transfer">
+		<evaluate expression="bankService.transfer(flowScope.currentUsername, transferForm)"/>
+		<transition on="yes" to="transferSuccess" />
+		<transition on="no" to="transferFailure" />
+	</action-state>
+	
+	<end-state id="transferSuccess" view="flow/success"/>
+	<end-state id="transferFailure" view="flow/failure"/>
+	<end-state id="cancel" view="externalRedirect:contextRelative:home"/>
+
+	<global-transitions>
+		<transition on="cancel" to="cancel" />
+	</global-transitions>
+
+
+</flow>

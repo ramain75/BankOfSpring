@@ -21,6 +21,10 @@
         	</c:if>
         	</p>
         	<p></p>
+        	<c:if test="${sessionScope.infoMessage}">
+        		<p style="color: blue; border: 1px solid blue;">${sessionScope.infoMessage}</p>
+        		<c:set scope="session" var="infoMessage" value="${null}"/>
+        	</c:if>
 	    </div>
 	    <hr/>
 		<div class="container">

@@ -16,6 +16,7 @@
 
 		<!-- Spring -->
 		<spring-framework.version>3.0.6.RELEASE</spring-framework.version>
+		<spring-webflow.version>2.4.2.RELEASE</spring-webflow.version>
 
 		<!-- Database -->
 		<hsqldb.version>2.3.2</hsqldb.version>
@@ -76,6 +77,11 @@
 			<version>${spring-framework.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>${spring-webflow.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.6.8</version>
@@ -105,6 +111,13 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.4.0.GA</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
 
 		<!-- HSQL DB -->
 		<dependency>
