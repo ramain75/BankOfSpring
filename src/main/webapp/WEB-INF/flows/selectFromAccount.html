@@ -1,5 +1,39 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div th:replace="header :: header">
+<div>
+<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bankofspring.css" 
+th:href="@{/resources/css/bankofspring.css}"/>
+</div>
+</div>
 <body>
-<h1>Select Account</h1>
+<H1 th:text="#{account.list}"> Accounts List</H1>
+<div th:replace="logo :: logo"></div>
+<div class="bostable">
+<table>
+<thead>
+<tr>
+<th th:text="#{account.number}">Account Number </th>
+<th th:text="#{account.description}">Account Description </th>
+<th th:text="#{account.balance}">Account Balance </th>
+<th th:text="#{account.maxbalance}">Account Max Balance </th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="account : ${accounts}">
+<td><a th:text="${account.accountNumber}" th:href="" href="../views/editaccount.html">accountNumber</a></td>
+<td th:text="${account.accountDescription}">Account Description </td>
+<td th:text="${account.accountBalance}">Not Much </td>
+<td th:text="${account.maxBalanceAmount}">Millions </td>
+</tr>
+</tbody>
+</table>
+<br/>
+</div>
+<div th:replace="footer :: footer">
+</div>
 </body>
+
 </html>

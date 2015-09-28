@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<!-- <var name="transfer" class="org.bankofspring.web.flow.TransferFlow" />-->
+	<var name="transfer" class="org.bankofspring.web.flow.TransferFlow" />
 	
 	<view-state id="selectFromAccount" >
 	<transition to="checkOwnAccount" on="fromAccountSelected"></transition>	
