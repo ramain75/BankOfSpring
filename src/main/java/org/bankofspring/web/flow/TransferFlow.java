@@ -1,11 +1,13 @@
 package org.bankofspring.web.flow;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.bankofspring.model.Account;
 import org.bankofspring.model.Customer;
 import org.bankofspring.model.User;
 import org.bankofspring.service.BankOfSpringService;
+import org.bankofspring.service.BankOfSpringTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class TransferFlow implements Serializable {
@@ -18,6 +20,9 @@ public class TransferFlow implements Serializable {
 	User user;
 	@Autowired
 	transient BankOfSpringService service;
+	@Autowired
+	transient BankOfSpringTransferService transferService;
+	
 	boolean targetAccountOwnAccount;
 	
 	
@@ -61,6 +66,10 @@ public class TransferFlow implements Serializable {
 	}
 	public void setFromAccount(Account fromAccount) {
 		this.fromAccount = fromAccount;
+	}
+	
+	public List<Account> getListOfAccounts (int customerId) {
+		return transferService.getListOfAccountsForCustomer(customerId);
 	}
 	
 	

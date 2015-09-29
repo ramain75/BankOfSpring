@@ -22,6 +22,7 @@ public class AccountControllerTest  {
 	@InjectMocks
 	AccountController controller = new AccountController();
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testShouldReturnAccountList() {
 		Account acc1 = new Account();
