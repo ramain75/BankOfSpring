@@ -8,9 +8,13 @@
 	
 	<view-state id="selectFromAccount">
 		<on-entry>
-			<set name="viewScope.accounts" value="transfer.getListOfAccounts(1)" ></set>
+			<set name="viewScope.accounts" value="bankTransferService.getListOfAccountsForCustomer(1)" ></set>
 		</on-entry>
-		<transition to="checkOwnAccount" on="fromAccountSelected"></transition>	
+		<transition to="enterAmount" on="fromAccountSelected"></transition>	
+	</view-state>
+	
+	<view-state id="enterAmount">
+		<transition to="checkOwnAccount" on="amountEntered"></transition>	
 	</view-state>
 	
 	<decision-state id="checkOwnAccount">

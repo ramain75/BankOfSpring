@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div th:replace="header :: header">
+<div>
+<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bankofspring.css" 
+th:href="@{/resources/css/bankofspring.css}"/>
+</div>
+</div>
+<body>
+<div th:replace="logo :: logo"></div>
+<h1 th:text="#{transfer.enteramount}">Enter Amount</h1>
+<div>
+<form action="#" method="post">
+  <div>
+	<label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
+	<input type="text" value="100" />
+	</div>
+</form>
+</div>
+
+</body>
+</html>

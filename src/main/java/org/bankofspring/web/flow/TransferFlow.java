@@ -15,17 +15,10 @@ public class TransferFlow implements Serializable {
 	
 	Account fromAccount;
 	Account toAccount;
-	Customer targetCustomer;
-	Customer startCustomer;
 	User user;
-	@Autowired
-	transient BankOfSpringService service;
-	@Autowired
-	transient BankOfSpringTransferService transferService;
-	
+		
 	boolean targetAccountOwnAccount;
-	
-	
+		
 	public boolean isTargetAccountOwnAccount() {
 		return targetAccountOwnAccount;
 	}
@@ -39,18 +32,7 @@ public class TransferFlow implements Serializable {
 	public void setToAccount(Account toAccount) {
 		this.toAccount = toAccount;
 	}
-	public Customer getTargetCustomer() {
-		return targetCustomer;
-	}
-	public void setTargetCustomer(Customer targetCustomer) {
-		this.targetCustomer = targetCustomer;
-	}
-	public Customer getStartCustomer() {
-		return startCustomer;
-	}
-	public void setStartCustomer(Customer startCustomer) {
-		this.startCustomer = startCustomer;
-	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -68,9 +50,6 @@ public class TransferFlow implements Serializable {
 		this.fromAccount = fromAccount;
 	}
 	
-	public List<Account> getListOfAccounts (int customerId) {
-		return transferService.getListOfAccountsForCustomer(customerId);
-	}
 	
 	
 }
