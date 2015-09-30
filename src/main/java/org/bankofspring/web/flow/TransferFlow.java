@@ -15,9 +15,17 @@ public class TransferFlow implements Serializable {
 	
 	Account fromAccount;
 	Account toAccount;
+	long amount;
 	User user;
-		
 	boolean targetAccountOwnAccount;
+	
+	public long getAmount() {
+		return amount;
+	}
+	public void setAmount(long amount) {
+		this.amount = amount;
+	}
+	
 		
 	public boolean isTargetAccountOwnAccount() {
 		return targetAccountOwnAccount;

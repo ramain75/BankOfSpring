@@ -6,9 +6,9 @@
 
 <body>
 <div th:fragment="transferprogress">
-<p th:text="'From Account: '+  ${transfer.fromAccount}"> From Account: 1 </p>
-<p th:text="'Amount: ' + ${transfer.Amount}"> Amount: 200 </p>
-<p th:text="'To Account: '+  ${transfer.toAccount}"> To Account: 2 </p>
+<p th:text="'From Account: '+  ${transfer.fromAccount.accountNumber}"> From Account: 1 </p>
+<p th:if ="${transfer.Amount != 0}" th:text="'Amount: ' + ${transfer.Amount}"> Amount: 200 </p>
+<p th:if ="${transfer.toAccount != null}" th:text="'To Account: '+  ${transfer.toAccount.accountNumber}"> To Account: 2 </p>
 </div>
 </body>
 </html>

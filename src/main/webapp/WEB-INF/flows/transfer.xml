@@ -14,7 +14,17 @@
 	</view-state>
 	
 	<view-state id="enterAmount">
+	<on-entry>
+		<evaluate expression="transfer.setFromAccount(jdbcAccountDao.getAccountByNumber(requestParameters.accountNumber))"/>
+	</on-entry>
 		<transition to="checkOwnAccount" on="amountEntered"></transition>	
+	</view-state>
+	
+	<view-state id="chooseInternalExternal">
+	<on-entry>
+		<evaluate expression="transfer.setAmount(requestParameters.amount))"/>
+	</on-entry>
+			<transition to="checkOwnAccount" on="internalExternalChoiceMade"></transition>	
 	</view-state>
 	
 	<decision-state id="checkOwnAccount">
