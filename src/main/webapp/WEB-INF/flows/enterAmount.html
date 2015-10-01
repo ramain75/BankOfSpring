@@ -14,13 +14,14 @@ th:href="@{/resources/css/bankofspring.css}"/>
 <div th:replace="transferprogress :: transferprogress" >
 </div>
 <div>
-<form method="post">
+<form method="post" action="#" th:action="${flowExecutionUrl}" th:object="${transfer}" >
   <div>
-  	<input type="hidden" name = "_flowExecutionKey" value = "@{${flowExecutionKey}}" />
+  	
 	<label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
-	<input type="text" value="100" id="amount"/>
-	</div>
+	<input type="text" th:field="*{amount}" value="100" id="amount"/>
+</div>
 	<input type="submit" name="_eventId_amountEntered" value="proceed"/>
+	
 </form>
 </div>
 

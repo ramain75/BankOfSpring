@@ -21,6 +21,13 @@ public class TransferFlow implements Serializable {
 	public void setAmount(long amount) {
 		this.amount = amount;
 	}
+	public void setAmount(String amount) {
+		if (amount == null) {
+			this.amount = -1;
+			return;
+		}
+		this.amount = Long.parseLong(amount);
+	}
 	
 		
 	public boolean isTargetAccountOwnAccount() {

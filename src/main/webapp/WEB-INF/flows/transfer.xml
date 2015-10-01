@@ -13,16 +13,16 @@
 		<transition to="enterAmount" on="fromAccountSelected"></transition>	
 	</view-state>
 	
-	<view-state id="enterAmount">
+	<view-state id="enterAmount" >
 	<on-entry>
 		<evaluate expression="transfer.setFromAccount(jdbcAccountDao.getAccountByNumber(requestParameters.accountNumber))"/>
 	</on-entry>
 		<transition to="chooseInternalExternal" on="amountEntered"></transition>	
 	</view-state>
 	
-	<view-state id="chooseInternalExternal">
+	<view-state id="chooseInternalExternal" >
 	<on-entry>
-		<evaluate expression="transfer.setAmount({T(java.lang.Long).parseLong(requestParameters.amount)})"/>
+		<evaluate expression="transfer.setAmount(requestParameters.amount)"/>
 	</on-entry>
 			<transition to="checkOwnAccount" on="internalExternalChoiceMade"></transition>	
 	</view-state>

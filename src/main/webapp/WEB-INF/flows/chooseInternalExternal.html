@@ -17,9 +17,9 @@ th:href="@{/resources/css/bankofspring.css}"/>
 <div>
 <form action="#" method="post">
   <div>
-	<input th:text="#{transfer.ownaccount}"  type="radio" value="internal" checked="checked"> Own Account </input>
+	<input th:text="#{transfer.ownaccount}"  name="whichaccount" type="radio" value="internal" checked="checked"> Own Account </input>
 	</div>
-	<input th:text="#{transfer.otheraccount}"  type="radio" value="external"> Other Account </input>
+	<input th:text="#{transfer.otheraccount}" name="whichaccount"  type="radio" value="external"> Other Account </input>
 </form>
 </div>
 

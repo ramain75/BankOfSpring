@@ -17,7 +17,6 @@ public class BankOfSpringTransferServiceImpl implements BankOfSpringTransferServ
 	@Override
 	public List<Account> getListOfAccountsForCustomer(int customerId) {
 		List <Account> accounts = accountDAO.getAccountsForCustomer(customerId);
-		System.out.println("listing accounts xxxxxxxxxxxxxx " + customerId + " " + accounts.size());
 		return accounts;
 	}
 
