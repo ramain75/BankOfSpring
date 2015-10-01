@@ -10,17 +10,16 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </div>
 <body>
 <div th:replace="logo :: logo"></div>
-<h1 th:text="#{transfer.enteramount}">Enter Amount</h1>
+<h1>Choose Account</h1>
 <div th:replace="transferprogress :: transferprogress" >
 </div>
+
 <div>
-<form method="post">
+<form action="#" method="post">
   <div>
-  	<input type="hidden" name = "_flowExecutionKey" value = "@{${flowExecutionKey}}" />
-	<label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
-	<input type="text" value="100" id="amount"/>
+	<input th:text="#{transfer.ownaccount}"  type="radio" value="internal" checked="checked"> Own Account </input>
 	</div>
-	<input type="submit" name="_eventId_amountEntered" value="proceed"/>
+	<input th:text="#{transfer.otheraccount}"  type="radio" value="external"> Other Account </input>
 </form>
 </div>
 

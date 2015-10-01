@@ -17,12 +17,12 @@
 	<on-entry>
 		<evaluate expression="transfer.setFromAccount(jdbcAccountDao.getAccountByNumber(requestParameters.accountNumber))"/>
 	</on-entry>
-		<transition to="checkOwnAccount" on="amountEntered"></transition>	
+		<transition to="chooseInternalExternal" on="amountEntered"></transition>	
 	</view-state>
 	
 	<view-state id="chooseInternalExternal">
 	<on-entry>
-		<evaluate expression="transfer.setAmount(requestParameters.amount))"/>
+		<evaluate expression="transfer.setAmount({T(java.lang.Long).parseLong(requestParameters.amount)})"/>
 	</on-entry>
 			<transition to="checkOwnAccount" on="internalExternalChoiceMade"></transition>	
 	</view-state>
@@ -42,6 +42,7 @@
 	<view-state id="selectTargetAccount">
 	<transition to="executeTransfer" on="targetAccountSelected"></transition>
 	</view-state>
+	
 	<action-state id="executeTransfer">
 	<evaluate expression="transfer.transfer()"></evaluate>
 	<transition to="thankUser"></transition>
