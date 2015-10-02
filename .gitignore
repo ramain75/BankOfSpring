@@ -1,0 +1,5 @@
+*.class
+/target/
+/bin/
+/.settings/
+/logigng.log
