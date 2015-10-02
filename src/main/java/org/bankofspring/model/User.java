@@ -1,11 +1,17 @@
 package org.bankofspring.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Class to represent a bank User
  *
  */
+@Entity
+@Table(name = "USER")
 public class User {
-
+	@Id
 	private String username;
 	private String password;
 

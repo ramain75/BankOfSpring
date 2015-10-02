@@ -5,6 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bankofspring</groupId>
 	<artifactId>BankOfSpring</artifactId>
+	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
@@ -15,7 +16,8 @@
 
 		<!-- Spring -->
 		<spring-framework.version>3.0.6.RELEASE</spring-framework.version>
-		
+		<spring-webflow.version>2.4.2.RELEASE</spring-webflow.version>
+
 		<!-- Database -->
 		<hsqldb.version>2.3.2</hsqldb.version>
 
@@ -25,6 +27,11 @@
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.8.4</mockito.version>
+
+		<!-- Web -->
+		<jstl.version>1.2</jstl.version>
+		<servlet.version>3.0.1</servlet.version>
+		<sitemesh.version>3.0.1</sitemesh.version>
 	</properties>
 
 	<dependencies>
@@ -60,6 +67,21 @@
 			<version>${spring-framework.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>${spring-webflow.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.6.8</version>
@@ -90,11 +112,40 @@
 			<version>3.4.0.GA</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
+
 		<!-- HSQL DB -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>${hsqldb.version}</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- jstl -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+
+		<!-- Sitemesh -->
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 
 		<!-- Logging with SLF4J -->
@@ -107,6 +158,18 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- Validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.0.2.GA</version>
 		</dependency>
 
 		<!-- Test Artifacts -->
@@ -128,5 +191,23 @@
 			<version>${mockito.version}</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
 
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.3.2.v20150730</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

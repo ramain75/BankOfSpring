@@ -2,11 +2,14 @@ package org.bankofspring.service;
 
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.dao.AccountTransactionDAO;
+import org.bankofspring.dao.CustomerDAO;
+import org.bankofspring.dao.UserDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.model.AccountTransaction;
 import org.bankofspring.model.BankOperationType;
 import org.bankofspring.model.User;
 import org.bankofspring.validator.BankOperationValidator;
+import org.bankofspring.web.TransferForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 	@Autowired
 	@Qualifier("jdbcAccountDao")
 	private AccountDAO accountDAO;
+	
+	@Autowired
+	private CustomerDAO customerDao;
 
 	@Autowired
 	private AccountTransactionDAO accountTransactionDAO;
@@ -82,5 +88,13 @@ public class BankOfSpringServiceImpl implements BankOfSpringService {
 
 	public void setValidator( BankOperationValidator validator ) {
 		this.validator = validator;
+	}
+	
+	@Override
+	public boolean transfer(String username, TransferForm transferForm) {
+		User u = customerDao.getCustomersForUser(username).get(0);
+		Account from = accountDAO.getAccountByNumber(transferForm.getFromAccount());
+		Account to = accountDAO.getAccountByNumber(transferForm.getToAccount());
+		return transfer(u, from, to, Long.parseLong(transferForm.getAmount()));
 	}
 }

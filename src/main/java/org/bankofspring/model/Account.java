@@ -1,6 +1,8 @@
 
 package org.bankofspring.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ import org.springframework.core.style.ToStringCreator;
  */
 @Entity
 @Table(name = "ACCOUNT")
-public class Account {
+public class Account implements Serializable {
 
 	private String accountNumber;
 	private String accountDescription;

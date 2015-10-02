@@ -1,8 +1,11 @@
 package org.bankofspring.dao.hibernate;
 
+import java.util.List;
+
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -66,5 +69,15 @@ public class AccountDAOHibernateImpl extends HibernateDaoSupport implements Acco
 		
 		create( account );
 		return true;
+	}
+	
+	@Override
+	public List<Account> getAccountsForUsername(String username) {
+		throw new RuntimeException("Not implemented");
+	}
+	
+	@Override
+	public List<Account> getAllAccounts() {
+		throw new RuntimeException("Not implemented");
 	}
 }
