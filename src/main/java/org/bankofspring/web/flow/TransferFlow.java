@@ -37,7 +37,6 @@ public class TransferFlow implements Serializable {
 		this.transferToOwnAccount = targetAccountOwnAccount;
 	}
 	public void setTransferToOwnAccount(String targetAccountOwnAccount) {
-		System.out.println("XXXXXXX transfer to own account " + targetAccountOwnAccount);
 		this.transferToOwnAccount = Boolean.parseBoolean(targetAccountOwnAccount);
 	}
 	
