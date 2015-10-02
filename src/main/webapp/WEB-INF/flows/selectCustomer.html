@@ -32,6 +32,11 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </table>
 <br/>
 </div>
+<div>
+<form method="post" action="#" th:action="${flowExecutionUrl}" >
+<input type="submit" name="_eventId_cancel" value="cancel"/>
+</form>
+</div>
 <div th:replace="footer :: footer">
 </div>
 </body>
