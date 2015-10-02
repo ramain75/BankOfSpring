@@ -20,7 +20,10 @@ th:href="@{/resources/css/bankofspring.css}"/>
 	<label th:text="#{basictransfer.amount}" for="amount" >Amount</label>
 	<input type="text" th:field="*{amount}" value="100" id="amount"/>
 </div>
+<p/>
+
 	<input type="submit" name="_eventId_amountEntered" value="proceed"/>
+	<input type="submit" name="_eventId_cancel" value="cancel"/>
 	
 </form>
 </div>

@@ -10,7 +10,9 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </div>
 <body>
 <div th:replace="logo :: logo"></div>
-<H1 th:text="#{transfer.selectFromAccount}"> Accounts List</H1>
+<H1 th:text="#{transfer.selectToAccount}"> Accounts List</H1>
+<div th:replace="transferprogress :: transferprogress" >
+</div>
 <div class="bostable">
 <table>
 <thead>

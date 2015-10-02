@@ -15,11 +15,14 @@ th:href="@{/resources/css/bankofspring.css}"/>
 </div>
 
 <div>
-<form action="#" method="post">
+<form action="#" method="post" th:action="${flowExecutionUrl}" th:object="${transfer}">
   <div>
-	<input th:text="#{transfer.ownaccount}"  name="whichaccount" type="radio" value="internal" checked="checked"> Own Account </input>
+	<input th:text="#{transfer.ownaccount}" th:field ="*{transferToOwnAccount}" name="whichaccount" type="radio" value="true" checked="checked"> Own Account </input>
 	</div>
-	<input th:text="#{transfer.otheraccount}" name="whichaccount"  type="radio" value="external"> Other Account </input>
+	<input th:text="#{transfer.otheraccount}" th:field ="*{transferToOwnAccount}" name="whichaccount"  type="radio" value="false"> Other Account </input>
+	<p/>
+	<input type="submit" name="_eventId_internalExternalChoiceMade" value="proceed"/>
+	<input type="submit" name="_eventId_cancel" value="cancel"/>
 </form>
 </div>
 

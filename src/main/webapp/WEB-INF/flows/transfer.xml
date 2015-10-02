@@ -28,31 +28,40 @@
 	</view-state>
 	
 	<decision-state id="checkOwnAccount">
-	<if test="transfer.checkOwnAccount()"
-	then="selectTargetAccount"
-	else="selectCustomer"
-	/>
-	
+	<on-entry>
+		<evaluate expression="transfer.setTransferToOwnAccount(requestParameters.transferToOwnAccount)"/>
+	</on-entry>
+		<if test="transfer.isTransferToOwnAccount()"
+				then="selectTargetAccount"
+				else="selectCustomer"
+		/>
 	</decision-state>
 	
 	<view-state id ="selectCustomer">
-	<transition to="selectTargetAccount" on="customerSelected"></transition>
-	
+		<on-entry>
+			<set name="viewScope.customers" value="bankTransferService.getListOfCustomerExcludingOne(1)" ></set>
+		</on-entry>
+		<transition to="selectTargetAccount" on="customerSelected"></transition>
 	</view-state>
+	
 	<view-state id="selectTargetAccount">
-	<transition to="executeTransfer" on="targetAccountSelected"></transition>
+		<transition to="executeTransfer" on="targetAccountSelected"></transition>
 	</view-state>
 	
 	<action-state id="executeTransfer">
-	<evaluate expression="transfer.transfer()"></evaluate>
-	<transition to="thankUser"></transition>
+		<evaluate expression="transfer.transfer()"></evaluate>
+		<transition to="thankUser"></transition>
 	</action-state>
+	
 	<view-state id="thankUser">
-	<transition to="endState" />
+		<transition to="endState" />
 	</view-state>
-	<end-state id="endState"></end-state>
+	
+	<end-state id="endState">
+	</end-state>
+	
 	<global-transitions>
-	<transition on="cancel" to="endState"></transition>
+		<transition on="cancel" to="endState"></transition>
 	</global-transitions>
 
 </flow>

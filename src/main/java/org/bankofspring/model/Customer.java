@@ -1,12 +1,13 @@
 package org.bankofspring.model;
 
+import java.io.Serializable;
 
 /**
  * Class to represent a bank customer - extends user
  * 
  *
  */
-public class Customer {
+public class Customer implements Serializable {
 	
 	private Integer id;
 	private String name;

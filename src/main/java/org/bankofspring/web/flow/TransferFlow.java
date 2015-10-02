@@ -13,7 +13,7 @@ public class TransferFlow implements Serializable {
 	Account toAccount;
 	long amount;
 	User user;
-	boolean targetAccountOwnAccount;
+	boolean transferToOwnAccount;
 	
 	public long getAmount() {
 		return amount;
@@ -30,11 +30,15 @@ public class TransferFlow implements Serializable {
 	}
 	
 		
-	public boolean isTargetAccountOwnAccount() {
-		return targetAccountOwnAccount;
+	public boolean isTransferToOwnAccount() {
+		return transferToOwnAccount;
 	}
-	public void setTargetAccountOwnAccount(boolean targetAccountOwnAccount) {
-		this.targetAccountOwnAccount = targetAccountOwnAccount;
+	public void setTransferToOwnAccount(boolean targetAccountOwnAccount) {
+		this.transferToOwnAccount = targetAccountOwnAccount;
+	}
+	public void setTransferToOwnAccount(String targetAccountOwnAccount) {
+		System.out.println("XXXXXXX transfer to own account " + targetAccountOwnAccount);
+		this.transferToOwnAccount = Boolean.parseBoolean(targetAccountOwnAccount);
 	}
 	
 	public Account getToAccount() {
