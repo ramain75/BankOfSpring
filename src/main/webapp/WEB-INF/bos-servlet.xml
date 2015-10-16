@@ -9,9 +9,7 @@
    		http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
 
 	<!-- Handles static resources -->
-	<mvc:resources location="/resources/**,favicon.ico"
-		mapping="/resources/" />
-	<mvc:resources location="/favicon.ico" mapping="/favicon.ico" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Scans for annotation controller configuration -->
 	<mvc:annotation-driven />

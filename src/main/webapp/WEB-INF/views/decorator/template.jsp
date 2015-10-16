@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<title><sitemesh:write property="title" default="Bank Of Spring"/></title>
-		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/favicon.ico"/>" />
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/resources/favicon.ico"/>" />
 		<sitemesh:write property='head'/>
 	</head>
 	<body>
