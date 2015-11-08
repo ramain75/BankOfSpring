@@ -14,7 +14,7 @@
         	<p>
         	<a href="<c:url value="/home"/>">Home</a> | 
         	<c:if test="${not empty sessionScope.bos_current_user}">
-        		Logged in as <c:out value="${bos_current_user}"/> (<a href="<c:url value="/logout"/>">logout</a>)
+        		Logged in as <c:out value="${bos_current_user}"/> (<a href="<c:url value="/static/j_spring_security_logout"/>">logout</a>)
         	</c:if>
         	<c:if test="${empty sessionScope.bos_current_user}">
         		Not logged in yet.
