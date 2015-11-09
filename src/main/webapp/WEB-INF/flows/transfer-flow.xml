@@ -8,7 +8,7 @@
 
 	<view-state id="start" view="flow/transferStart">
 		<on-entry>
-			<evaluate expression="flowRequestContext.externalContext.sessionMap.bos_current_user" result="flowScope.currentUsername"/>
+			<evaluate expression="T(org.springframework.security.core.context.SecurityContextHolder).getContext().getAuthentication().getName()" result="flowScope.currentUsername"/>
 		</on-entry>
 		<transition on="continue" to="fromAccount"/>
 	</view-state>

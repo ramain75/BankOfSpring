@@ -22,4 +22,9 @@ public class UserDAOHibernateImpl extends HibernateDaoSupport implements UserDAO
 		return getHibernateTemplate().find("from " + User.class.getName());
 	}
 
+	@Override
+	public User getUserByUsername(String username) {
+		return getHibernateTemplate().get(User.class, username);
+	}
+
 }
