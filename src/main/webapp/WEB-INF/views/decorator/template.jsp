@@ -13,8 +13,8 @@
 		<div class="header">
         	<h1>Bank Of Spring</h1>
         	<p>
-        	<a href="<c:url value="/home"/>">Home</a> | 
         	<sec:authorize access="isAuthenticated()">
+        		<a href="<c:url value="/home"/>">Home</a> |
         		Logged in as <sec:authentication property="principal.username"/> (<a href="<c:url value="/logout"/>">logout</a>)
         	</sec:authorize>
         	<sec:authorize access="isAnonymous()">
