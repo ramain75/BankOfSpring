@@ -11,9 +11,15 @@
 		<form method="post" class="signin" action="${authUrl}">
 			<fieldset>
 				<legend>Login</legend>
-				<label for="username">User Name</label> <input id="username"
-					name="j_username" type="text" /> <label for="password">Password</label>
+				<div>
+				<label for="username">User Name</label>
+				 <input id="username"
+					name="j_username" type="text" /> 
+					</div>
+					<div>
+				<label for="password">Password</label>
 				<input id="password" name="j_password" type="password" />
+				</div>
 				<div class="submit">
 					<button type="submit" name="save">Login</button>
 				</div>

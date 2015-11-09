@@ -20,4 +20,9 @@ public class HomeController {
 		session.setAttribute(USER_SESSION_ATTRIBUTE_KEY, username);
 		return "home";
 	}
+	
+	@RequestMapping({"/login"})
+	public String home() {
+		return "login";
+	}
 }
