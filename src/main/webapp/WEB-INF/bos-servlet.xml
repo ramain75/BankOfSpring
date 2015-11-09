@@ -13,9 +13,6 @@
 
 	<!-- Scans for annotation controller configuration -->
 	<mvc:annotation-driven />
-	<mvc:interceptors>
-		<bean class="org.bankofspring.web.interceptor.LoggedInInterceptor" />
-	</mvc:interceptors>
 
 	<!-- Location to scan for controllers -->
 	<context:component-scan base-package="org.bankofspring.web.controller" />
