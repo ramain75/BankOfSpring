@@ -81,6 +81,21 @@
 			<artifactId>spring-webflow</artifactId>
 			<version>${spring-webflow.version}</version>
 		</dependency>
+			<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-config</artifactId>
+	<version>${spring-framework.version}</version>
+</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -190,6 +205,8 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 		</dependency>
+	
+		
 	</dependencies>
 	<build>
 		<plugins>
@@ -206,7 +223,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.2.v20150730</version>
+				<version>9.2.6.v20141205</version>
 			</plugin>
 		</plugins>
 	</build>

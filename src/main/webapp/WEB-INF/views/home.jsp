@@ -12,7 +12,6 @@
 				<li><a href="<c:url value="/me"/>">View Accounts</a></li>
 				<li><a href="<c:url value="/transfer"/>">Transfer Cash</a></li>
 				<li><a href="<c:url value="/transferFlow"/>">Transfer Cash (Flow)</a></li>
-				<li><a href="<c:url value="/selectUser"/>">Select User</a> (Demo only)</li>
 			</ul>
 		</p>
 	</body>

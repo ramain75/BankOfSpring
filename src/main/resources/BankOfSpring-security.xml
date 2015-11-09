@@ -1,0 +1,30 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+ xmlns="http://www.springframework.org/schema/security"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/security
+     http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+     <http auto-config="true">
+         
+     	  <form-login 
+     	login-processing-url="/static/j_spring_security_check"
+     	login-page="/login"
+     	authentication-failure-url="/login?login_error=t"
+     />
+     <intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+     <intercept-url pattern="/**" access="ROLE_USER"/> 
+     </http>
+     <authentication-manager>
+     <authentication-provider user-service-ref="jdbcUserService"></authentication-provider>
+     </authentication-manager>
+     <user-service id="userService">
+     
+     <user name="user" password="password" authorities="ROLE_USER"/>
+     
+     </user-service>
+     <jdbc-user-service id="jdbcUserService" data-source-ref="dataSource"
+     users-by-username-query="select username, password, true from user where username=?"
+     authorities-by-username-query="select username,'ROLE_USER' from user where username=?"/>
+     
+</beans:beans>

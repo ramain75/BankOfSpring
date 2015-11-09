@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.dao.CustomerDAO;
 import org.bankofspring.model.Account;
-import org.bankofspring.web.interceptor.LoggedInInterceptor;
+import org.bankofspring.web.controller.HomeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class CustomerController {
 	
 	@RequestMapping( method = RequestMethod.GET)
 	public String showAccounts(HttpSession session, ModelMap map) {
-		String username = (String) session.getAttribute(LoggedInInterceptor.USER_SESSION_ATTRIBUTE_KEY);
+		String username = (String) session.getAttribute(HomeController.USER_SESSION_ATTRIBUTE_KEY);
 		List<Account> accounts = accountDAO.getAccountsForUsername(username);
 		map.addAttribute("accounts", accounts);
 		return "accountList";
