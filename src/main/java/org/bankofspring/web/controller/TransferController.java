@@ -9,9 +9,9 @@ import org.bankofspring.dao.AccountDAO;
 import org.bankofspring.model.Account;
 import org.bankofspring.service.BankOfSpringService;
 import org.bankofspring.web.TransferForm;
-import org.bankofspring.web.interceptor.LoggedInInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -44,7 +44,7 @@ public class TransferController {
 		if (errors.hasErrors()) {
 			return "transfer";
 		}
-		String username = (String) httpSession.getAttribute(LoggedInInterceptor.USER_SESSION_ATTRIBUTE_KEY);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		boolean outcome = bankOfSpringService.transfer(username, transferForm);
 		map.put("outcome", outcome);
 		return "redirect:/transfer/outcome";
@@ -58,7 +58,7 @@ public class TransferController {
 	
 	@ModelAttribute("fromAccounts")
 	public List<Account> getFromAccounts(HttpSession session) {
-		return accountDao.getAccountsForUsername((String) session.getAttribute(LoggedInInterceptor.USER_SESSION_ATTRIBUTE_KEY));
+		return accountDao.getAccountsForUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 	
 	@ModelAttribute("toAccounts")

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:useBean id="footer_date" class="java.util.Date" />
 <html>
 	<head>
@@ -12,13 +13,13 @@
 		<div class="header">
         	<h1>Bank Of Spring</h1>
         	<p>
-        	<a href="<c:url value="/home"/>">Home</a> | 
-        	<c:if test="${not empty sessionScope.bos_current_user}">
-        		Logged in as <c:out value="${bos_current_user}"/> (<a href="<c:url value="/logout"/>">logout</a>)
-        	</c:if>
-        	<c:if test="${empty sessionScope.bos_current_user}">
+        	<sec:authorize access="isAuthenticated()">
+        		<a href="<c:url value="/home"/>">Home</a> |
+        		Logged in as <sec:authentication property="principal.username"/> (<a href="<c:url value="/logout"/>">logout</a>)
+        	</sec:authorize>
+        	<sec:authorize access="isAnonymous()">
         		Not logged in yet.
-        	</c:if>
+        	</sec:authorize>
         	</p>
         	<p></p>
         	<c:if test="${sessionScope.infoMessage}">
